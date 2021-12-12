@@ -1,0 +1,42 @@
+@media all and (min-width: 650px) {
+    
+    .only-desktop {
+        display: flex;
+    }
+
+    nav.header {
+            
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .menu_icon {
+            width: 36px;
+            cursor: pointer;
+        }
+
+        .menu_icon {
+            display: none;
+        }
+
+    }
+
+    .homepage {
+        padding: 20px 40px;
+
+        &-flex {
+            margin-top: 50px;
+        }
+    }
+
+    .pagination-links {
+        width: 80%;
+        margin: 40px auto;
+    }
+
+    #footerMenu {
+        display: none;
+    }
+    
+    
+}

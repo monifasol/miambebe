@@ -1,0 +1,39 @@
+@media all and (min-width: 850px) {      
+
+    .homepage {
+        &-flex {
+            flex-direction: row;
+    
+            .week-component {
+                width: 40%;
+            }
+    
+            &-left-side {
+                width: 60%;
+                margin-left: 20px;
+                .databoard-component {
+                    margin-top: 0px;
+                }
+                .recipes-overview-component {
+                    margin-top: 30px;
+                }
+            }
+        }
+        
+    }
+
+    .week-component {
+
+        .dates-current-week {
+            padding: 10px 20px;
+            margin: 30px auto;
+        }
+    
+        .weekly-food-plan {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    }
+
+}
