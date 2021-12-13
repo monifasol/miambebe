@@ -21,7 +21,7 @@ function AuthProviderWrapper(props) {
         })
         .then((response) => {
           const userJWT = response.data;
-          setUser(userJWT);   // this is essential to create the context for auth
+          setUser(userJWT);   
           setIsLoading(false);
           setIsLoggedIn(true);
         })
@@ -45,8 +45,6 @@ function AuthProviderWrapper(props) {
   const logOutUser = () => {
     // Upon logout, remove the token from the localStorage
     localStorage.removeItem("authToken");
-
-    // Update the state variables
     setIsLoggedIn(false);
     setUser(null);
   };

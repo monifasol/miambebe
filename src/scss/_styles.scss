@@ -197,7 +197,7 @@ nav.menu {
     }
 }
 
-/* ====== Homepage ======== */
+/* ====== Homepage Layout ======== */
 
 .homepage { 
     padding: 12px;
@@ -215,7 +215,7 @@ nav.menu {
             height: fit-content;
             width: fit-content;
             padding: 0 20px;
-            margin: auto;
+            margin: 0 auto;
         }
 
         &-left-side {
@@ -352,6 +352,10 @@ nav.menu {
 /* ========== Current Week Component ============ */
 
 .week-component {
+
+    .no-baby {
+        margin: 50px auto;
+    }
 
     .dates-current-week {
         width: fit-content;

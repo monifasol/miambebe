@@ -7,7 +7,7 @@ import { CurrentDataContext } from '../../context/currentData.context';
 
 const Databoard = () => {
 
-    const { currentWeek } = useContext(CurrentDataContext)
+    const { currentWeek, currentBaby } = useContext(CurrentDataContext)
     const { goalsDataboard, isDataUpdating } = useContext(DataboardContext);
     
     const [ isDataLoading, setIsDataLoading ] = useState(true)     
@@ -96,26 +96,23 @@ const Databoard = () => {
             <h2 className="h2-comp">Databoard</h2>
 
 
-            { (
-                    (isDataLoading || isDataUpdating) 
-                    
-                    ||
+            { (!currentBaby || !currentWeek || (!isDataLoading && !isDataUpdating && areGoalsEmpty())) 
+            
+                &&
+                
+                <p className="no-data-databoard">       
+                    There is no data to show at the moment. 
+                    <br/>Please, set the goals for the week first.
+                </p>
+            }
 
-                    ((isDataLoading || isDataUpdating) && 
-                    (currentWeek && goalsDataboard && goalsDataboard.length > 0 )) 
-                )
 
+            {   (isDataLoading || isDataUpdating) 
+                && 
+                (currentBaby && currentWeek && goalsDataboard && goalsDataboard.length > 0 )
                 &&
 
                 <LoadingSpinner msg="Loading data for graphics..."/> 
-            }
-
-            { !isDataLoading && !isDataUpdating && areGoalsEmpty() &&
-                
-                        <p className="no-data-databoard">       
-                            There is no data to show at the moment. 
-                            <br/>Please, set the goals for the week first.
-                        </p>
             }
 
             { !isDataLoading && !isDataUpdating && goalsDataboard && goalsDataboard.length > 0 &&

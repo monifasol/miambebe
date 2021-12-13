@@ -12,18 +12,53 @@ const CurrentDataContext = React.createContext();
 
 function CurrentDataProviderWrapper(props) {
   
-  const { user } = useContext(AuthContext);
+  const { user, isLoggedIn } = useContext(AuthContext);
 
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(user);
   const [currentBaby, setCurrentBaby] = useState(null);
   const [currentWeek, setCurrentWeek] = useState(null);  
- 
+
+  const prepareCurrentUser = () => {
+      axios
+        .get(`${API_URI}/users/${user._id}`, {
+          headers: { Authorization: `Bearer ${localJWTToken}` },
+        })
+        .then((response) => {
+          const foundUser = response.data.data
+          setCurrentUser(foundUser)
+        })
+        .catch((error) => {
+          console.log(error)
+          setCurrentUser(null)
+        });
+  }
+
+
+  // initializes currentUser, when user (from auth) changes
+  // use comes from JWT token and has very little info
+  useEffect( () => {
+    if (isLoggedIn) prepareCurrentUser()
+  }, [isLoggedIn]);
+
+
+
+  // initializes currentBaby, when currentUser loads or changes
+  useEffect( () => {
+    if (currentUser && currentUser.babies) {
+      let initBaby = currentUser.babies[0]
+      setCurrentBaby(initBaby)
+    }
+  }, [currentUser]);
+          
+
+
+  // ========= Week Initialization
+
   const formatDate = (date) => {
     return date.getDate() + 
     "-" +  (date.getMonth() + 1) +
     "-" +  date.getFullYear();
   }  
-
 
   const getMondaySunday = () => {
 
@@ -44,10 +79,10 @@ function CurrentDataProviderWrapper(props) {
   let lastDayWeek = getMondaySunday().lastday
 
 
-  // Changes currentBaby when parent switches babies
+  // Updates currentBaby when parent switches babies
   const switchBabies = (babyId) => {
 
-    if (babyId != null) {
+    if (babyId) {
       
         axios
         .get(`${API_URI}/babies/${babyId}`, {
@@ -64,38 +99,7 @@ function CurrentDataProviderWrapper(props) {
     } 
   };
 
-
-  const getCurrentUser = () => {
-      axios
-        .get(`${API_URI}/users/${user._id}`, {
-          headers: { Authorization: `Bearer ${localJWTToken}` },
-        })
-        .then((response) => {
-          const foundUser = response.data.data
-          setCurrentUser(foundUser)
-        })
-        .catch((error) => {
-          console.log(error)
-          setCurrentUser(null)
-        });
-  }
-
-
-  // initializes currentUser, when USER changes (user => coming from JWT token)
-  useEffect( () => {
-    if (user) getCurrentUser()
-  }, [user]);
-
-
-  // initializes currentBaby, when currentUser loads or changes
-  useEffect( () => {
-    if (currentUser && currentUser.babies) {
-      let initBaby = currentUser.babies[0]
-      setCurrentBaby(initBaby)
-    }
-  }, [currentUser]);
-          
-          
+        
   const createCurrentWeek = () => {
       const requestBody = {firstday: firstDayWeek, lastday: lastDayWeek, babyId: currentBaby._id}
 

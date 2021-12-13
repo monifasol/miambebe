@@ -130,36 +130,49 @@ const Week = () => {
         <div className="week-component comp">
             <h2 className="h2-comp">Current Week</h2>
         
-            <p className="dates-current-week">
-                <span>from</span> 
-                <Moment format="DD MMM YYYY">{firstDay}</Moment>
-                <span>to</span> 
-                <Moment format="DD MMM YYYY">{lastDay}</Moment>
-            </p>
+            { !currentBaby && <p className="no-baby">First, you need to register your baby(s).</p>}
 
-            { !currentBaby && <p>First, you need to register your baby(s).</p>}
+            { currentBaby && 
 
-            { (currentBaby && !goals) ?
-                              
-                    <div>
-                        <p className="text-current-week">There's no food plan set for this week yet! Start now! </p>
-                        <p className="text-current-week">What would you like {currentBaby.name } to eat this week?</p> 
-                        <p className="btn" onClick={ () => initWeekFoodPlan()}>Set {currentBaby.name}'s food plan </p>
-                    </div>
+                <p className="dates-current-week">
+                    <span>from</span> 
+                    <Moment format="DD MMM YYYY">{firstDay}</Moment>
+                    <span>to</span> 
+                    <Moment format="DD MMM YYYY">{lastDay}</Moment>
+                </p>
+            }
 
-                :
+            { currentBaby && currentWeek 
+            
+                &&
 
-                    <>
-                        { isInitializingGoals && <LoadingSpinner msg="Initializing weekly food plan..."/> }
-
-                        <div id="form-error">
-                        <p className="flash-small error">error here</p>
+                <>
+                    !goals 
+                    
+                    ?
+                                
+                        <div>
+                            <p className="text-current-week">There's no food plan set for this week yet! Start now! </p>
+                            <p className="text-current-week">What would you like {currentBaby.name } to eat this week?</p> 
+                            <p className="btn" onClick={ () => initWeekFoodPlan()}>Set {currentBaby.name}'s food plan </p>
                         </div>
 
-                        <div className="weekly-food-plan">
-                            { !isInitializingGoals && goals && goals.map(( goal ) => ( <GoalForm key={goal._id} goal={goal} buildError={buildError} /> )) }
-                        </div>
-                    </>
+                    :
+
+                        <>
+                            { isInitializingGoals && <LoadingSpinner msg="Initializing weekly food plan..."/> }
+
+                            <div id="form-error">
+                            <p className="flash-small error">error here</p>
+                            </div>
+
+                            <div className="weekly-food-plan">
+                                { !isInitializingGoals && goals && goals.map(( goal ) => ( <GoalForm key={goal._id} goal={goal} buildError={buildError} /> )) }
+                            </div>
+                        </>
+
+                </>
+            
             }
             
         </div>
