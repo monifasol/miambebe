@@ -206,12 +206,16 @@ nav.menu {
 
         display: flex;
         flex-direction: column;
+        justify-content: center;
         margin-top: 30px;
 
         .week-component {
             width: 100%;
             border: solid 1px white;
             height: fit-content;
+            width: fit-content;
+            padding: 0 20px;
+            margin: auto;
         }
 
         &-left-side {
@@ -358,8 +362,8 @@ nav.menu {
     .dates-current-week {
         width: fit-content;
         word-spacing: 10px;
-        border: solid 1px #ccc;
-        background-color: #f0f0f0;
+        border: solid 1px $color-pink-dark;
+        background-color: $color-pink-light;
         padding: 5px 10px;
         border-radius: 6px;
         margin: 20px auto 0px;
@@ -379,7 +383,7 @@ nav.menu {
     .weekly-food-plan {
         width: 100%;
         max-width: fit-content;
-        padding: 20px 0;
+        padding-bottom: 20px;
         margin: 0 auto;
     }
 
@@ -412,13 +416,14 @@ nav.menu {
         input{
             margin: 5px;
             height: 50px;
-            width: 40px;
+            width: 38px;
             text-align: center;
         }
 
         .input-foodgroup {
             border: none;
             width: fit-content;
+            padding: 0;
         }
 
         .btn {

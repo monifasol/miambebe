@@ -1,15 +1,17 @@
 @media all and (min-width: 850px) {      
 
     .homepage {
+        padding: 40px 10px;
+        
         &-flex {
             flex-direction: row;
     
             .week-component {
-                width: 40%;
+                width: 45%;
             }
     
             &-left-side {
-                width: 60%;
+                width: 55%;
                 margin-left: 20px;
                 .databoard-component {
                     margin-top: 0px;

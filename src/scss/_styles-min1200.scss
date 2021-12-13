@@ -1,5 +1,16 @@
 @media all and (min-width: 1200px) {      
 
+    .homepage {
+        padding: 40px 60px;
+
+        .week-component { 
+            max-width: fit-content;
+            padding: 40px;
+        }
+    }
+
+
+
     .databoard-graphics {
         text-align: center;
         display: flex;

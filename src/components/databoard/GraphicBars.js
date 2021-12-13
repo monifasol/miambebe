@@ -72,7 +72,7 @@ const GraphicBars = ( { dataGoals } ) => {
                     categories={{ x: labelsFoodgroups }}
 
                     style={{
-                            data: { fill: "#F6F4FF", stroke: "#333", strokeWidth: 0.5 },
+                            data: { fill: "#F6F4FF", stroke: "#ADA1D8", strokeWidth: 0.5 },
                             labels: { fontSize: 7, fill: "#333" } 
                            }}
 
@@ -92,7 +92,7 @@ const GraphicBars = ( { dataGoals } ) => {
                                     {   target: "data",
                                         mutation: (props) => { 
                                             buildTooltip(props.datum)
-                                            return { style: { fill: "#E7E3F5", stroke: "#333", strokeWidth: 0.5 }}
+                                            return { style: { fill: "#E7E3F5", stroke: "#ADA1D8", strokeWidth: 0.5 }}
                                         }
                                     }
                                 ];
@@ -102,7 +102,7 @@ const GraphicBars = ( { dataGoals } ) => {
                                     {   target: "data",
                                         mutation: () => { 
                                             hideTooltip()
-                                            return { style: { fill: "#F6F4FF", stroke: "#333", strokeWidth: 0.5 }}
+                                            return { style: { fill: "#F6F4FF", stroke: "#ADA1D8", strokeWidth: 0.5 }}
                                         }
                                     }
                                 ];
