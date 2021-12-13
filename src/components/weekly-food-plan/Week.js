@@ -1,6 +1,5 @@
 import { React, useContext, useState, useEffect } from "react";        
 import Moment from 'react-moment';
-import 'moment/locale/fr';
 
 import GoalForm from "./GoalForm";
 import LoadingSpinner from "../layout-elements/LoadingSpinner";
@@ -27,8 +26,7 @@ const Week = () => {
     const [isError, setIsError] = useState(false)
 
 
-    // API request that populates 'goals' for the currentWeek
-    // otherwise, when I iterate over week.goals I only get ID's
+    // API request that populates 'goals' for the currentWeek, otherwise week.goals is only ID's
     useEffect( ()=> {
         if (currentWeek && currentWeek.goals && currentWeek.goals.length > 0) {  
 
@@ -50,8 +48,16 @@ const Week = () => {
     // Init currentWeek start and end dates
     useEffect( () => {
         if (currentWeek) {
-            setFirstDay(currentWeek.firstday)
-            setLastDay(currentWeek.lastday)
+
+            const buildDate = (dayStr) => {
+                // JS default format is MM/DD/YYYY but we work with DD-MM-YYYY so:
+                var dateParts = dayStr.split("-")
+                // month is 0-based, that's why we need dataParts[1] - 1
+                return new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+            }
+
+            setFirstDay(buildDate(currentWeek.firstday).toString())
+            setLastDay(buildDate(currentWeek.lastday).toString())
         } 
     }, [currentWeek]);
 
@@ -70,7 +76,7 @@ const Week = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 .then((response) => {
-                    console.log(`Goal initialized for the week of ${currentWeek.firstday}`)
+                    console.log(`Goal set for the week of ${currentWeek.firstday}`)
                 })
                 .catch((error) => {
                     setIsError(true)
@@ -117,7 +123,7 @@ const Week = () => {
         setTimeout( () => {
           errorEl.classList.remove("show")
         }, 1500)
-      }
+    }
 
 
     return (
@@ -126,9 +132,9 @@ const Week = () => {
         
             <p className="dates-current-week">
                 <span>from</span> 
-                <Moment locale="fr" format="DD MMMM YYYY">{firstDay}</Moment>
+                <Moment format="DD MMM YYYY">{firstDay}</Moment>
                 <span>to</span> 
-                <Moment locale="fr" format="DD MMMM YYYY">{lastDay}</Moment>
+                <Moment format="DD MMM YYYY">{lastDay}</Moment>
             </p>
 
             { !currentBaby && <p>First, you need to register your baby(s).</p>}

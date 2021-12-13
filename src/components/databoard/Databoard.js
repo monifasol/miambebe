@@ -2,10 +2,12 @@ import { React, useContext, useState, useEffect } from 'react'
 import LoadingSpinner from "../layout-elements/LoadingSpinner";
 import GraphicBars from "./GraphicBars.js"
 import { DataboardContext } from "../../context/databoard.context";
+import { CurrentDataContext } from '../../context/currentData.context';
 
 
 const Databoard = () => {
 
+    const { currentWeek } = useContext(CurrentDataContext)
     const { goalsDataboard, isDataUpdating } = useContext(DataboardContext);
     
     const [ isDataLoading, setIsDataLoading ] = useState(true)     
@@ -14,28 +16,19 @@ const Databoard = () => {
     // isDataUpdating ==> when user edited the goals
     // isDataLoading ==> when this component builds the object to show in VictoryChart
 
-
-    // Builds data object for Victory Chart, when data is loaded 
+    // Builds data object for Victory Chart, when data is loaded, or when goalsDataboard.length changes
     useEffect(()=> {
-
-        if (goalsDataboard) {
-
-            console.log("I WILL BUILD THE OBJ DATACHART")
-        
-            setTimeout( () => {
-                buildDataObj()
-            }, 500)
-
+    
+        if (currentWeek && goalsDataboard ) {                 
+            buildDataObj()
         }
 
-    }, [goalsDataboard])
+    }, [currentWeek, goalsDataboard, (goalsDataboard && goalsDataboard.length)])
 
 
     const buildDataObj = () => {
 
         console.log("We are going to build the object to show in Victory Chart")
-
-        setIsDataLoading(true)
         
         // Sort the array first
         const sortedArray = goalsDataboard.sort((a, b) => {
@@ -65,38 +58,58 @@ const Databoard = () => {
             }
         })  
 
-        setDataChart(buildData)
-        setIsDataLoading(false)
+        //setDataChart(buildData)
+        
+    
+        setTimeout( () => {
+            setDataChart(buildData)
+            setIsDataLoading(false)
+        }, 800)
 
         console.log("We just built the Object to be used in Victory Chart ===> ", buildData)
     }
 
 
-    //console.log("isDataUpdating???? ===> ", isDataUpdating.toString())
-    //console.log("isDataLoading???? ===> ", isDataLoading.toString())
-    //console.log("goalsDataboard???? ===> ", goalsDataboard)
+    console.log("isDataUpdating???? ===> ", isDataUpdating.toString())
+    console.log("isDataLoading???? ===> ", isDataLoading.toString())
+    console.log("goalsDataboard length ===> ", (goalsDataboard && goalsDataboard.length))
 
     return (
 
         <div className="databoard-component comp">
             <h2 className="h2-comp">Databoard</h2>
 
-            { (isDataLoading || isDataUpdating) && <LoadingSpinner msg="Loading data for graphics..."/> }
 
-            { !isDataLoading && !isDataUpdating && !goalsDataboard 
+            { ((isDataLoading || isDataUpdating)
                 &&
-                    <p className="no-data-databoard">       
-                        There is no data to show at the moment. 
-                        <br/>Please, set the goals for the week first.
-                    </p>
+                (currentWeek && goalsDataboard && goalsDataboard.length > 0 )) 
+                &&
+                <LoadingSpinner msg="Loading data for graphics..."/> 
             }
 
-            { !isDataLoading && !isDataUpdating && goalsDataboard &&
+            { (goalsDataboard && goalsDataboard.length === 0 && !isDataLoading && !isDataUpdating) 
+                
+                &&
+                        <p className="no-data-databoard">       
+                            There is no data to show at the moment. 
+                            <br/>Please, set the goals for the week first.
+                        </p>
+            }
 
+                <>
+                    <p>{isDataLoading.toString()}</p>
+                    <p>{isDataUpdating.toString()}</p>
+                    <p>{goalsDataboard && goalsDataboard.length}</p>
+                    
+                </>
+
+            { !isDataLoading && !isDataUpdating && goalsDataboard && goalsDataboard.length > 0 &&
+                <>
+                    <p>HOLAAAA I ENTER!!</p>
                     <div className="databoard-graphics">
                         { dataChart && <GraphicBars dataGoals={dataChart} /> }
                     </div>
-
+                </>
             }
         </div>
 

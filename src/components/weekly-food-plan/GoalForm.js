@@ -101,17 +101,26 @@ const GoalForm = ( props ) => {
       setQuantityGoal(quantityGoal + 1)
     }
 
+    const decreaseQuantityAccomplished = () => {
+      if (quantityAccomplished  > 0) setQuantityAccomplished (quantityAccomplished  - 1)
+    }
+
+    const increaseQuantityAccomplished  = () => {
+      setQuantityAccomplished (quantityAccomplished  + 1)
+    }
+
     return (
         <div>
         
             <form onSubmit={handleSubmit} className='form form-goal'>
 
-                <div className="food-goal">
+                <div className="group-inputs-goal">
+                  
                   <input disabled="disabled" 
                           type="text" 
                           name="foodgroup" 
                           className="input-foodgroup"
-                          value={foodgroup.name || ""} />   {/* foodgroup.name */}
+                          value={foodgroup.name || ""} />   
                   
                   <img src={btnLess} 
                       alt="decrease quantity goal" 
@@ -131,30 +140,29 @@ const GoalForm = ( props ) => {
                       className="btn-more"
                       onClick={ ()=> increaseQuantityGoal() } 
                   />
-
                 </div>
 
 
+                <div className="group-inputs-goal">
+                  <img src={btnLess} 
+                        alt="decrease quantity goal" 
+                        className="btn-less"
+                        onClick={ ()=>decreaseQuantityAccomplished() }                   
+                  />
 
+                  <input type="text" 
+                          name="quantityAccomplished" 
+                          value={quantityAccomplished || 0} 
+                          className='input-quantity-accomplished'
+                          onChange={ (e)=> setQAccomplished(e.target.value) }
+                  />
 
-                <img src={btnLess} 
-                      alt="decrease quantity goal" 
-                      className="btn-less"
-                      onClick={ ()=>decreaseQuantityGoal() }                   
-                />
-
-                <input type="text" 
-                        name="quantityAccomplished" 
-                        value={quantityAccomplished || 0} 
-                        className='input-quantity-accomplished'
-                        onChange={ (e)=> setQAccomplished(e.target.value) }
-                />
-
-                <img src={btnMore} 
-                      alt="increase quantity goal" 
-                      className="btn-more"
-                      onClick={ ()=> increaseQuantityGoal() } 
-                />
+                  <img src={btnMore} 
+                        alt="increase quantity goal" 
+                        className="btn-more"
+                        onClick={ ()=> increaseQuantityAccomplished() } 
+                  />
+                </div>
 
                 <button type="submit" className="btn">Save</button>
             </form>

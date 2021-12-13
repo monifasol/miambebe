@@ -14,7 +14,7 @@ window.env = {
   "MallocNanoZone": "0",
   "ORIGINAL_XDG_CURRENT_DESKTOP": "undefined",
   "COLOR": "1",
-  "TERM_SESSION_ID": "CD758142-9116-436D-A4B8-748D6635DC70",
+  "TERM_SESSION_ID": "7BF6E171-B7E7-4CA5-A022-02305F7AD3CF",
   "npm_config_noproxy": "",
   "npm_config_local_prefix": "/Users/monica/workspace/ironhack-webdev/projects/miam-bebe/dev/miambebe-client",
   "USER": "monica",
