@@ -1,0 +1,19 @@
+@media all and (min-width: 1200px) {      
+
+    .databoard-graphics {
+        text-align: center;
+        display: flex;
+        .VictoryContainer {
+            width: 700px !important;
+            margin: 30px auto;
+            padding-left: 35px;
+        }
+
+        .tooltip-databoard {
+            
+            top: 20px;
+            left: 30%;
+        }
+    }
+
+}

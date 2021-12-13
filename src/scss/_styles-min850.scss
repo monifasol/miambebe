@@ -36,4 +36,23 @@
         }
     }
 
+
+.databoard-graphics {
+
+    .VictoryContainer {
+        //width: 700px !important;
+        //margin: 40px auto 0;
+
+        svg {
+            overflow: visible; // overriding from Victorychart
+        }
+        path {
+            cursor: pointer; // overriding from Victorychart
+        }
+    }
+  
+    
+}
+
+
 }

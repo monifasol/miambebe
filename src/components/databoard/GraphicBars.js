@@ -6,10 +6,14 @@ const GraphicBars = ( { dataGoals } ) => {
 
     const styleAxis = {
                         axis: {stroke: "#4C536A"},
-                        axisLabel: {fontSize: 6},
+                        axisLabel: {fontSize: 6, 
+                            fontFamily: "'Montserrat Alternates', sans-serif"},
                         grid: {stroke: "#eaeaea"},
                         ticks: {stroke: "#4C536A"},
-                        tickLabels: {width: 40, fontSize: 8, padding: 4} }
+                        tickLabels: {width: 40, 
+                                    fontSize: 8, 
+                                    padding: 4, 
+                                    fontFamily: "'Montserrat Alternates', sans-serif"} }
     
     
     const labelsFoodgroups = dataGoals.map( item => item.labelFoodgroup)
@@ -34,7 +38,7 @@ const GraphicBars = ( { dataGoals } ) => {
     return (
 
         <>
-        
+
         <div id="tooltip" className="tooltip-databoard">Here it goes tooltip</div>
         
         <VictoryChart

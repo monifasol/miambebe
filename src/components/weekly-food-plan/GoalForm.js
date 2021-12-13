@@ -116,52 +116,52 @@ const GoalForm = ( props ) => {
 
                 <div className="group-inputs-goal">
                   
-                  <input disabled="disabled" 
-                          type="text" 
-                          name="foodgroup" 
-                          className="input-foodgroup"
-                          value={foodgroup.name || ""} />   
-                  
-                  <img src={btnLess} 
-                      alt="decrease quantity goal" 
-                      className="btn-less"
-                      onClick={ ()=>decreaseQuantityGoal() }                   
-                  />
+                    <input disabled="disabled" 
+                            type="text" 
+                            name="foodgroup" 
+                            className="input-foodgroup"
+                            value={foodgroup.name || ""} />   
+                    
+                    <img src={btnLess} 
+                        alt="decrease quantity goal" 
+                        className="btn-less"
+                        onClick={ ()=>decreaseQuantityGoal() }                   
+                    />
 
-                  <input type="text" 
-                          name="quantityGoal" 
-                          value={quantityGoal || 0} 
-                          className="input-quantity-goal"
-                          onChange={ (e)=> setQGoal(e.target.value) } 
-                  />
+                    <input type="text" 
+                            name="quantityGoal" 
+                            value={quantityGoal || 0} 
+                            className="input-quantity-goal"
+                            onChange={ (e)=> setQGoal(e.target.value) } 
+                    />
 
-                  <img src={btnMore} 
-                      alt="increase quantity goal" 
-                      className="btn-more"
-                      onClick={ ()=> increaseQuantityGoal() } 
-                  />
+                    <img src={btnMore} 
+                        alt="increase quantity goal" 
+                        className="btn-more"
+                        onClick={ ()=> increaseQuantityGoal() } 
+                    />
                 </div>
 
 
-                <div className="group-inputs-goal">
-                  <img src={btnLess} 
-                        alt="decrease quantity goal" 
-                        className="btn-less"
-                        onClick={ ()=>decreaseQuantityAccomplished() }                   
-                  />
+                <div className="group-inputs-goal given">
+                    <img src={btnLess} 
+                          alt="decrease quantity goal" 
+                          className="btn-less"
+                          onClick={ ()=>decreaseQuantityAccomplished() }                   
+                    />
 
-                  <input type="text" 
-                          name="quantityAccomplished" 
-                          value={quantityAccomplished || 0} 
-                          className='input-quantity-accomplished'
-                          onChange={ (e)=> setQAccomplished(e.target.value) }
-                  />
+                    <input type="text" 
+                            name="quantityAccomplished" 
+                            value={quantityAccomplished || 0} 
+                            className='input-quantity-accomplished'
+                            onChange={ (e)=> setQAccomplished(e.target.value) }
+                    />
 
-                  <img src={btnMore} 
-                        alt="increase quantity goal" 
-                        className="btn-more"
-                        onClick={ ()=> increaseQuantityAccomplished() } 
-                  />
+                    <img src={btnMore} 
+                          alt="increase quantity goal" 
+                          className="btn-more"
+                          onClick={ ()=> increaseQuantityAccomplished() } 
+                    />
                 </div>
 
                 <button type="submit" className="btn">Save</button>
