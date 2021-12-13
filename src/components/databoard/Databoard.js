@@ -17,18 +17,22 @@ const Databoard = () => {
     // isDataLoading ==> when this component builds the object to show in VictoryChart
 
     // Builds data object for Victory Chart, when data is loaded, or when goalsDataboard.length changes
-    useEffect(()=> {
+    useEffect( ()=> {
     
-        if (currentWeek && goalsDataboard ) {                 
-            buildDataObj()
+        if (currentWeek && goalsDataboard && !isDataUpdating) {     
+            
+            setTimeout( () => {
+                buildDataObj()
+            }, 300)
         }
 
-    }, [currentWeek, goalsDataboard, (goalsDataboard && goalsDataboard.length)])
+    }, [currentWeek, goalsDataboard, isDataUpdating])
 
 
+    // For this we need the goalsDataboard loaded for sure.
     const buildDataObj = () => {
-
-        console.log("We are going to build the object to show in Victory Chart")
+        
+        console.log("We are going to build the object to show in Victory Chart: ", goalsDataboard)
         
         // Sort the array first
         const sortedArray = goalsDataboard.sort((a, b) => {
@@ -60,19 +64,28 @@ const Databoard = () => {
 
         //setDataChart(buildData)
         
+        setDataChart(buildData)
+        setIsDataLoading(false)
     
-        setTimeout( () => {
-            setDataChart(buildData)
-            setIsDataLoading(false)
-        }, 800)
-
         console.log("We just built the Object to be used in Victory Chart ===> ", buildData)
+
     }
 
+    const areGoalsEmpty = () => {
+
+        let empty = true
+
+       if (goalsDataboard) {
+            goalsDataboard.forEach((goal) => { if (goal.quantityGoal !== 0) empty = false })
+       }
+
+       return empty
+    }
 
     console.log("isDataUpdating???? ===> ", isDataUpdating.toString())
     console.log("isDataLoading???? ===> ", isDataLoading.toString())
     console.log("goalsDataboard length ===> ", (goalsDataboard && goalsDataboard.length))
+    console.log("goalsDataboard ===> ", (goalsDataboard))
 
     return (
 
@@ -80,32 +93,30 @@ const Databoard = () => {
             <h2 className="h2-comp">Databoard</h2>
 
 
-            { ((isDataLoading || isDataUpdating)
+            { (
+                    (isDataLoading || isDataUpdating) 
+                    
+                    ||
+
+                    ((isDataLoading || isDataUpdating) && 
+                    (currentWeek && goalsDataboard && goalsDataboard.length > 0 )) 
+                )
+
                 &&
-                (currentWeek && goalsDataboard && goalsDataboard.length > 0 )) 
-                &&
+
                 <LoadingSpinner msg="Loading data for graphics..."/> 
             }
 
-            { (goalsDataboard && goalsDataboard.length === 0 && !isDataLoading && !isDataUpdating) 
+            { !isDataLoading && !isDataUpdating && areGoalsEmpty() &&
                 
-                &&
                         <p className="no-data-databoard">       
                             There is no data to show at the moment. 
                             <br/>Please, set the goals for the week first.
                         </p>
             }
 
-                <>
-                    <p>{isDataLoading.toString()}</p>
-                    <p>{isDataUpdating.toString()}</p>
-                    <p>{goalsDataboard && goalsDataboard.length}</p>
-                    
-                </>
-
             { !isDataLoading && !isDataUpdating && goalsDataboard && goalsDataboard.length > 0 &&
                 <>
-                    <p>HOLAAAA I ENTER!!</p>
                     <div className="databoard-graphics">
                         { dataChart && <GraphicBars dataGoals={dataChart} /> }
                     </div>

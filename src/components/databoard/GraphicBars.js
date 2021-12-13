@@ -15,8 +15,8 @@ const GraphicBars = ( { dataGoals } ) => {
     const labelsFoodgroups = dataGoals.map( item => item.labelFoodgroup)
     const arrayTickValues = dataGoals.map( item => item.foodgroup)
 
-    console.log("labelsFoodgroups", labelsFoodgroups)
-    console.log("arrayTickValues", arrayTickValues)
+    //console.log("labelsFoodgroups", labelsFoodgroups)
+    //console.log("arrayTickValues", arrayTickValues)
 
     const buildTooltip = (datum) => {
         let message = `You wanted to give ${datum.goalQ} portions of ${datum.labelFoodgroup} this week, and baby ate ${datum.givenQ} so far`        
@@ -41,7 +41,12 @@ const GraphicBars = ( { dataGoals } ) => {
                 height={300}
                 domainPadding={20}
                 theme={VictoryTheme.material} 
-                horizontal={true}>
+                horizontal={true}
+                style={{
+                            data: { fontFamily: "Montserrat Alternates" },
+                            labels: { fontFamily: "Montserrat Alternates" } 
+                           }}
+                >
 
                 <VictoryAxis crossAxis
                     tickValues={arrayTickValues}

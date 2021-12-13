@@ -23,7 +23,7 @@ function DataboardProviderWrapper(props) {
     // Init Goals Array Object for the current week, used in Databoard
 
     useEffect( ()=> {
-        if (currentWeek) {
+        if (currentWeek && !goalsDataboard) {               // only the first time; this is, if goalsDataboard == null
           axios
             .get(`${API_URI}/weeks/${currentWeek._id}`, {
                 headers: { Authorization: `Bearer ${token}` },
@@ -31,11 +31,11 @@ function DataboardProviderWrapper(props) {
             .then((response) => {
                 const foundWeek = response.data.data
                 const populatedGoals = foundWeek.goals      // goals are now populated
-                buildGoalsArrObj(populatedGoals)           // calls function that inits array of goals objects
+                buildGoalsArrObj(populatedGoals)            // calls function that inits array of goals objects
               })
             .catch((error) => console.log(error));   
         }
-      }, [currentWeek])
+      }, [currentWeek, goalsDataboard])
 
 
     function buildGoalsArrObj(goals) {
@@ -71,7 +71,12 @@ function DataboardProviderWrapper(props) {
         console.log("Im in Context, re-builing the array of objets: ", goalsArrayObj) 
         
         setGoalsDataboard(goalsArrayObj)          // updated context variable!!!
-        setIsDataUpdating(false)
+
+        setTimeout( () => {
+          setIsDataUpdating(false)                // to show the spinner for 1 sec
+        }, 600)
+
+  
     }
 
 
