@@ -39,7 +39,13 @@
 
     .profile-page {
         max-width: 700px;
-        margin-top: 50px;
+        margin: 50px auto;
+    }
+
+    .modal {
+        left: 25%;
+        top: 25%;
+        width: 50%;
     }
 
 }

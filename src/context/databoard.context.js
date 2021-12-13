@@ -12,7 +12,7 @@ const DataboardContext = React.createContext();
 
 function DataboardProviderWrapper(props) {
   
-    const { currentWeek } = useContext(CurrentDataContext)
+    const { currentWeek, currentUser } = useContext(CurrentDataContext)
 
     const [goalsDataboard, setGoalsDataboard] = useState(null)
     const [foodgroups, setFoodgroups] = useState(null)
@@ -75,21 +75,12 @@ function DataboardProviderWrapper(props) {
         setTimeout( () => {
           setIsDataUpdating(false)             // show the spinner for 1 sec
         }, 600)
-
-  
     }
-
-/*
-  Ways to clone array of objects:
-    const clonedArray = goalsArr.map( (item) => { return {...item} })
-    const clonedArray2 = goalsArr.map( (item) => { return Object.assign({}, item) })
-    const clonedArray3 = JSON.parse(JSON.stringify(goalsArr))
-    const clonedArray4 = Array.from(goalsArr);
-*/
 
 
   // Init foodggroups
   useEffect(() => {
+    if (token) {
       axios
         .get(`${API_URI}/foodgroups`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -102,7 +93,8 @@ function DataboardProviderWrapper(props) {
           setFoodgroups(null)
           console.log(e)
         });
-  }, [])
+      }
+  }, [token])
 
 
   return (

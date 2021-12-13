@@ -12,9 +12,9 @@ const CurrentDataContext = React.createContext();
 
 function CurrentDataProviderWrapper(props) {
   
-  const { user, isLoggedIn } = useContext(AuthContext);
+  const { user, isLoggedIn, isLoading } = useContext(AuthContext);
 
-  const [currentUser, setCurrentUser] = useState(user);
+  const [currentUser, setCurrentUser] = useState(null);
   const [currentBaby, setCurrentBaby] = useState(null);
   const [currentWeek, setCurrentWeek] = useState(null);  
 
@@ -26,6 +26,8 @@ function CurrentDataProviderWrapper(props) {
         .then((response) => {
           const foundUser = response.data.data
           setCurrentUser(foundUser)
+
+          console.log("Im here and I found the user", foundUser)
         })
         .catch((error) => {
           console.log(error)
@@ -36,17 +38,24 @@ function CurrentDataProviderWrapper(props) {
 
   // initializes currentUser, when user (from auth) changes
   // use comes from JWT token and has very little info
-  useEffect( () => {
-    if (isLoggedIn) prepareCurrentUser()
-  }, [isLoggedIn]);
+  useEffect( () => {    
+    if (isLoggedIn && !isLoading) {
+
+      console.log("Im logged in, user is:", user)  
+      prepareCurrentUser()
+      
+    }
+  }, [isLoggedIn, isLoading]);
 
 
 
   // initializes currentBaby, when currentUser loads or changes
   useEffect( () => {
     if (currentUser && currentUser.babies) {
+      
       let initBaby = currentUser.babies[0]
       setCurrentBaby(initBaby)
+
     }
   }, [currentUser]);
           

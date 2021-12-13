@@ -31,19 +31,17 @@ function AuthProviderWrapper(props) {
           setIsLoading(false);
         });
     } else {
-      // The token is not in the localStorage
+      // The token is not in localStorage
       setIsLoading(false);
     }
   };
 
   const logInUser = (JWTToken) => {
     localStorage.setItem("authToken", JWTToken);
-    verifyToken(); // I do not pass it her because verify will read for localStorage.
-    // This way I save subsequent requests to the back
+    verifyToken(); // We don't wend token here, since verify will read it from localStorage.
   };
 
   const logOutUser = () => {
-    // Upon logout, remove the token from the localStorage
     localStorage.removeItem("authToken");
     setIsLoggedIn(false);
     setUser(null);
