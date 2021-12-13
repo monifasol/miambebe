@@ -37,23 +37,9 @@
         }
     }
 
-
-.databoard-graphics {
-
-    .VictoryContainer {
-        //width: 700px !important;
-        //margin: 40px auto 0;
-
-        svg {
-            overflow: visible; // overriding from Victorychart
-        }
-        path {
-            cursor: pointer; // overriding from Victorychart
-        }
+    .profile-page {
+        max-width: 700px;
+        margin-top: 50px;
     }
-  
-    
-}
-
 
 }

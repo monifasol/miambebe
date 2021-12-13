@@ -6,8 +6,8 @@ import { CurrentDataContext } from "../../context/currentData.context";
 
 const Navbar = () => {
 
-  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
-  const { currentBaby } = useContext(CurrentDataContext);
+  const { isLoggedIn, logOutUser } = useContext(AuthContext);
+  const { currentBaby, currentUser } = useContext(CurrentDataContext);
 
   return (
     <nav className="header">
@@ -26,12 +26,12 @@ const Navbar = () => {
               <Link to="/recipes">
                 <span className="link">Recipes</span>
               </Link>
-              <Link to="/recipes">
+              <Link to="/profile">
                 <span className="link">Profile</span>
               </Link>
             </div>
 
-            <span>Hello, {user.name}!</span> -
+            <span>Hello, {currentUser && currentUser.name}!</span> -
             <span onClick={logOutUser} className="link">Logout</span>
           </>)
         : 

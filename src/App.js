@@ -4,6 +4,7 @@ import Navbar from "./components/layout-elements/Navbar";
 import FooterMenu from "./components/layout-elements/FooterMenu";
 
 import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
 import RecipesPage from "./pages/RecipesPage";
 import RecipeDetailsPage from "./pages/RecipeDetailsPage";
 import SignupPage from "./pages/SignupPage";
@@ -19,6 +20,7 @@ function App() {
 
       <Switch>      
         <PrivateRoute exact path="/" component={HomePage} />
+        <PrivateRoute exact path="/profile" component={ProfilePage} />
         <PrivateRoute exact path="/recipes" component={RecipesPage} />
         <PrivateRoute exact path="/recipes/:id" component={RecipeDetailsPage} />
         {/* Profile page */}

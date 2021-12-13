@@ -13,9 +13,12 @@ const Databoard = () => {
     const [ isDataLoading, setIsDataLoading ] = useState(true)     
     const [ dataChart, setDataChart ] = useState(null)               
 
+    // =====================
+    // Legend variables: 
     // isDataUpdating ==> when user edited the goals
     // isDataLoading ==> when this component builds the object to show in VictoryChart
-
+    // =====================
+    
     // Builds data object for Victory Chart, when data is loaded, or when goalsDataboard.length changes
     useEffect( ()=> {
     
@@ -82,10 +85,10 @@ const Databoard = () => {
        return empty
     }
 
-    console.log("isDataUpdating???? ===> ", isDataUpdating.toString())
-    console.log("isDataLoading???? ===> ", isDataLoading.toString())
-    console.log("goalsDataboard length ===> ", (goalsDataboard && goalsDataboard.length))
-    console.log("goalsDataboard ===> ", (goalsDataboard))
+    //console.log("isDataUpdating??? ===> ", isDataUpdating.toString())
+    //console.log("isDataLoading??? ===> ", isDataLoading.toString())
+    //console.log("goalsDataboard length??? ===> ", (goalsDataboard && goalsDataboard.length))
+    //console.log("goalsDataboard??? ===> ", (goalsDataboard))
 
     return (
 

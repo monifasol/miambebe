@@ -70,15 +70,14 @@ function DataboardProviderWrapper(props) {
 
         console.log("Im in Context, re-builing the array of objets: ", goalsArrayObj) 
         
-        setGoalsDataboard(goalsArrayObj)          // updated context variable!!!
+        setGoalsDataboard(goalsArrayObj)       // updated context variable!!!
 
         setTimeout( () => {
-          setIsDataUpdating(false)                // to show the spinner for 1 sec
+          setIsDataUpdating(false)             // show the spinner for 1 sec
         }, 600)
 
   
     }
-
 
 /*
   Ways to clone array of objects:

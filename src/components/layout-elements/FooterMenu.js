@@ -12,14 +12,14 @@ const FooterMenu = () => {
             
                 (<>
                     <Link to="/">
-                        <span className="link">Current week</span>
+                        <span className="link">Week Dashboard</span>
                     </Link>
                     
                     <Link to="/recipes">
                         <span className="link">Recipes</span>
                     </Link>
 
-                    <Link to="/recipes">
+                    <Link to="/profile">
                         <span className="link">Profile</span>
                     </Link>
 

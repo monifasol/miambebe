@@ -16,7 +16,7 @@ h1 {
     margin: 20px 0;
     text-align: center;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 h2.h2-comp {
@@ -162,8 +162,8 @@ nav.menu {
     position: absolute;
     top: 0px;
     transition: all 0.5s 0s ease-out;
-    background-color: $color-green-light;
-    border: solid 2px $color-green-medium;
+    background-color: $color-lila-light;
+    border: solid 2px $color-lila-dark;
     padding: 16px;
     width: 100vw;
     height: calc(100vh - 50px);
@@ -178,8 +178,8 @@ nav.menu {
         font-size: 16px;
 
         &:hover {
-            color: $color-green-dark;
-            border-bottom: solid 1px $color-green-dark;
+            color: $color-lila-dark;
+            border-bottom: solid 1px $color-lila-dark;
         }
     }
 
@@ -237,14 +237,7 @@ nav.menu {
     }
 }
 
-
-
-
-
 /* ====== Login and Signup ======== */
-
-
-/* styles form the boiler plate */
 
 .signup-page,
 .login-page {
@@ -299,9 +292,9 @@ nav.menu {
     display: flex;
 
     a {
-        color: $color-green-dark;
-        border: solid 2px $color-green-dark;
-        background-color: $color-green-light;
+        color: $color-lila-dark;
+        border: solid 2px $color-lila-dark;
+        background-color: $color-lila-light;
         margin: 10px auto;
         font-size: 13px !important;
         padding: 5px 10px;
@@ -309,7 +302,8 @@ nav.menu {
         transition: all 0.3 0s;
 
         &:hover {
-            background-color: $color-green-medium;
+            background-color: $color-lila-dark;
+            color: white;
         }
     }
 }
@@ -345,8 +339,8 @@ nav.menu {
 }
 
 .btn.secondary {
-    background-color: $color-pink-medium;
-    border: solid 1px$color-pink-dark;
+    background-color: $color-pink;
+    border: solid 1px $color-pink-dark;
     color: black;
 
     &:hover {
@@ -355,7 +349,7 @@ nav.menu {
 }
 
 
-/* Current Week Component */
+/* ========== Current Week Component ============ */
 
 .week-component {
 
@@ -450,7 +444,7 @@ nav.menu {
     }
 }
 
-/* Databoard */
+/* ============== Databoard ============ */
 
 .no-data-databoard {
     padding: 50px;
@@ -493,9 +487,57 @@ nav.menu {
     
 }
 
+/* ========= Profile page ======== */
+.profile-page {
+    width: 100%;
+    &-form {
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        margin: 20px;
+
+        .field-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 50px;
+        }
+
+        label {
+            display: block;
+            width: 50%;
+        }
+    }
+
+    h3 {
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .user-babies {
+        padding: 20px;
+        background-color: $color-lila-light;
+        border-radius: 10px;
+        margin-top: 10px;
+        width: 90%;
+    }
+
+}
+
+.content-editable {
+    padding: 10px 20px;
+    border-radius: 4px;
+
+    // bg image of a pencil to edit!!!!
+
+    &:focus {
+        background-color: white;
+    }
+
+}
 
 
-/* ====== Flash messages ======== */
+/* ========= Flash messages ======== */
 
 .flash {
     border-radius: 10px;
@@ -571,7 +613,7 @@ nav.menu {
     }
 }
 
-/* ====== Footer ======== */
+/* ============= Footer =========== */
 #footerMenu {
     display: block;
 }

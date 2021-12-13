@@ -45,12 +45,7 @@ const GraphicBars = ( { dataGoals } ) => {
                 height={300}
                 domainPadding={20}
                 theme={VictoryTheme.material} 
-                horizontal={true}
-                style={{
-                            data: { fontFamily: "Montserrat Alternates" },
-                            labels: { fontFamily: "Montserrat Alternates" } 
-                           }}
-                >
+                horizontal={true} >
 
                 <VictoryAxis crossAxis
                     tickValues={arrayTickValues}

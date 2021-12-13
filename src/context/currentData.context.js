@@ -24,6 +24,7 @@ function CurrentDataProviderWrapper(props) {
     "-" +  date.getFullYear();
   }  
 
+
   const getMondaySunday = () => {
 
       // Find out beginning and end of the week  
@@ -70,7 +71,7 @@ function CurrentDataProviderWrapper(props) {
           headers: { Authorization: `Bearer ${localJWTToken}` },
         })
         .then((response) => {
-          const foundUser = response.data
+          const foundUser = response.data.data
           setCurrentUser(foundUser)
         })
         .catch((error) => {

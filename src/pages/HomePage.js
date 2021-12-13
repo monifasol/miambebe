@@ -5,7 +5,7 @@ import RecipesOverview from "./../components/recipes/RecipesOverview"
 function HomePage() {
   return (
     <div className="homepage">
-      <h1>Home Page</h1>
+      <h1>Your dashboard</h1>
       
       <div className="homepage-flex">
         <Week />
