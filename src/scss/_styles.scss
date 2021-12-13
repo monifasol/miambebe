@@ -392,7 +392,7 @@ nav.menu {
             display: flex;
             justify-content: space-evenly;
             align-items: center;
-            padding: 2px 8px 2px 8px;
+            padding: 6px 10px;
             .title {
                 font-size: 12px;
                 text-align: center;
@@ -403,19 +403,22 @@ nav.menu {
             &.given {
                 background-color: unset;
             }
+            .goal-buttons {
+                display: flex;
+                flex-direction: column;
+            }
         }
         
         input{
             margin: 5px;
-        }
-        .input-quantity-goal,
-        .input-quantity-accomplished {
+            height: 50px;
             width: 40px;
             text-align: center;
         }
 
         .input-foodgroup {
             border: none;
+            width: fit-content;
         }
 
         .btn {
@@ -424,7 +427,8 @@ nav.menu {
             display: block;
             padding: 10px 8px;
             font-size: 13px;
-            margin: 5px 0 0 0;
+            margin: 10px 0 0 0;
+            height: 50px;
         }
 
         .btn-more,
