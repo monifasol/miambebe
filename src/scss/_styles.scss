@@ -356,8 +356,8 @@ nav.menu {
     .dates-current-week {
         width: fit-content;
         word-spacing: 10px;
-        border: solid 1px $color-pink-dark;
-        background-color: $color-pink-light;
+        border: solid 1px $color-lila-dark;
+        background-color: $color-lila-light;
         padding: 5px 10px;
         border-radius: 6px;
         margin: 20px auto 0px;
@@ -501,6 +501,12 @@ nav.menu {
             flex-direction: row;
             align-items: center;
             height: 50px;
+            position: relative;
+
+            &.edit-user-name {
+                padding: 0px 20px;
+                width: 90%;
+            }
         }
 
         label {
@@ -526,15 +532,66 @@ nav.menu {
 
 .content-editable {
     padding: 10px 20px;
+    margin-left: 10px;
     border-radius: 4px;
-
-    // bg image of a pencil to edit!!!!
-
+    width: -webkit-fill-available;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
     &:focus {
         background-color: white;
     }
 
+    &:hover {
+        background-color: $color-lila-light;
+        border-bottom: solid 1px $color-lila-dark;
+        margin-bottom: -1px;
+    }
+
+    .edit-icon {
+        width: 20px; 
+        opacity: 0;
+        transition: all 0.5s;
+
+        &.show {
+            opacity: 1;
+        }
+    }
 }
+
+.tooltip-saved {
+    color: $color-info-dark;
+    background-color: $color-info-light;
+    border: solid 1px $color-info-dark;
+    padding: 2px 7px;
+    font-size: 10px;
+    width: fit-content;
+    display: block;
+    position: absolute;
+    right: -10px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all 0.5s;
+
+    &.show {
+        opacity: 1;
+    }
+
+}
+
+.content-editable.complementary {
+
+    &:focus {
+        background-color: $color-lila-light;
+    }
+    
+    &:hover {
+        background-color: white;
+    }
+}
+
+
 
 
 /* ========= Flash messages ======== */
@@ -566,8 +623,8 @@ nav.menu {
 }
 
 .info {
-    border: solid 2px $color-green-dark;
-    background-color: $color-green-light;
+    border: solid 2px $color-info-dark;
+    background-color: $color-info-light;
 }
 
 .error {

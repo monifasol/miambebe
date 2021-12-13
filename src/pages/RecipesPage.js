@@ -31,6 +31,16 @@ function RecipesListPage() {
     <div className="ProjectListPage">
 
       <h1>Recipes</h1>
+
+      <p>I am working on this!</p>
+
+
+      title: My first recipe"
+      content
+      preparationTime 
+      difficulty
+
+
       
       {/* <AddRecipe refreshProjects={getAllRecipes} />
 

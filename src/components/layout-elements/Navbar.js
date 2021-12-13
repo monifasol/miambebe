@@ -31,8 +31,8 @@ const Navbar = () => {
               </Link>
             </div>
 
-            <span>Hello, {currentUser && currentUser.name}!</span> -
-            <span onClick={logOutUser} className="link">Logout</span>
+            <span>Hello, {currentUser && currentUser.name}!</span>
+            <span onClick={logOutUser} className="link">[ Logout ]</span>
           </>)
         : 
           (<>
