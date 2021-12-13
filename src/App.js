@@ -16,6 +16,9 @@ import AnonRoute from "./components/AnonRoute";
 function App() {
   return (
     <div className="App">  
+
+      <div id="overlayModals"></div>
+
       <Navbar />
 
       <Switch>      

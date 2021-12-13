@@ -2,6 +2,7 @@ import { React, useContext, useState, useEffect } from "react";
 import Moment from 'react-moment';
 
 import GoalForm from "./GoalForm";
+import FormNewBaby from "../babies/FormNewBaby";
 import LoadingSpinner from "../layout-elements/LoadingSpinner";
 
 import { CurrentDataContext } from "../../context/currentData.context";
@@ -9,6 +10,7 @@ import { DataboardContext } from "../../context/databoard.context";
 
 import axios from "axios";
 import env from "react-dotenv";
+
 const token = localStorage.getItem("authToken");
 const API_URI = env.SERVER_API_URL;
 
@@ -24,7 +26,7 @@ const Week = () => {
     const [goals, setGoals] = useState(null)
     const [isInitializingGoals, setIsInitializingGoals] = useState(true)
     const [isError, setIsError] = useState(false)
-
+    
 
     // API request that populates 'goals' for the currentWeek, otherwise week.goals is only ID's
     useEffect( ()=> {
@@ -91,16 +93,11 @@ const Week = () => {
                 })
                 .then((response) => {
                     const foundWeek = response.data.data
-
                     setGoals(foundWeek.goals)
                     setTimeout(() => { setIsInitializingGoals(false) }, 1000)
-
-                    console.log("foundWeek.goals -=========> ", foundWeek.goals)
-                    console.log(`Week found with id ${foundWeek._id}`)
                 })
                 .catch((error) => { console.log(error)});
         }
-
         console.log("currentWeek now has goals ===> ", currentWeek.goals.length)
     }
 
@@ -125,12 +122,38 @@ const Week = () => {
         }, 1500)
     }
 
+    const openModalNewBaby = () => {
+        let overlay = document.getElementById("overlayModals")
+        let modalNewBaby = document.getElementById('modalNewBaby')
+        modalNewBaby.classList.add("show")
+        overlay.classList.add("show")
+
+    }
+
+    const closeModalNewBaby = () => {
+        let overlay = document.getElementById("overlayModals")
+        let modalNewBaby = document.getElementById('modalNewBaby')
+        modalNewBaby.classList.remove("show")
+        overlay.classList.remove("show")
+    }
 
     return (
         <div className="week-component comp">
+
+
+            <div className="modal" id="modalNewBaby">
+                <span className="close-modal" onClick={ ()=> closeModalNewBaby()}></span>
+                <FormNewBaby /> 
+            </div>
+
+
             <h2 className="h2-comp">Current Week</h2>
         
-            { !currentBaby && <p className="no-baby">First, you need to register your baby(s).</p>}
+            { !currentBaby && 
+                <p className="no-baby">
+                    First, you need to register your baby(s).
+                    <span className="btn" onClick={ ()=> openModalNewBaby() }>Let's start!</span>
+                </p>}
 
             { currentBaby && 
 
@@ -147,7 +170,7 @@ const Week = () => {
                 &&
 
                 <>
-                    !goals 
+                    { !goals 
                     
                     ?
                                 
@@ -163,13 +186,14 @@ const Week = () => {
                             { isInitializingGoals && <LoadingSpinner msg="Initializing weekly food plan..."/> }
 
                             <div id="form-error">
-                            <p className="flash-small error">error here</p>
+                                <p className="flash-small error">error here</p>
                             </div>
 
                             <div className="weekly-food-plan">
                                 { !isInitializingGoals && goals && goals.map(( goal ) => ( <GoalForm key={goal._id} goal={goal} buildError={buildError} /> )) }
                             </div>
                         </>
+                    }
 
                 </>
             

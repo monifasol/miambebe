@@ -28,11 +28,6 @@
             margin-top: 50px;
         }
     }
-
-    .profile-page {
-        width: 80%;
-        margin: auto;
-    }
     
     .pagination-links {
         width: 80%;
@@ -43,5 +38,11 @@
         display: none;
     }
     
+    .modal {
+        left: 10%;
+        top: 20%;
+        width: 80%;
+    }
+
     
 }
