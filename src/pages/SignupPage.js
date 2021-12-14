@@ -20,19 +20,18 @@ function SignupPage(props) {
     // Create an object representing the request body
     const requestBody = { email, password, name };
 
-    // Make an axios request to the API
-    // If POST request is successful redirect to login page
-    // If the request resolves with an error, set the error message in the state
+    // If POST request for Signup is successful, redirects to homepage
+    // Otherwise, sets the error message in the state
 
     console.log("API_URI", API_URI)
 
-
     axios
       .post(`${API_URI}/auth/signup`, requestBody)
-      .then((response) => props.history.push("/login"))
+      .then((response) => props.history.push("/"))
+      //.then((response) => props.history.push("/login"))
       .catch((error) => {
-        const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
+        const errorDescription = `There's been an error: ${error}`
+        setErrorMessage(errorDescription)
       });
   };
 
@@ -67,8 +66,6 @@ function SignupPage(props) {
         <button type="submit" className="btn">Sign Up</button>
       </form>
 
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
     </div>
   );
 }
