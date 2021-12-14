@@ -22,6 +22,19 @@ function HomePage() {
   const [isInitializingGoals, setIsInitializingGoals] = useState(true)    // goals for the week
 
 
+/*
+              // ADD SORTING BY GOALS?
+                const sortyByGoal = (a, b) => {
+                    if (a.quantityGoal < b.quantityGoal) return 1
+                    if (a.quantityGoal > b.quantityGoal) return -1
+                    else return 0
+                } 
+      
+                const sortedGoals = goals.sort(sortyByGoal)
+*/
+
+
+
     // API request that populates 'goals' for the currentWeek, otherwise week.goals is only ID's
     useEffect( ()=> {
       if (currentWeek && currentWeek.goals && currentWeek.goals.length > 0) {  
@@ -65,7 +78,7 @@ function HomePage() {
     // Init goals for an empty week 
     const initWeekFoodPlan = () => {
 
-      console.log("Init goals for an empty weelk =====>", currentWeek.firstday)
+      //console.log("Init goals for an empty weelk =====>", currentWeek.firstday)
 
       foodgroups.forEach( (foodgroup) => {
           const requestBody = { foodgroupId: foodgroup._id, quantityGoal: 0, quantityAccomplished: 0, weekId: currentWeek._id }
@@ -94,7 +107,7 @@ function HomePage() {
               })
               .catch((error) => { console.log(error)});
       }
-      console.log("currentWeek now has goals ===> ", currentWeek.goals.length)
+      //console.log("currentWeek now has goals ===> ", currentWeek.goals.length)
   }
 
 
@@ -114,7 +127,7 @@ function HomePage() {
         })
         .then((response) => {
           let updatedGoal = response.data.data
-          console.log(`Goal successfully updated with id ${updatedGoal._id}`)
+          //console.log(`Goal successfully updated with id ${updatedGoal._id}`)
 
           // get goals for the week and re-recreate state variable
           axios

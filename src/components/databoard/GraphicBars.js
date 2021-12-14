@@ -1,13 +1,12 @@
 import React from 'react'
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLabel, VictoryScatter } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 
 
-const GraphicBars = ( { dataGoals } ) => {
+const GraphicBars = ( { dataGoals, labelsFoodgroups, arrayTickValues } ) => {
 
     const styleAxis = {
                         axis: {stroke: "#4C536A"},
-                        axisLabel: {fontSize: 6, 
-                            fontFamily: "'Montserrat Alternates', sans-serif"},
+                        axisLabel: {fontSize: 6, fontFamily: "'Montserrat Alternates', sans-serif"},
                         grid: {stroke: "#eaeaea"},
                         ticks: {stroke: "#4C536A"},
                         tickLabels: {width: 40, 
@@ -16,11 +15,9 @@ const GraphicBars = ( { dataGoals } ) => {
                                     fontFamily: "'Montserrat Alternates', sans-serif"} }
     
     
-    const labelsFoodgroups = dataGoals.map( item => item.labelFoodgroup)
-    const arrayTickValues = dataGoals.map( item => item.foodgroup)
-
-    //console.log("labelsFoodgroups", labelsFoodgroups)
-    //console.log("arrayTickValues", arrayTickValues)
+    //console.log("In GRAPHIC: dataGoals", dataGoals)
+    //console.log("In GRAPHIC: labelsFoodgroups", labelsFoodgroups)
+    //console.log("In GRAPHIC: arrayTickValues", arrayTickValues)
 
     const buildTooltip = (datum) => {
         let message = `You wanted to give ${datum.goalQ} portions of ${datum.labelFoodgroup} this week, and baby ate ${datum.givenQ} so far`        
@@ -45,7 +42,8 @@ const GraphicBars = ( { dataGoals } ) => {
                 height={300}
                 domainPadding={20}
                 theme={VictoryTheme.material} 
-                horizontal={true} >
+                horizontal={true} 
+                animate={{ duration: 500 }} >
 
                 <VictoryAxis crossAxis
                     tickValues={arrayTickValues}
@@ -74,10 +72,6 @@ const GraphicBars = ( { dataGoals } ) => {
                     alignment="middle"
                     barRatio={0.8}
                     cornerRadius={5}
-
-                    animate={{
-                        onLoad: { delay: 0, duration: 500 }, 
-                        duration: 1000}}
 
                     events={[{
                         target: "data",

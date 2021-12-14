@@ -3,7 +3,6 @@ import LoadingSpinner from "../layout-elements/LoadingSpinner";
 import GraphicBars from "./GraphicBars.js"
 import { CurrentDataContext } from '../../context/currentData.context';
 
-
 import axios from "axios";
 import env from "react-dotenv";
 
@@ -15,36 +14,55 @@ const Databoard = ( { goals } ) => {
 
     const { currentWeek, currentBaby } = useContext(CurrentDataContext)
     const [ isDataLoading, setIsDataLoading ] = useState(true)     
-    const [ dataChart, setDataChart ] = useState(null)   
 
-    
+    const [ dataChart, setDataChart ] = useState(null)   
+    const [ labelsChart, setLabelsChart ] = useState(null) 
+    const [ tickValuesChart, setTickValuesChart ] = useState(null) 
+
+
     // Calls "buildGoalsArrObj" on component mount, to use in Victory Chart.
     useEffect( ()=> {
         if (goals) {
-            console.log("DATABOARD FINISHED MOUNTING, OR GOALS CHANGED. Goals: ", goals)
-            buildDataObj(goals)  
+            buildDataObj(goals)
         }
     }, [goals]);
 
 
+    useEffect( ()=> {
+        if (dataChart) {
+
+           console.log("USE EFFECT LISTENING TO DATACHART")
+           
+           dataChart.sort( (a, b) => {
+                if ((a.labelFoodgroup).localeCompare(b.labelFoodgroup) === -1) return 1
+                if ((a.labelFoodgroup).localeCompare(b.labelFoodgroup) === 1) return -1
+                else return 0   
+            })
+            
+            // Build labels and tick values data
+            let labelsFoodgroups = dataChart.map( item => item.labelFoodgroup)
+            let arrayTickValues = dataChart.map( item => item.foodgroup)
+
+            console.log("======> labelsFoodgroups 1", labelsFoodgroups)
+            console.log("======> arrayTickValues 1", arrayTickValues)
+
+            setLabelsChart(labelsFoodgroups)
+            setTickValuesChart(arrayTickValues)
+        }
+    }, [dataChart]);
+
+
     const buildDataObj = () => {
         
-        setIsDataLoading(true)          // every time I build the Obj again, I setIsDataLoading = true
-
-        console.log("About to build OBJ to show in Victory Chart: ", goals)
+        console.log("IN ******** buildDataObj ********** ")
         
-        // Sort the array first
-        const sortedArray = goals.sort((a, b) => {
-            if ((a.foodgroup).localeCompare(b.foodgroup) === 1) return 1
-            if ((a.foodgroup).localeCompare(b.foodgroup) === -1) return -1
-            else return 0
-        })
-
+        //setIsDataLoading(true)          // every time I build the Obj again, I setIsDataLoading = true
+    
         let buildData = []
         let counter = 1
         let populatedFoodgroup = null
 
-        sortedArray.forEach( (goal, i) => {
+        goals.forEach( (goal, i) => {
 
             if (goal.quantityGoal !== 0 ) {
                 axios  // Aims to populate foodgroup
@@ -74,15 +92,13 @@ const Databoard = ( { goals } ) => {
                     .catch((error) => console.log(error));   
             }
         })  
-        
-        setDataChart(buildData)
-        
-        setTimeout(()=> {
+
+        setTimeout(()=> {        
+            setDataChart(buildData)
             setIsDataLoading(false)         // show spinner
         },1000) 
-    
-        console.log("FINISH BUILDING OBJ to be used in Victory Chart ===> ", buildData)
 
+        console.log("FINISH BUILDING OBJ to be used in Victory Chart ===> ", buildData)
     }
 
 
@@ -92,9 +108,9 @@ const Databoard = ( { goals } ) => {
        return empty
     }
 
-    console.log("isDataLoading??? ===> ", isDataLoading.toString())
-    console.log("goals length??? ===> ", (goals && goals.length))
-    console.log("goals??? ===> ", (goals))
+    //console.log("isDataLoading??? ===> ", isDataLoading.toString())
+    //console.log("goals length??? ===> ", (goals && goals.length))
+    //console.log("goals??? ===> ", (goals))
     console.log("===> DATACHART (TO SHOW IN VICTORY CHART) ---> ", dataChart)
 
     return (
@@ -124,7 +140,7 @@ const Databoard = ( { goals } ) => {
             { !isDataLoading && goals && goals.length > 0 &&
                 <>
                     <div className="databoard-graphics">
-                        { dataChart && <GraphicBars dataGoals={dataChart} /> }
+                        { dataChart && <GraphicBars dataGoals={dataChart} labelsFoodgroups={labelsChart} arrayTickValues={tickValuesChart} /> }
                     </div>
                 </>
             }

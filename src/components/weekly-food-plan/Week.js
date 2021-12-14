@@ -58,11 +58,7 @@ const Week = ( props ) => {
         overlay.classList.remove("show")
     }
 
-    const sortyByGoal = (a, b) => {
-        if (a.quantityGoal < b.quantityGoal) return 1
-        if (a.quantityGoal > b.quantityGoal) return -1
-        else return 0
-    } 
+    
 
     return (
         <div className="week-component comp">
@@ -123,7 +119,7 @@ const Week = ( props ) => {
                                     <p><span>Already accomplished</span></p>
                                 </div>
 
-                                { !isInitializingGoals && goals && goals.sort(sortyByGoal).map(( goal ) => ( 
+                                { !isInitializingGoals && goals && goals.map(( goal ) => ( 
 
                                     <GoalForm key={goal._id} 
                                                 goal={goal} 
