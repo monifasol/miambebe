@@ -21,7 +21,7 @@ const RecipeCard = ({ recipe, dispatchToRecipe }) => {
         </p>
 
         <p className="content">
-          {recipe.content}
+          {recipe.content.slice(0, 200)}...
         </p>
 
         <p className="intolerances">

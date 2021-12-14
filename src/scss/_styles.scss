@@ -770,7 +770,7 @@ form, .form {
     }
 
     .writter {
-        font-size: 10px;
+        font-size: 11px;
         color: grey;
     }
 
@@ -829,6 +829,17 @@ form, .form {
         }
         .writter {
             text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            margin: 30px auto;
+        }
+
+        .tags-section-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
         }
     }
 }

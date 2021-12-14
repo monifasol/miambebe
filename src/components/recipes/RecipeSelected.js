@@ -1,6 +1,7 @@
 import { React, useContext, useEffect, useState } from 'react'
 import editIcon from "../../images/edit-icon.png"
 import { CurrentDataContext } from '../../context/currentData.context'
+import Moment from 'react-moment';
 
 const RecipeSelected = ( { recipe, submitRecipeChange } ) => {
 
@@ -56,7 +57,7 @@ const RecipeSelected = ( { recipe, submitRecipeChange } ) => {
             setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1000)
 
         } else {
-            
+
             setDataBeforeEdit[field] = value
             submitRecipeChange(e, recipe._id)
         }          
@@ -93,7 +94,10 @@ const RecipeSelected = ( { recipe, submitRecipeChange } ) => {
                     <img src={editIcon} alt="edit icon" className="edit-icon" />
                 </p>
                 
-                <p className="writter">by {recipe.user && recipe.user.name} </p>
+                <p className="writter">
+                        by {recipe.user && recipe.user.name}, 
+                        on <Moment fromNow>{recipe.timestamp}</Moment>
+                </p>
 
                 <div className="bar-bottom">
                     <p className="prep-time">
@@ -116,18 +120,21 @@ const RecipeSelected = ( { recipe, submitRecipeChange } ) => {
                     <img src={editIcon} alt="edit icon" className="edit-icon" />
                 </p>
 
-                <p> 
-                    { recipe.tags && recipe.tags.map((tag, i) => 
-                        <span className="tag" key={i}> {tag} </span>
-                    ) }
-                </p>
 
-                <p className="intolerances">
-                    <span className="intolerances-label">Possible intolerances: </span>
-                    { recipe.intolerances && recipe.intolerances.map((into, i) => 
-                        <span className="tag" key={i}> {into} </span>
-                    ) }
-                </p>    
+                <div className="tags-section-bottom">
+                    <p className="intolerances">
+                        <span className="intolerances-label">Possible intolerances: </span>
+                        { recipe.intolerances && recipe.intolerances.map((into, i) => 
+                            <span className="tag" key={i}> {into} </span>
+                        ) }
+                    </p>   
+
+                    <p> 
+                        { recipe.tags && recipe.tags.map((tag, i) => 
+                            <span className="tag" key={i}> {tag} </span>
+                        ) }
+                    </p>
+                </div> 
 
             </>
         }
