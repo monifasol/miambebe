@@ -63,12 +63,10 @@ const Week = ( props ) => {
     return (
         <div className="week-component comp">
 
-
             <div className="modal" id="modalNewBaby">
                 <span className="close-modal" onClick={ ()=> closeModalNewBaby()}></span>
                 <FormNewBaby /> 
             </div>
-
 
             <h2 className="h2-comp">Current Week</h2>
         

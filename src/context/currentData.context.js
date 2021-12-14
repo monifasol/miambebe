@@ -9,15 +9,15 @@ const localJWTToken = localStorage.getItem("authToken");
 const CurrentDataContext = React.createContext();
 
 
-
 function CurrentDataProviderWrapper(props) {
   
   const { user, isLoggedIn, isLoading } = useContext(AuthContext);
 
-  const [currentUser, setCurrentUser] = useState(null);
-  const [currentBaby, setCurrentBaby] = useState(null);
-  const [currentWeek, setCurrentWeek] = useState(null);  
+  const [currentUser, setCurrentUser] = useState(null)
+  const [currentBaby, setCurrentBaby] = useState(null)
+  const [currentWeek, setCurrentWeek] = useState(null)
   const [foodgroups, setFoodgroups] = useState(null)
+  const [userDevice, setUserDevice] = useState("")
 
   const prepareCurrentUser = () => {
       axios
@@ -47,6 +47,21 @@ function CurrentDataProviderWrapper(props) {
       
     }
   }, [isLoggedIn, isLoading]);
+
+
+  // Set the type of device the user is using
+  useEffect( ()=>{
+
+    const ua = navigator.userAgent;
+      if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+        setUserDevice("tablet")
+      }
+      else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+        setUserDevice("mobile")
+      }
+      setUserDevice("desktop")
+
+  }, [])
 
 
 
@@ -157,7 +172,7 @@ function CurrentDataProviderWrapper(props) {
 
   return (
     <CurrentDataContext.Provider
-      value={{ currentBaby, currentUser, currentWeek, foodgroups, switchBabies }}
+      value={{ currentBaby, currentUser, currentWeek, foodgroups, userDevice, switchBabies }}
     >
       {props.children}
     </CurrentDataContext.Provider>

@@ -1,52 +1,109 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
+import LoadingSpinner from "../components/layout-elements/LoadingSpinner";
+import { CurrentDataContext } from '../context/currentData.context';
+
 import axios from "axios";
 //import AddRecipe from "./../components/recipes/AddRecipe";
-//import RecipeCard from "./../components/recipes/RecipeCard";
+import RecipeSelected from "../components/recipes/RecipeSelected";
+import RecipeCard from "./../components/recipes/RecipeCard";
 import env from "react-dotenv";
 
 const API_URI = env.SERVER_API_URL;
+const token = localStorage.getItem("authToken");
+
 
 function RecipesListPage() {
-  const [recipes, setRecipes] = useState([]);
 
-  const getAllRecipes = () => {
-    // Get the token from the localStorage
-    const storedToken = localStorage.getItem("authToken");
+    const [ recipes, setRecipes ] = useState([])
+    const [ isLoading, setIsLoading ] = useState(true)
+    const [ recipeSelected, setRecipeSelected ] = useState(null)
 
-    axios
-      .get(`${API_URI}/recipes`, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      })
-      .then((response) => setRecipes(response.data))
-      .catch((error) => console.log(error));
-  };
+    const { userDevice } = useContext(CurrentDataContext)
 
-  // We set this effect will run only once, after the initial render
-  // by setting the empty dependency array - []
-  useEffect(() => {
-    getAllRecipes();
-  }, []);
+    // Load the first recipe in the Selected recipe container
+    useEffect(()=>{
+      if (recipes) {
+        let firstRecipe = recipes[0]
+        setRecipeSelected(firstRecipe)
+      }
+    },[recipes])
+
+    
+    const dispatchToRecipe = (recipeId) => {
+
+      if (userDevice === "mobile") {
+          <Redirect to="/recipes" id={recipeId} />   // CHECK THIS!! 
+      } else {
+          // show recipe in the container
+          let getRecipe = recipes.filter( (recipe) => recipe._id === recipeId)
+          setRecipeSelected(getRecipe)
+      }
+    }
+
+    const getAllRecipes = () => {
+      // Get the token from the localStorage
+      const token = localStorage.getItem("authToken");
+      axios
+        .get(`${API_URI}/recipes`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          let foundRecipes = response.data.data
+          setRecipes(foundRecipes)
+          setIsLoading(false)
+        })
+        .catch((error) => console.log(error));
+    };
+
+    useEffect(() => {
+      getAllRecipes();
+    }, []);
+
+
+    const submitRecipeChange = (e, recipeId) => {
+
+      let tooltipEl = e.target.parentElement.querySelector('.tooltip-form.info')
+      let field = e.target.attributes.fieldtoedit.value  // custom attribute  
+      let value = e.target.innerText
+      
+      const requestBody = { [field]: value }   
+      const putURL = `${API_URI}/recipes/${recipeId}`
+
+      axios
+          .put(putURL, requestBody, {     // updates baby info    
+              headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((response) => {
+              tooltipEl.classList.add('show')
+              tooltipEl.innerText = `${field} saved!`
+              setTimeout(()=>{ tooltipEl.classList.remove('show')}, 1000)
+          })
+          .catch((error) => console.log(error));
+    }
+
 
   return (
-    <div className="ProjectListPage">
+    <div className="recipes-page">
 
       <h1>Recipes</h1>
 
-      <p>I am working on this!</p>
+      <Link to="/"><div className="btn">Add recipe</div></Link>
 
+      <div className="recipes-page-container">
 
-      title: My first recipe"
-      content
-      preparationTime 
-      difficulty
+          { isLoading && <LoadingSpinner msg="Loading recipes..."/> }
 
+          <div className="recipes-list-container">
+                { recipes && recipes.map((recipe) => 
+                      <RecipeCard key={recipe._id} recipe={recipe} dispatchToRecipe={dispatchToRecipe} /> 
+                )}
+          </div>
 
-      
-      {/* <AddRecipe refreshProjects={getAllRecipes} />
-
-      {projects.map((project) => (
-        <RecipeCard key={project._id} {...project} />
-      ))} */}
+          <div className="recipes-selected">
+            <RecipeSelected recipe={recipeSelected} submitRecipeChange={submitRecipeChange} />
+          </div>
+      </div>
       
     </div>
   );

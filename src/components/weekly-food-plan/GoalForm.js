@@ -1,11 +1,7 @@
 import {React, useState, useContext, useEffect} from 'react'
-import axios from "axios"
-import env from "react-dotenv";
 
 import btnLess from "../../images/btn-less.png"
 import btnMore from "../../images/btn-more.png"
-
-const API_URI = env.SERVER_API_URL;
 
 const GoalForm = ( props ) => {
 
@@ -15,8 +11,6 @@ const GoalForm = ( props ) => {
     const [quantityAccomplished, setQuantityAccomplished ] = useState(0)
     const [foodgroup, setFoodgroup ] = useState("")
     
-    const token = localStorage.getItem("authToken")
-
     // Initialize the form with the Goal information
     useEffect( ()=> {
             setQuantityGoal(goal.quantityGoal)
@@ -25,31 +19,19 @@ const GoalForm = ( props ) => {
     }, [goal])
 
 
-    // API request that populates 'foodgroup' for the Goal
     useEffect( ()=> {
       if (goal) {
-
-        axios
-          .get(`${API_URI}/goals/${goal._id}`, {
-              headers: { Authorization: `Bearer ${token}` },
-            })
-          .then((response) => {
-              const foundGoal = response.data.data
-              setFoodgroup(foundGoal.foodgroup)
-            })
-          .catch((error) => console.log(error));   
+        setFoodgroup(goal.foodgroup)
       }
-    }, [goal, token])
+    }, [goal]);
 
 
     const setQGoal = (value) => {
-
       if (Number.isNaN(parseInt(value))) buildError()
       else setQuantityGoal(value)
     }
 
     const setQAccomplished = (value) => {
-
       if (Number.isNaN(parseInt(value))) buildError()
       else setQuantityAccomplished(value)
     }

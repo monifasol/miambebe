@@ -7,6 +7,7 @@ import { CurrentDataContext } from '../context/currentData.context'
 const API_URI = env.SERVER_API_URL;
 const token = localStorage.getItem("authToken");
 
+
 const ProfilePage = () => {
     
     const { currentUser, currentBaby } = useContext(CurrentDataContext)

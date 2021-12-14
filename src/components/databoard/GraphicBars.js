@@ -46,7 +46,7 @@ const GraphicBars = ( { dataGoals, labelsFoodgroups, arrayTickValues } ) => {
                 animate={{ duration: 500 }} >
 
                 <VictoryAxis crossAxis
-                    tickValues={arrayTickValues}
+                    //tickValues={[arrayTickValues]}
                     tickFormat={labelsFoodgroups}
                     style={styleAxis} 
                     //fixLabelOverlap={true} 
