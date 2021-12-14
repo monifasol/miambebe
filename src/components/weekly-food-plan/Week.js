@@ -6,50 +6,18 @@ import FormNewBaby from "../babies/FormNewBaby";
 import LoadingSpinner from "../layout-elements/LoadingSpinner";
 
 import { CurrentDataContext } from "../../context/currentData.context";
-import { DataboardContext } from "../../context/databoard.context";
 
-import axios from "axios";
-import env from "react-dotenv";
-
-const token = localStorage.getItem("authToken");
-const API_URI = env.SERVER_API_URL;
-
-
-const Week = () => {
+const Week = ( props ) => {
     
-    const { currentBaby, currentWeek } = useContext(CurrentDataContext);
-    const { foodgroups } = useContext(DataboardContext);
+    const { week, goals, initWeekFoodPlan, isInitializingGoals, handleSubmit } = props
 
+    const { currentBaby } = useContext(CurrentDataContext);
     const [firstDay, setFirstDay] = useState(null)
     const [lastDay, setLastDay] = useState(null)
-
-    const [goals, setGoals] = useState(null)
-    const [isInitializingGoals, setIsInitializingGoals] = useState(true)
-    const [isError, setIsError] = useState(false)
     
-
-    // API request that populates 'goals' for the currentWeek, otherwise week.goals is only ID's
-    useEffect( ()=> {
-        if (currentWeek && currentWeek.goals && currentWeek.goals.length > 0) {  
-
-            let url = `${API_URI}/weeks/${currentWeek._id}`
-            axios
-                .get(url, {
-                    headers: { Authorization: `Bearer ${token}` },
-                })
-                .then((response) => {
-                    const foundWeek = response.data.data
-                    setGoals(foundWeek.goals)
-                    setTimeout(() => { setIsInitializingGoals(false) }, 1000)
-                })
-                .catch((error) => console.log(error));   
-        }
-      }, [currentWeek])
-
-
-    // Init currentWeek start and end dates
+    // Set the values for start and end dates of the week
     useEffect( () => {
-        if (currentWeek) {
+        if (week) {
 
             const buildDate = (dayStr) => {
                 // JS default format is MM/DD/YYYY but we work with DD-MM-YYYY so:
@@ -58,57 +26,10 @@ const Week = () => {
                 return new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
             }
 
-            setFirstDay(buildDate(currentWeek.firstday).toString())
-            setLastDay(buildDate(currentWeek.lastday).toString())
+            setFirstDay(buildDate(week.firstday).toString())
+            setLastDay(buildDate(week.lastday).toString())
         } 
-    }, [currentWeek]);
-
-
-    // Init goals for an empty week. 
-    const initWeekFoodPlan = () => {
-
-        console.log("Init goals for an empty weelk =====>", currentWeek.firstday)
-
-        foodgroups.forEach( (foodgroup) => {
-        
-            const requestBody = { foodgroupId: foodgroup._id, quantityGoal: 0, quantityAccomplished: 0, weekId: currentWeek._id }
-        
-            axios
-                .post(`${API_URI}/goals`, requestBody, {
-                    headers: { Authorization: `Bearer ${token}` },
-                })
-                .then((response) => {
-                    console.log(`Goal set for the week of ${currentWeek.firstday}`)
-                })
-                .catch((error) => {
-                    setIsError(true)
-                    console.log(error)
-                });
-        })
-        
-        if (!isError) {
-            axios
-                .get(`${API_URI}/weeks/${currentWeek._id}`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                })
-                .then((response) => {
-                    const foundWeek = response.data.data
-                    setGoals(foundWeek.goals)
-                    setTimeout(() => { setIsInitializingGoals(false) }, 1000)
-                })
-                .catch((error) => { console.log(error)});
-        }
-        console.log("currentWeek now has goals ===> ", currentWeek.goals.length)
-    }
-
-
-    // Inits state variable GOALS, if week has already goals
-    useEffect( () => {
-        if (currentWeek && currentWeek.goals && currentWeek.goals.length > 0) {
-            setGoals(currentWeek.goals)
-            setTimeout(() => { setIsInitializingGoals(false) }, 1000)
-        } 
-    }, [currentWeek])
+    }, [week]);
 
 
     // Builds small error when input is not a number (function passed as a CB to children <GoalForm/>)
@@ -136,6 +57,8 @@ const Week = () => {
         modalNewBaby.classList.remove("show")
         overlay.classList.remove("show")
     }
+
+    
 
     return (
         <div className="week-component comp">
@@ -165,7 +88,7 @@ const Week = () => {
                 </p>
             }
 
-            { currentBaby && currentWeek 
+            { currentBaby && week 
             
                 &&
 
@@ -190,7 +113,21 @@ const Week = () => {
                             </div>
 
                             <div className="weekly-food-plan">
-                                { !isInitializingGoals && goals && goals.map(( goal ) => ( <GoalForm key={goal._id} goal={goal} buildError={buildError} /> )) }
+                                
+                                <div className="header-form-goals">
+                                    <p><span>Baby's week food plan</span></p>
+                                    <p><span>Already accomplished</span></p>
+                                </div>
+
+                                { !isInitializingGoals && goals && goals.map(( goal ) => ( 
+
+                                    <GoalForm key={goal._id} 
+                                                goal={goal} 
+                                                buildError={buildError} 
+                                                handleSubmit={handleSubmit}
+                                                /> 
+
+                                )) }
                             </div>
                         </>
                     }
