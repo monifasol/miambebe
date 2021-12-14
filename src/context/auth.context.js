@@ -22,8 +22,8 @@ function AuthProviderWrapper(props) {
         .then((response) => {
           const userJWT = response.data;
           setUser(userJWT);   
-          setIsLoading(false);
           setIsLoggedIn(true);
+          setIsLoading(false);
         })
         .catch((error) => {
           setUser(null);

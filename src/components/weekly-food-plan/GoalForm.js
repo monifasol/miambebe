@@ -2,9 +2,6 @@ import {React, useState, useContext, useEffect} from 'react'
 import axios from "axios"
 import env from "react-dotenv";
 
-import { CurrentDataContext } from '../../context/currentData.context';
-import { DataboardContext } from "../../context/databoard.context";
-
 import btnLess from "../../images/btn-less.png"
 import btnMore from "../../images/btn-more.png"
 
@@ -12,15 +9,12 @@ const API_URI = env.SERVER_API_URL;
 
 const GoalForm = ( props ) => {
 
-    const { goal } = props
-
-    const { currentWeek } = useContext(CurrentDataContext);
-    const { buildGoalsArrObj } = useContext(DataboardContext);
+    const { goal, handleSubmit, buildError } = props
 
     const [quantityGoal, setQuantityGoal] = useState(0)
     const [quantityAccomplished, setQuantityAccomplished ] = useState(0)
     const [foodgroup, setFoodgroup ] = useState("")
-
+    
     const token = localStorage.getItem("authToken")
 
     // Initialize the form with the Goal information
@@ -48,48 +42,15 @@ const GoalForm = ( props ) => {
     }, [goal, token])
 
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-
-      if (currentWeek && foodgroup) {
-        const requestBody = { foodgroupId: foodgroup._id, quantityGoal, quantityAccomplished, weekId: currentWeek._id }
-        
-        axios
-          .put(`${API_URI}/goals/${goal._id}`, requestBody, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((response) => {
-            let updatedGoal = response.data.data
-            console.log(`Goal successfully updated with id ${updatedGoal._id}`)
-
-            // get goals for the week and re-build object in Context
-
-            axios
-            .get(`${API_URI}/weeks/${currentWeek._id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-              })
-            .then((response) => {
-                const foundWeek = response.data.data
-                const populatedGoals = foundWeek.goals      // goals are now populated
-                buildGoalsArrObj(populatedGoals)            // calls function that inits array of goals objects
-              })
-            .catch((error) => console.log(error)); 
-
-
-          })
-          .catch((error) => console.log(error));
-      }
-    };
-
     const setQGoal = (value) => {
 
-      if (Number.isNaN(parseInt(value))) props.buildError()
+      if (Number.isNaN(parseInt(value))) buildError()
       else setQuantityGoal(value)
     }
 
     const setQAccomplished = (value) => {
 
-      if (Number.isNaN(parseInt(value))) props.buildError()
+      if (Number.isNaN(parseInt(value))) buildError()
       else setQuantityAccomplished(value)
     }
 
@@ -111,8 +72,9 @@ const GoalForm = ( props ) => {
 
     return (
         <div>
-        
-            <form onSubmit={handleSubmit} className='form form-goal'>
+              
+            <form className={(!quantityGoal || quantityGoal === 0) ? "form form-goal empty" : "form form-goal" }  
+                  onSubmit={ (e)=>{handleSubmit(e, goal, foodgroup, quantityGoal, quantityAccomplished)} } >
 
                 <div className="group-inputs-goal">
                   
@@ -130,7 +92,7 @@ const GoalForm = ( props ) => {
 
                     <div className="goal-buttons">
                       <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ ()=> increaseQuantityGoal() } />
-                      <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ ()=>decreaseQuantityGoal() } />
+                      <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ ()=> decreaseQuantityGoal() } />
                     </div>
 
                 </div>
@@ -146,7 +108,7 @@ const GoalForm = ( props ) => {
 
                     <div className="goal-buttons">
                       <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ ()=> increaseQuantityAccomplished() } />
-                      <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ ()=>decreaseQuantityAccomplished() } />
+                      <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ ()=> decreaseQuantityAccomplished() } />
                     </div>
                 </div>
 

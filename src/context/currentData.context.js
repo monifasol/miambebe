@@ -17,6 +17,7 @@ function CurrentDataProviderWrapper(props) {
   const [currentUser, setCurrentUser] = useState(null);
   const [currentBaby, setCurrentBaby] = useState(null);
   const [currentWeek, setCurrentWeek] = useState(null);  
+  const [foodgroups, setFoodgroups] = useState(null)
 
   const prepareCurrentUser = () => {
       axios
@@ -129,6 +130,25 @@ function CurrentDataProviderWrapper(props) {
   }
 
 
+  // Init foodggroups
+  useEffect(() => {
+    if (localJWTToken) {
+      axios
+        .get(`${API_URI}/foodgroups`, {
+          headers: { Authorization: `Bearer ${localJWTToken}` },
+        })
+        .then((response) => {
+          const foundGroups = response.data.data
+          setFoodgroups(foundGroups)
+        })
+        .catch((e) => {
+          setFoodgroups(null)
+          console.log(e)
+        });
+      }
+  }, [localJWTToken])
+
+
   // Create the Current Week for this time and current Baby; if it alreayd exists, the backend will not let us.
   useEffect( () => {
     if (currentBaby) createCurrentWeek()
@@ -137,7 +157,7 @@ function CurrentDataProviderWrapper(props) {
 
   return (
     <CurrentDataContext.Provider
-      value={{ currentBaby, currentUser, currentWeek, switchBabies }}
+      value={{ currentBaby, currentUser, currentWeek, foodgroups, switchBabies }}
     >
       {props.children}
     </CurrentDataContext.Provider>

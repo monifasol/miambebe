@@ -344,11 +344,38 @@ nav.menu {
         margin: 0 auto;
     }
 
+    .header-form-goals {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        font-size: smaller;
+        text-align: center;
+        margin-bottom: 20px;
+        
+        p:first-child {
+            width: 70%;
+        }
+
+        p span {
+            width: 110px;
+            display: block;
+            margin: auto;
+        }
+    }
+
     .form-goal {
         display: flex;
         flex-direction: row;
         width: 100%;
+        padding-right: 8px;
 
+        &.empty {
+            background-color: #eaeaea;
+            .group-inputs-goal {
+                background-color: #eaeaea;
+            }
+        }
+        
         .group-inputs-goal {
             display: flex;
             justify-content: space-evenly;
