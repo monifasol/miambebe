@@ -7,56 +7,84 @@ const GoalForm = ( props ) => {
 
     const { goal, handleSubmit, buildError } = props
 
-    const [quantityGoal, setQuantityGoal] = useState(0)
-    const [quantityAccomplished, setQuantityAccomplished ] = useState(0)
-    const [foodgroup, setFoodgroup ] = useState("")
+    //const [quantityGoal, setQuantityGoal] = useState(0)
+    //const [quantityAccomplished, setQuantityAccomplished ] = useState(0)
+    //const [foodgroup, setFoodgroup ] = useState("")
+
+    const [ formState, setFormState ] = useState({
+          quantityGoal: 0,
+          quantityAccomplished: 0,
+          foodgroup: ""
+    })
     
     // Initialize the form with the Goal information
     useEffect( ()=> {
-            setQuantityGoal(goal.quantityGoal)
-            setQuantityAccomplished(goal.quantityAccomplished)
-            setFoodgroup(goal.foodgroup)
+            setFormState(Object.assign({}, formState, {quantityGoal: goal.quantityGoal}))
+            setFormState(Object.assign({}, formState, {quantityAccomplished: goal.quantityAccomplished}))
+            setFormState(Object.assign({}, formState, {foodgroup: goal.foodgroup}))
     }, [goal])
 
 
-    useEffect( ()=> {
-      if (goal) {
-        setFoodgroup(goal.foodgroup)
+    const handleChange = (e) => {
+      const {name, value } = e.target
+
+      console.log("name======>", name)
+      console.log("value======>", value)
+
+      if (Number.isNaN(parseInt(value))) buildError()
+      else {
+        setFormState(Object.assign({}, formState, {[name]: value}))
+        console.log("formState", formState)
+        handleSubmit(goal, formState.foodgroup, formState.quantityGoal, formState.quantityAccomplished )
       }
-    }, [goal]);
-
-
-    const setQGoal = (value) => {
-      if (Number.isNaN(parseInt(value))) buildError()
-      else setQuantityGoal(value)
     }
 
-    const setQAccomplished = (value) => {
-      if (Number.isNaN(parseInt(value))) buildError()
-      else setQuantityAccomplished(value)
+    const submitField = () => {
+      handleSubmit(
+        goal, 
+        formState.foodgroup, 
+        formState.quantityGoal, 
+        formState.quantityAccomplished
+      )
     }
 
-    const decreaseQuantityGoal = () => {
-      if (quantityGoal > 0) setQuantityGoal(quantityGoal - 1)
+    const increaseQuantityGoal = (e) => {
+      setFormState(
+          Object.assign({}, formState, {quantityGoal: parseInt(formState.quantityGoal) + 1})
+      )
+      submitField()
     }
 
-    const increaseQuantityGoal = () => {
-      setQuantityGoal(quantityGoal + 1)
+    const decreaseQuantityGoal = (e) => {
+      if (parseInt(formState.quantityGoal) > 0) {
+          setFormState(
+              Object.assign({}, formState, {quantityGoal: parseInt(formState.quantityGoal) - 1})
+          )
+          submitField()
+      }
     }
 
-    const decreaseQuantityAccomplished = () => {
-      if (quantityAccomplished  > 0) setQuantityAccomplished (quantityAccomplished  - 1)
+    const increaseQuantityAccomplished = (e) => {
+      setFormState(
+          Object.assign({}, formState, {quantityAccomplished: parseInt(formState.quantityAccomplished) + 1})
+      )
+      submitField()
     }
 
-    const increaseQuantityAccomplished  = () => {
-      setQuantityAccomplished (quantityAccomplished  + 1)
+    const decreaseQuantityAccomplished= (e) => {
+      if (parseInt(formState.quantityAccomplished) > 0) {
+          setFormState(
+              Object.assign({}, formState, {quantityAccomplished: parseInt(formState.quantityAccomplished) - 1})
+          )
+          submitField()
+      }
     }
+
 
     return (
         <div>
               
-            <form className={(!quantityGoal || quantityGoal === 0) ? "form form-goal empty" : "form form-goal" }  
-                  onSubmit={ (e)=>{handleSubmit(e, goal, foodgroup, quantityGoal, quantityAccomplished)} } >
+            <form className={(!formState.quantityGoal || formState.quantityGoal === 0) ? "form form-goal empty" : "form form-goal" } >
 
                 <div className="group-inputs-goal">
                   
@@ -64,17 +92,17 @@ const GoalForm = ( props ) => {
                             type="text" 
                             name="foodgroup" 
                             className="input-foodgroup"
-                            value={foodgroup.name || ""} />   
+                            value={(formState.foodgroup && formState.foodgroup.name) || ""} />   
                     
                     <input type="text" 
                             name="quantityGoal" 
-                            value={quantityGoal || 0} 
-                            onChange={ (e)=> setQGoal(e.target.value) } 
+                            value={formState.quantityGoal || 0} 
+                            onChange={ (e)=> { handleChange(e) }} 
                     />
 
                     <div className="goal-buttons">
-                      <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ ()=> increaseQuantityGoal() } />
-                      <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ ()=> decreaseQuantityGoal() } />
+                      <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ (e)=> increaseQuantityGoal(e) } />
+                      <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ (e)=> decreaseQuantityGoal(e) } />
                     </div>
 
                 </div>
@@ -84,13 +112,13 @@ const GoalForm = ( props ) => {
                     
                     <input type="text" 
                             name="quantityAccomplished" 
-                            value={quantityAccomplished || 0} 
-                            onChange={ (e)=> setQAccomplished(e.target.value) }
+                            value={formState.quantityAccomplished || 0} 
+                            onChange={ (e)=> { handleChange(e) }}
                     />
 
                     <div className="goal-buttons">
-                      <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ ()=> increaseQuantityAccomplished() } />
-                      <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ ()=> decreaseQuantityAccomplished() } />
+                      <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ (e)=> increaseQuantityAccomplished(e) } />
+                      <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ (e)=> decreaseQuantityAccomplished(e) } />
                     </div>
                 </div>
 

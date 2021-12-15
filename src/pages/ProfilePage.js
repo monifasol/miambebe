@@ -4,7 +4,7 @@ import axios from "axios";
 import editIcon from "../images/edit-icon.png"
 import { CurrentDataContext } from '../context/currentData.context'
 
-const API_URI = process.env.REACT_APP_API_URL;
+const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 const token = localStorage.getItem("authToken");
 
 
@@ -117,7 +117,7 @@ const ProfilePage = () => {
                     <div className="user-babies">
                         { currentUser.babies && currentUser.babies.map( (baby) => (
 
-                            <>
+                            <div key={baby._id}>
 
                                 <p className="field-row">
                                     <label>Baby's name: </label>
@@ -172,7 +172,7 @@ const ProfilePage = () => {
                                     <span className="extra-text">Kgs</span>
                                 </p>
 
-                            </>
+                            </div>
                             
                         )) }
                     </div>

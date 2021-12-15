@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const API_URI = process.env.REACT_APP_API_URL;
+const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 const AuthContext = React.createContext();
 const localJWTToken = localStorage.getItem("authToken");
@@ -21,13 +21,13 @@ function AuthProviderWrapper(props) {
         .then((response) => {
           const userJWT = response.data;
           setUser(userJWT);   
-          setIsLoggedIn(true);
           setIsLoading(false);
+          setIsLoggedIn(true);
         })
         .catch((error) => {
           setUser(null);
-          setIsLoggedIn(false);
           setIsLoading(false);
+          setIsLoggedIn(false);
         });
     } else {
       // The token is not in localStorage

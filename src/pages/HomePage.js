@@ -9,9 +9,7 @@ import axios from "axios";
 
 
 const token = localStorage.getItem("authToken");
-const API_URI = process.env.REACT_APP_API_URL;
-
-
+const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 function HomePage() {
 
@@ -86,9 +84,9 @@ function HomePage() {
 
   // Handle submit for Week > FormGoal
 
-  const handleSubmit = (e, goal, foodgroup, quantityGoal, quantityAccomplished) => {
+  const handleSubmit = (goal, foodgroup, quantityGoal, quantityAccomplished) => {
 
-    e.preventDefault();
+    console.log("SUBMIT GOAL!!!! ")
 
     if (currentWeek && foodgroup) {
       const requestBody = { foodgroupId: foodgroup._id, quantityGoal, quantityAccomplished, weekId: currentWeek._id }
@@ -100,17 +98,22 @@ function HomePage() {
         .then((response) => {
           let updatedGoal = response.data.data
           console.log(`Goal successfully updated with id ${updatedGoal._id}`)
-          
-          
-          // Problem is here!!
-          // is currentWeek.goals already updated????
-          // I tested it. No, it's not updated.
-
-          console.log("=====> currentWeek.goals", currentWeek.goals)
-          setGoals(currentWeek.goals)
-
-          
-
+        
+          // I need an Axios call here, to get the week from the API with its goals updated. 
+          // Otherwise, week.goals do not reflect the updated goals.          
+          axios
+              .get(`${API_URI}/weeks/${currentWeek._id}`, requestBody, {
+                  headers: { Authorization: `Bearer ${token}` },
+              })
+              .then((response) => {
+                  let foundWeek = response.data.data
+                  console.log(`New goals for the week of ${foundWeek.goals}`)
+                  setGoals(foundWeek.goals)
+              })
+              .catch((error) => {
+                  setIsError(true)
+                  console.log(error)
+              });
         })
         .catch((error) => console.log(error));
     }

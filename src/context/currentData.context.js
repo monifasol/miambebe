@@ -4,7 +4,10 @@ import { AuthContext } from "./auth.context";
 
 
 const localJWTToken = localStorage.getItem("authToken");
-const API_URI = process.env.REACT_APP_API_URL;
+const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
+console.log("process.env ===>", process.env)
+
 
 const CurrentDataContext = React.createContext();
 

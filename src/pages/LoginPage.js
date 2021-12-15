@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "./../context/auth.context";
 
-const API_URI = process.env.REACT_APP_API_URL;
+const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 
 function LoginPage(props) {
