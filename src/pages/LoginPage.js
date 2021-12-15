@@ -1,10 +1,9 @@
 import { useState, useContext } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { AuthContext } from "./../context/auth.context";
-import env from "react-dotenv";
 
-const API_URI = env.SERVER_API_URL;
+const API_URI = process.env.REACT_APP_API_URL;
+
 
 function LoginPage(props) {
   
@@ -17,11 +16,15 @@ function LoginPage(props) {
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
 
+
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const requestBody = { email, password };
 
+    console.log("URIIIII ======>", API_URI)
+
     axios
+
       .post(`${API_URI}/auth/login`, requestBody)
       .then((response) => {
         console.log("JWT token", response.data.authToken);

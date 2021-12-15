@@ -6,10 +6,11 @@ import { React, useContext, useState, useEffect } from "react";
 import { CurrentDataContext } from "../context/currentData.context";
 
 import axios from "axios";
-import env from "react-dotenv";
+
 
 const token = localStorage.getItem("authToken");
-const API_URI = env.SERVER_API_URL;
+const API_URI = process.env.REACT_APP_API_URL;
+
 
 
 function HomePage() {
@@ -23,7 +24,7 @@ function HomePage() {
 
 
 /*
-              // ADD SORTING BY GOALS?
+              // ADD SORTING BY GOAL Quantity ?
                 const sortyByGoal = (a, b) => {
                     if (a.quantityGoal < b.quantityGoal) return 1
                     if (a.quantityGoal > b.quantityGoal) return -1
@@ -34,43 +35,13 @@ function HomePage() {
 */
 
 
-
-    // API request that populates 'goals' for the currentWeek, otherwise week.goals is only ID's
-    useEffect( ()=> {
-      if (currentWeek && currentWeek.goals && currentWeek.goals.length > 0) {  
-
-          let url = `${API_URI}/weeks/${currentWeek._id}`
-          axios
-              .get(url, {
-                  headers: { Authorization: `Bearer ${token}` },
-              })
-              .then((response) => {
-                  const foundWeek = response.data.data
-                  setGoals(foundWeek.goals)
-                  setTimeout(() => { setIsInitializingGoals(false) }, 1000)
-              })
-              .catch((error) => console.log(error));   
-      }
-    }, [currentWeek])
-
-
     // Inits state variable GOALS, if week has already goals (first, API call to populate them)
     useEffect( () => {
       if (currentWeek && currentWeek.goals && currentWeek.goals.length > 0) {
-  
-           axios
-              .get(`${API_URI}/weeks/${currentWeek._id}`, {
-                  headers: { Authorization: `Bearer ${token}` },
-                })
-              .then((response) => {
-                  const foundWeek = response.data.data
-                  const populatedGoals = foundWeek.goals    
-                  setGoals(populatedGoals)                  // POPULATED GOALS
-          
-                  setTimeout(() => { setIsInitializingGoals(false) }, 1000)
-                })
-              .catch((error) => console.log(error)); 
-        
+
+          setGoals(currentWeek.goals)
+          setTimeout(() => { setIsInitializingGoals(false) }, 1000)
+       
       } 
     }, [currentWeek])
 
@@ -107,6 +78,7 @@ function HomePage() {
               })
               .catch((error) => { console.log(error)});
       }
+
       //console.log("currentWeek now has goals ===> ", currentWeek.goals.length)
   }
 
@@ -127,19 +99,18 @@ function HomePage() {
         })
         .then((response) => {
           let updatedGoal = response.data.data
-          //console.log(`Goal successfully updated with id ${updatedGoal._id}`)
+          console.log(`Goal successfully updated with id ${updatedGoal._id}`)
+          
+          
+          // Problem is here!!
+          // is currentWeek.goals already updated????
+          // I tested it. No, it's not updated.
 
-          // get goals for the week and re-recreate state variable
-          axios
-          .get(`${API_URI}/weeks/${currentWeek._id}`, {
-              headers: { Authorization: `Bearer ${token}` },
-            })
-          .then((response) => {
-              const foundWeek = response.data.data
-              const populatedGoals = foundWeek.goals      // goals are now populated
-              setGoals(populatedGoals)                    // STATE VARIABLE WITH GOALS UPDATED!
-            })
-          .catch((error) => console.log(error)); 
+          console.log("=====> currentWeek.goals", currentWeek.goals)
+          setGoals(currentWeek.goals)
+
+          
+
         })
         .catch((error) => console.log(error));
     }

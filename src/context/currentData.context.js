@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import env from "react-dotenv";
 import { AuthContext } from "./auth.context";  
 
-const API_URI = env.SERVER_API_URL;
+
 const localJWTToken = localStorage.getItem("authToken");
+const API_URI = process.env.REACT_APP_API_URL;
 
 const CurrentDataContext = React.createContext();
 
@@ -125,8 +125,10 @@ function CurrentDataProviderWrapper(props) {
   };
 
         
-  const createCurrentWeek = () => {
+  const createCurrentWeek = async () => {
       const requestBody = {firstday: firstDayWeek, lastday: lastDayWeek, babyId: currentBaby._id}
+
+      console.log("requestBody", requestBody)
 
       axios
         .post(`${API_URI}/weeks/`, requestBody, {
@@ -134,9 +136,18 @@ function CurrentDataProviderWrapper(props) {
         })
         .then((response) => {
           // We get the created week; or the original week if it already existed.
-          const weekFromAPI = response.data.data;                
-          console.log("======> The current week already existed in API: ", weekFromAPI)
-          setCurrentWeek(weekFromAPI);  
+          const weekFromAPI = response.data.data;      
+          
+          // Find week, to populate goals (when we CREATE in the API, we don't populate!)
+          axios
+              .get(`${API_URI}/weeks/${weekFromAPI._id}`, {
+                headers: { Authorization: `Bearer ${localJWTToken}` },
+              })
+              .then( (response) => { 
+                let foundWeek = response.data.data
+                setCurrentWeek(foundWeek) 
+              })
+              .catch((error) => { console.log("Error in week creation: ", error) });
         })
         .catch((error) => {
           setCurrentWeek(null);  
@@ -148,6 +159,7 @@ function CurrentDataProviderWrapper(props) {
   // Init foodggroups
   useEffect(() => {
     if (localJWTToken) {
+
       axios
         .get(`${API_URI}/foodgroups`, {
           headers: { Authorization: `Bearer ${localJWTToken}` },

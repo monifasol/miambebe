@@ -1,10 +1,10 @@
 import { React, useContext } from 'react'
 import axios from "axios";
-import env from "react-dotenv";
+
 import editIcon from "../images/edit-icon.png"
 import { CurrentDataContext } from '../context/currentData.context'
 
-const API_URI = env.SERVER_API_URL;
+const API_URI = process.env.REACT_APP_API_URL;
 const token = localStorage.getItem("authToken");
 
 

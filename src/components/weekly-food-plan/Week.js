@@ -58,7 +58,6 @@ const Week = ( props ) => {
         overlay.classList.remove("show")
     }
 
-    
 
     return (
         <div className="week-component comp">

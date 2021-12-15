@@ -38,6 +38,8 @@ const Databoard = ( { goals } ) => {
         let buildData = []
         let counter = 1
 
+        console.log("LETS SEE THIS GOALS ====> ", goals)
+
         goals.forEach( (goal, i) => {
 
             if (goal.quantityGoal !== 0 ) {

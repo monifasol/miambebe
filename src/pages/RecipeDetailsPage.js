@@ -3,9 +3,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import AddTask from "../components/AddTask";
 import RecipeCard from "../components/recipes/RecipeCard";
-import env from "react-dotenv";
 
-const API_URI = env.SERVER_API_URL;
+const API_URI = process.env.REACT_APP_API_URL;
+
 
 function RecipeDetailsPage(props) {
   const [recipe, setRecipe] = useState(null);

@@ -7,9 +7,9 @@ import axios from "axios";
 //import AddRecipe from "./../components/recipes/AddRecipe";
 import RecipeSelected from "../components/recipes/RecipeSelected";
 import RecipeCard from "./../components/recipes/RecipeCard";
-import env from "react-dotenv";
 
-const API_URI = env.SERVER_API_URL;
+
+const API_URI = process.env.REACT_APP_API_URL;
 const token = localStorage.getItem("authToken");
 
 

@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import env from "react-dotenv";
 
-const API_URI = env.SERVER_API_URL;
+const API_URI = process.env.REACT_APP_API_URL;
+
 
 function SignupPage(props) {
   const [email, setEmail] = useState("");

@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import env from "react-dotenv";
 
-const API_URI = env.SERVER_API_URL;
+const API_URI = process.env.REACT_APP_API_URL;
 
 function EditProjectPage(props) {
   const [title, setTitle] = useState("");
