@@ -1,12 +1,12 @@
 import { React, useContext, useState, useEffect } from 'react'
 import LoadingSpinner from "../layout-elements/LoadingSpinner";
 import GraphicBars from "./GraphicBars.js"
-import { CurrentDataContext } from '../../context/currentData.context';
+import { DataContext } from '../../context/data.context';
 
 
 const Databoard = ( { goals } ) => {
 
-    const { currentWeek, currentBaby } = useContext(CurrentDataContext)
+    const { currentWeek, currentBaby } = useContext(DataContext)
     const [ isDataLoading, setIsDataLoading ] = useState(true)     
 
     const [ dataChart, setDataChart ] = useState(null)   

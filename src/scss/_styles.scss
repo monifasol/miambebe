@@ -1,16 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;800&display=swap');
 
-
 body {
     font-family: $main-font-family;
     color: $main-color;
     font-size: 16px;
-    width: 100vw;
     background-color: $color-main-bg;
     line-height: 1.7em;
     letter-spacing: 0.02em;
     padding-bottom: 50px;
     font-weight: 400;
+    background-color: $color-gradient-bg-bottom;
+    background: linear-gradient(180deg, $color-gradient-bg-top 0%, $color-gradient-bg-bottom 100%);
+    background-repeat: no-repeat;
+    width: 100vw;
+    //height: 100vh;
+    //height: 100%;
+    min-height: 100vh;
 }
 
 h1 {
@@ -123,10 +128,12 @@ nav.header {
     
     background-color: white;
     display: flex;
-    justify-content:flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     height: 80px; 
+    margin: 10px;
+    border-radius: 10px;
 
     .singup, .login {
         display: flex;
@@ -143,14 +150,28 @@ nav.header {
     }
 
     .current-baby {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
         span {
             font-size: 12px;
+        }
+        .baby-avatar-header {
+            object-fit: cover;
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
         }
     }
 
     .logo {
         width: 100px;
         //margin: auto;
+        img {
+            width: 100%;
+        }
     }
 
     span {
@@ -193,7 +214,6 @@ nav.header {
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            border: solid 2px $color-pink-light;
             margin-left: 10px;
         }
     }
@@ -264,7 +284,6 @@ nav.menu {
             max-width: 100%;
             border: solid 1px white;
             height: fit-content;
-            width: fit-content;
             padding: 0 20px;
             margin: 0 auto;
         }
@@ -280,9 +299,19 @@ nav.menu {
                 margin-top: 30px;
             }
 
-            .recipes-overview-component {
+            .logs-component {
                 border: solid 1px white;
                 margin-top: 30px;
+                padding: 20px;
+
+                .log {
+                    margin: 10px 0;
+                }
+
+                h2.h2-comp {
+                    margin-bottom: 30px;
+                }
+                
             }
         }
     }
@@ -342,7 +371,6 @@ nav.menu {
 
     .weekly-food-plan {
         width: 100%;
-        max-width: fit-content;
         padding-bottom: 20px;
         margin: 0 auto;
     }
@@ -350,12 +378,12 @@ nav.menu {
     .header-form-goals {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
+        justify-content: space-evenly;
+        width: 88%;
         font-size: smaller;
         text-align: center;
         margin-bottom: 20px;
-        
+
         p:first-child {
             width: 70%;
         }
@@ -370,7 +398,7 @@ nav.menu {
     .form-goal {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-evenly;
         width: 100%;
         padding-right: 8px;
 
@@ -543,7 +571,7 @@ nav.menu {
 
             margin-top: 20px;
 
-            .wapper-upload-pic {
+            .wrapper-upload-pic {
                 margin-top: 20px;
                 display: flex;
                 flex-wrap: wrap;
@@ -560,7 +588,6 @@ nav.menu {
                     object-fit: cover;
                     border-radius: 20px;
                     margin-right: 20px;
-                    border: solid 2px $color-lila-dark;
                 }
             }
             
@@ -688,6 +715,12 @@ form, .form {
         cursor: pointer;
     }
 
+    &#modalRecipe {
+        top: 50px;
+        left: 10%;
+        width: 80%;
+    }
+
 }
 
 .content-editable {
@@ -762,6 +795,10 @@ form, .form {
     }
 }
 
+.not-available {
+    text-align: center;
+    margin: 30px auto;
+}
 
 /* ========= Recipes ======== */
 .recipes-page {
@@ -772,6 +809,12 @@ form, .form {
         position: absolute;
         top: 0px;
         left: 30px;
+        background-color: $color-lila-light;
+        border: solid 1px $color-lila-dark;
+
+        &:hover {
+            background-color: $color-lila;
+        }
     }
 }
 
@@ -780,7 +823,7 @@ form, .form {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 .recipes-list-container {
@@ -788,6 +831,7 @@ form, .form {
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
+    position: relative;
 }
 
 .recipe-card {
@@ -858,6 +902,12 @@ form, .form {
     height: 100%;  // backup
     height: fit-content;
 
+    &.fix {
+        position: sticky;
+        top: 20px;
+        right: 0px;
+    }
+
     .recipe-card {
         border: unset;
         cursor: unset;
@@ -895,6 +945,10 @@ form, .form {
     font-size: 9px;
     border-radius: 3px;
 }
+
+/* ========= Add Recipe ======== */
+
+
 
 
 /* ========= Flash messages ======== */
@@ -935,14 +989,6 @@ form, .form {
     background-color: #ffcccb;
 }
 
-.user-avatar-already-filled {
-    object-fit: cover;
-    width: 70px;
-    height: 70px;
-    border-radius: 8px;
-    border: solid 2px $color-pink-light;
-}
-
 
 /* ============= Footer =========== */
 #footerMenu {
@@ -954,7 +1000,7 @@ form, .form {
     bottom: 0;
     left: 0;
     text-align: center;
-    background-color: $color-button-border;
+    background-color: $color-footer;
     color: white;
     width: 100vw;
     height: 50px;

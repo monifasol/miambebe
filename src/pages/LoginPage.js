@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "./../context/auth.context";
+import { DataContext } from "./../context/data.context";
 
 const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
@@ -14,7 +14,7 @@ function LoginPage(props) {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  const { logInUser } = useContext(AuthContext);
+  const { logInUser } = useContext(DataContext);
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
@@ -28,11 +28,12 @@ function LoginPage(props) {
 
       .post(`${API_URI}/auth/login`, requestBody)
       .then((response) => {
+
         console.log("JWT token", response.data.authToken);
 
         const JWTToken = response.data.authToken;
         logInUser(JWTToken);
-        history.push("/");
+        history.push("/login");
       })
       .catch((error) => {
         const errorDescription = `There has been an error: ${error}`;

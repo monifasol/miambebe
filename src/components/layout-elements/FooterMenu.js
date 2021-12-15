@@ -1,10 +1,10 @@
 import {React, useContext} from 'react'
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/auth.context";  
+import { DataContext } from "../../context/data.context";  
 
 const FooterMenu = () => {
 
-    const { isLoggedIn } = useContext(AuthContext);
+    const { isLoggedIn } = useContext(DataContext);
 
     return (
         <div className="footer-menu">

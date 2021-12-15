@@ -1,19 +1,18 @@
 import Week from "./../components/weekly-food-plan/Week";
 import Databoard from "../components/databoard/Databoard"
-import RecipesOverview from "./../components/recipes/RecipesOverview"
+import Logs from "../components/databoard/Logs"
 
 import { React, useContext, useState, useEffect } from "react";        
-import { CurrentDataContext } from "../context/currentData.context";
+import { DataContext } from "../context/data.context";
 
 import axios from "axios";
-
 
 const token = localStorage.getItem("authToken");
 const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 function HomePage() {
 
-  const { currentWeek, foodgroups } = useContext(CurrentDataContext);
+  const { currentWeek, foodgroups } = useContext(DataContext);
 
   const [goals, setGoals] = useState(null)
   const [isError, setIsError] = useState(false)
@@ -123,7 +122,7 @@ function HomePage() {
 
         <div className="homepage-flex-left-side">
           <Databoard goals={goals} />
-          <RecipesOverview />  
+          <Logs />  
         </div>
       </div>
       

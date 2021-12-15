@@ -1,4 +1,4 @@
-import {React, useState, useContext, useEffect} from 'react'
+import {React, useState, useEffect} from 'react'
 
 import btnLess from "../../images/btn-less.png"
 import btnMore from "../../images/btn-more.png"

@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import LoadingSpinner from "../components/layout-elements/LoadingSpinner";
-import { CurrentDataContext } from '../context/currentData.context';
+import { DataContext } from '../context/data.context';
+import AddRecipe from "../components/recipes/AddRecipe";
 
 import axios from "axios";
 //import AddRecipe from "./../components/recipes/AddRecipe";
@@ -19,7 +20,7 @@ function RecipesListPage() {
     const [ isLoading, setIsLoading ] = useState(true)
     const [ recipeSelected, setRecipeSelected ] = useState(null)
 
-    const { userDevice } = useContext(CurrentDataContext)
+    const { userDevice } = useContext(DataContext)
 
     
     const dispatchToRecipe = (recipeId) => {
@@ -77,12 +78,57 @@ function RecipesListPage() {
     }
 
 
+    const openModalRecipe = () => {
+      let overlay = document.getElementById("overlayModals")
+      let modalNewBaby = document.getElementById('modalRecipe')
+      modalNewBaby.classList.add("show")
+      overlay.classList.add("show")
+
+  }
+
+  const closeModalRecipe = () => {
+      let overlay = document.getElementById("overlayModals")
+      let modalNewBaby = document.getElementById('modalRecipe')
+      modalNewBaby.classList.remove("show")
+      overlay.classList.remove("show")
+  }
+
+
+  useEffect(() => {
+
+    let recipeSelectedElement = document.querySelector('.recipes-selected')
+
+
+    console.log("recipeSelectedElement", recipeSelectedElement)
+
+    if (recipes) {
+
+      window.addEventListener('scroll', function () {
+        var scrolledHeight = window.pageYOffset || document.documentElement.scrollTop;
+    
+        if (scrolledHeight > 240) {     // we are in the top
+          recipeSelectedElement && recipeSelectedElement.classList.add('fix')
+        } else {
+          recipeSelectedElement && recipeSelectedElement.classList.remove('fix')
+        }
+      }, false);
+    }
+
+  }, [])
+  
+
   return (
     <div className="recipes-page">
 
       <h1>Recipes</h1>
 
-      <Link to="/"><div className="btn">Add recipe</div></Link>
+      <div className="btn" onClick={ ()=> openModalRecipe()}>Add recipe</div>
+
+      <div className="modal" id="modalRecipe">
+          <span className="close-modal" onClick={ ()=> closeModalRecipe()}></span>
+          <AddRecipe /> 
+      </div>
+
 
       <div className="recipes-page-container">
 

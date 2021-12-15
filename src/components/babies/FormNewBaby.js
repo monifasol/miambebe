@@ -1,15 +1,15 @@
 import { React, useState, useContext } from 'react'
 import axios from "axios";
-import { CurrentDataContext } from '../../context/currentData.context'
+import { DataContext } from '../../context/data.context'
 
 const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 const token = localStorage.getItem("authToken");
 
-const FormNewBaby = () => {
+const FormNewBaby = (props) => {
 
-    const [formState, setFormState] = useState({})
-    const { currentUser } = useContext(CurrentDataContext)
 
+    const [ formState, setFormState ] = useState({})
+    const { currentUser } = useContext(DataContext)
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -39,6 +39,8 @@ const FormNewBaby = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 .then((response) => {
+                    props.babyIsUpdated()
+
                     tooltipEl.classList.add('show')
                     tooltipEl.innerText = `Baby successfully saved!`
 

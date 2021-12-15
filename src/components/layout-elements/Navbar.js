@@ -1,21 +1,20 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";        
 import CurrentBabyNav from "./CurrentBabyNav";               
-import { AuthContext } from "../../context/auth.context";  
-import { CurrentDataContext } from "../../context/currentData.context";
+import { DataContext } from "../../context/data.context";
+import logo from "../../images/logo.png"
 
 const Navbar = () => {
 
-  const { logOutUser } = useContext(AuthContext);
-  const { currentBaby, currentUser } = useContext(CurrentDataContext);
+  const { isLoggedIn, logOutUser, currentBaby, currentUser } = useContext(DataContext);
 
   return (
     <nav className="header">
       <Link to="/" className="logo">
-        <span className="link">Miam Bebe</span>
+        <img src={logo} alt="logo miam bebe" />
       </Link>
 
-      {currentUser
+      {isLoggedIn
         ? 
           (<>
             

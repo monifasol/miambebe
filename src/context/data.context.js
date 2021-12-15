@@ -1,22 +1,72 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { AuthContext } from "./auth.context";
 
 const localJWTToken = localStorage.getItem("authToken");
 const API_URI = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
-const CurrentDataContext = React.createContext();
+const DataContext = React.createContext();
 
-function CurrentDataProviderWrapper(props) {
-  const { user, isLoggedIn, } = useContext(AuthContext);
+function DataProviderWrapper(props) {
 
-  const [currentUser, setCurrentUser] = useState(null);
+
+  // AUTH state variables 
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);                 // this user only contains the Token content ({ _id, email, name })
+
+    
+  // Current data state variables
+  const [currentUser, setCurrentUser] = useState(null);   // this user will contain the full user model
   const [currentBaby, setCurrentBaby] = useState(null);
   const [currentWeek, setCurrentWeek] = useState(null);
   const [foodgroups, setFoodgroups] = useState(null);
   const [userDevice, setUserDevice] = useState("");
 
-  const fetchCurrentUser = () => {
+
+  // ====== Auth methods ========
+
+   const verifyToken = () => {
+    
+    if (localJWTToken) {
+      axios
+        .get(`${API_URI}/auth/verify`, {
+          headers: { Authorization: `Bearer ${localJWTToken}` },
+        })
+        .then((response) => {
+          const userJWT = response.data;
+          setUser(userJWT);     
+          setIsLoggedIn(true);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setUser(null);
+          setIsLoggedIn(false);
+          setIsLoading(false);
+        });
+    } else {
+      setIsLoading(false);
+    }
+  };
+
+  const logInUser = (JWTToken) => {
+    localStorage.setItem("authToken", JWTToken);
+    verifyToken(); // We don't send token here, since verify will read it from localStorage.
+  };
+
+  const logOutUser = () => {
+    localStorage.removeItem("authToken");
+    setIsLoggedIn(false);
+    setUser(null);
+  };
+
+  useEffect(() => {
+    verifyToken();
+  }, []);
+
+
+   // fetches currentUser (full user model)
+   useEffect( ()=> {
     if (user) {
       axios
       .get(`${API_URI}/users/${user._id}`, {
@@ -25,35 +75,26 @@ function CurrentDataProviderWrapper(props) {
       .then((response) => {
           const foundUser = response.data.data;
           setCurrentUser(foundUser);
-          
-          console.log("Im here and I found the user", foundUser);
         })
         .catch((error) => {
           console.log(error);
+          console.log("error===>", error)
         });
     }
-  };
+  }, [user])
 
-  // initializes currentUser, when user (from auth) changes
-  // use comes from JWT token and has very little info
-  useEffect(() => {
-      fetchCurrentUser();
-  }, [user]);
 
   // Set the type of device the user is using
   useEffect(() => {
     const ua = navigator.userAgent;
     if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
       setUserDevice("tablet");
-    } else if (
-      /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
-        ua
-      )
-    ) {
+    } else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
       setUserDevice("mobile");
     }
     setUserDevice("desktop");
   }, []);
+
 
   // initializes currentBaby, when currentUser loads or changes
   useEffect(() => {
@@ -63,7 +104,9 @@ function CurrentDataProviderWrapper(props) {
     }
   }, [currentUser]);
 
-  // ========= Week Initialization
+
+
+  // ========= Week Initialization ============
 
   const formatDate = (date) => {
     return (
@@ -87,23 +130,6 @@ function CurrentDataProviderWrapper(props) {
   let firstDayWeek = getMondaySunday().firstday;
   let lastDayWeek = getMondaySunday().lastday;
 
-  // Updates currentBaby when parent switches babies
-  const switchBabies = (babyId) => {
-    if (babyId) {
-      axios
-        .get(`${API_URI}/babies/${babyId}`, {
-          headers: { Authorization: `Bearer ${localJWTToken}` },
-        })
-        .then((response) => {
-          const baby = response.data.data;
-          setCurrentBaby(baby); // we switched babies
-        })
-        .catch((error) => {
-          console.log(error);
-          setCurrentBaby(null);
-        });
-    }
-  };
 
   const createCurrentWeek = async () => {
     const requestBody = {
@@ -111,8 +137,6 @@ function CurrentDataProviderWrapper(props) {
       lastday: lastDayWeek,
       babyId: currentBaby._id,
     };
-
-    console.log("requestBody", requestBody);
 
     axios
       .post(`${API_URI}/weeks/`, requestBody, {
@@ -122,7 +146,7 @@ function CurrentDataProviderWrapper(props) {
         // We get the created week; or the original week if it already existed.
         const weekFromAPI = response.data.data;
 
-        // Find week, to populate goals (when we CREATE in the API, we don't populate!)
+        // Find week, to populate goals (after CREATE, we don't populate!!)
         axios
           .get(`${API_URI}/weeks/${weekFromAPI._id}`, {
             headers: { Authorization: `Bearer ${localJWTToken}` },
@@ -131,15 +155,16 @@ function CurrentDataProviderWrapper(props) {
             let foundWeek = response.data.data;
             setCurrentWeek(foundWeek);
           })
-          .catch((error) => {
-            console.log("Error in week creation: ", error);
-          });
+          .catch((error) => console.log("Error in week creation: ", error));
       })
-      .catch((error) => {
-        setCurrentWeek(null);
-        console.log("Error in week creation: ", error);
-      });
+      .catch((error) => console.log("Error in week creation: ", error));
   };
+
+  // Create the Current Week for this time and current Baby; if it alreayd exists, the backend will not let us.
+  useEffect(() => {
+    if (currentBaby) createCurrentWeek();
+  }, [currentBaby]);
+
 
   // Init foodggroups
   useEffect(() => {
@@ -159,25 +184,25 @@ function CurrentDataProviderWrapper(props) {
     }
   }, []);
 
-  // Create the Current Week for this time and current Baby; if it alreayd exists, the backend will not let us.
-  useEffect(() => {
-    if (currentBaby) createCurrentWeek();
-  }, [currentBaby]);
 
   return (
-    <CurrentDataContext.Provider
+    <DataContext.Provider
       value={{
+        logInUser, 
+        logOutUser, 
+        user, 
+        isLoggedIn, 
+        isLoading, 
         currentBaby,
         currentUser,
         currentWeek,
         foodgroups,
-        userDevice,
-        switchBabies,
+        userDevice
       }}
     >
       {props.children}
-    </CurrentDataContext.Provider>
+    </DataContext.Provider>
   );
 }
 
-export { CurrentDataProviderWrapper, CurrentDataContext };
+export { DataProviderWrapper, DataContext };

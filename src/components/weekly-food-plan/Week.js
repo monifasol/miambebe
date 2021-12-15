@@ -5,13 +5,13 @@ import GoalForm from "./GoalForm";
 import FormNewBaby from "../babies/FormNewBaby";
 import LoadingSpinner from "../layout-elements/LoadingSpinner";
 
-import { CurrentDataContext } from "../../context/currentData.context";
+import { DataContext } from "../../context/data.context";
 
 const Week = ( props ) => {
     
     const { week, goals, initWeekFoodPlan, isInitializingGoals, handleSubmit } = props
 
-    const { currentBaby } = useContext(CurrentDataContext);
+    const { currentBaby } = useContext(DataContext);
     const [firstDay, setFirstDay] = useState(null)
     const [lastDay, setLastDay] = useState(null)
     

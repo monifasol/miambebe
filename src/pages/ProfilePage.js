@@ -1,9 +1,10 @@
-import { React, useContext, useState } from 'react'
+import { React, useContext, useState, useEffect } from 'react'
 import axios from "axios";
-import defaultBabyPic from "../images/spinner.png"
+import { UploadPicture } from '../components/UploadPicture';
+import { DataContext } from '../context/data.context'
+import FormNewBaby from "../components/babies/FormNewBaby";
 
 import editIcon from "../images/edit-icon.png"
-import { CurrentDataContext } from '../context/currentData.context'
 
 const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 const token = localStorage.getItem("authToken");
@@ -11,8 +12,29 @@ const token = localStorage.getItem("authToken");
 
 const ProfilePage = () => {
     
-    const { currentUser, currentBaby } = useContext(CurrentDataContext)
-    const [ picBaby, setPicBaby ] = useState()
+
+    const { currentUser, currentBaby } = useContext(DataContext)
+    const [ user, setUser ] = useState()
+
+
+    useEffect( () => {
+        if (currentUser) setUser(currentUser)
+    }, [currentUser])
+
+
+    // Fetch again currentUser, so that it reflects the New baby from child component FormNewBaby
+    const babyIsUpdated = () => {
+
+        axios
+            .get(`${API_URI}/users/${currentUser._id}`, {      
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => {
+                let foundUser = response.data.data
+                setUser(foundUser)
+            })
+            .catch((error) => console.log(error));
+    }
 
     const toggleEditIcon = (e, action) => {
         let iconEl = e.target.querySelector('.edit-icon')
@@ -21,41 +43,6 @@ const ProfilePage = () => {
             if (action === 'show') iconEl.classList.add("show")
             else if (action === 'hide') iconEl.classList.remove("show")
         }
-    }
-
-    const handleSubmitPicture = (e, babyId) => {
-
-        e.preventDefault()
-
-        let tooltipEl = e.target.nextSibling
-        let tooltipErr = e.target.nextSibling.nextSibling
-
-        console.log("tooltipEl", tooltipEl)
-        console.log("tooltipErr",tooltipErr )
-
-        const requestBody = new FormData();
-        requestBody.append("imageUrl", e.target.files[0]);
-        let url = `${API_URI}/babies/${babyId}/uploadPic`
-
-        axios
-            .post(url, requestBody, {     // updates user info     
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .then((response) => {
-                tooltipEl.classList.add('show')
-                tooltipEl.innerText = "Picture saved!"
-
-                let babyPic = response.data.data
-                console.log("is this an image? ==>", babyPic)
-                setPicBaby(babyPic)
-                setTimeout(()=>{ tooltipEl.classList.remove('show')}, 1000)
-            })
-            .catch((error) => {
-                tooltipErr.classList.add('show')
-                tooltipErr.innerText = "Sorry, picture not saved"
-                setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1000)
-            });
-
     }
 
     const submitUserName = (e) => {
@@ -85,7 +72,6 @@ const ProfilePage = () => {
             setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1000)
         }
     }    
-
 
     const submitBabyField = (e) => {
 
@@ -118,13 +104,35 @@ const ProfilePage = () => {
     }    
 
 
+    const openModalNewBaby = () => {
+        let overlay = document.getElementById("overlayModals")
+        let modalNewBaby = document.getElementById('modalNewBaby')
+        modalNewBaby.classList.add("show")
+        overlay.classList.add("show")
+
+    }
+
+    const closeModalNewBaby = () => {
+        let overlay = document.getElementById("overlayModals")
+        let modalNewBaby = document.getElementById('modalNewBaby')
+        modalNewBaby.classList.remove("show")
+        overlay.classList.remove("show")
+    }
+
+
     return (
         <div className="profile-page">
             <h1>Your profile</h1>
 
+            <div className="modal" id="modalNewBaby">
+                <span className="close-modal" onClick={ ()=> closeModalNewBaby()}></span>
+                <FormNewBaby babyIsUpdated={babyIsUpdated} /> 
+            </div>
+
+
             <div className="profile-page-form form">
 
-            { currentUser && 
+            { user && 
             
                 <>
 
@@ -137,18 +145,24 @@ const ProfilePage = () => {
                                 className="content-editable"
                                 suppressContentEditableWarning={true}>
 
-                                {currentUser.name || ""}
+                                {user.name || ""}
                             <img src={editIcon} alt="edit icon" className="edit-icon" />
                         </span>
                         <span className="tooltip-form info"></span>
                         <span className="tooltip-form error"></span>
                     </p>
 
-
                     <h3> Your babies </h3>
 
                     <div className="user-babies">
-                        { currentUser.babies && currentUser.babies.map( (baby) => (
+
+                        { (!user.babies || user.babies.length === 0 ) 
+                            &&
+                            <span className="btn" onClick={ ()=> openModalNewBaby() }>Register a baby</span>
+                        }
+
+
+                        { user.babies && user.babies.map( (baby) => (
 
                             <div key={baby._id}>
 
@@ -205,23 +219,7 @@ const ProfilePage = () => {
                                     <span className="extra-text">Kgs</span>
                                 </p>
 
-
-                                <div className="pic-upload">
-
-                                    <form className="form">
-                                        <label>Baby's picture: </label>
-
-                                        <div className="wapper-upload-pic">
-                                            <img className="preview-pic" src={ baby.imageUrl || picBaby || defaultBabyPic } alt="baby_avatar" />
-                                            <input type="file" name="imageUrl" 
-                                                    onChange={ (e) => { handleSubmitPicture(e, baby._id) } } />
-                                            <span className="tooltip-form info"></span>
-                                            <span className="tooltip-form error"></span>
-                                        </div>
-                                    </form>
-
-                                </div>
-                                
+                                <UploadPicture baby={currentBaby} />
 
                             </div>
 

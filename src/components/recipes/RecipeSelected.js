@@ -1,12 +1,12 @@
 import { React, useContext, useEffect, useState } from 'react'
 import editIcon from "../../images/edit-icon.png"
-import { CurrentDataContext } from '../../context/currentData.context'
+import { DataContext } from '../../context/data.context'
 import Moment from 'react-moment';
 
 const RecipeSelected = ( { recipe, submitRecipeChange } ) => {
 
 
-    const { currentUser } = useContext(CurrentDataContext)
+    const { currentUser } = useContext(DataContext)
     const [ isWritter, setIsWritter ] = useState(false)
     const [ dataBeforeEdit, setDataBeforeEdit ] = useState({})
 

@@ -4,13 +4,13 @@
     }
     
     nav.header {
+        margin: 20px;
         span {
             font-size: 15px;
         }
     }
 
     .homepage {
-        padding: 40px 10px;
         
         &-flex {
             flex-direction: row;
@@ -25,8 +25,9 @@
                 .databoard-component {
                     margin-top: 0px;
                 }
-                .recipes-overview-component {
-                    margin-top: 30px;
+
+                .logs-component {
+                    padding: 20px 30px;
                 }
             }
         }
@@ -35,6 +36,9 @@
 
     .week-component {
 
+        .header-form-goals {
+            width: 100%;
+        }
         .dates-current-week {
             margin: 30px auto;
         }
