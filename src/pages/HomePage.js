@@ -81,7 +81,6 @@ function HomePage() {
   }
 
 
-
   // Handle submit for Week > FormGoal
 
   const handleSubmit = (goal, foodgroup, quantityGoal, quantityAccomplished) => {

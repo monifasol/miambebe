@@ -155,6 +155,7 @@ nav.header {
     span {
         display: block;
         margin: 0 20px;
+        font-size: smaller;
     }
 
     .page-title {
@@ -259,6 +260,7 @@ nav.menu {
 
         .week-component {
             width: 100%;
+            max-width: 100%;
             border: solid 1px white;
             height: fit-content;
             width: fit-content;
@@ -347,6 +349,7 @@ nav.menu {
     .header-form-goals {
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
         width: 100%;
         font-size: smaller;
         text-align: center;
@@ -366,13 +369,14 @@ nav.menu {
     .form-goal {
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
         width: 100%;
         padding-right: 8px;
 
         &.empty {
-            background-color: #eaeaea;
+            background-color: #F2F2F2;
             .group-inputs-goal {
-                background-color: #eaeaea;
+                background-color: #F2F2F2;
             }
         }
         
@@ -407,6 +411,7 @@ nav.menu {
         .input-foodgroup {
             border: none;
             width: fit-content;
+            max-width: 100px;
             padding: 0;
         }
 

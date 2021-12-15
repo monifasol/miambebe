@@ -111,10 +111,13 @@ const Week = ( props ) => {
 
                             <div className="weekly-food-plan">
                                 
-                                <div className="header-form-goals">
-                                    <p><span>Baby's week food plan</span></p>
-                                    <p><span>Already accomplished</span></p>
-                                </div>
+                                { !isInitializingGoals && goals &&
+                                
+                                    <div className="header-form-goals">
+                                        <p><span>Baby's week food plan</span></p>
+                                        <p><span>Already accomplished</span></p>
+                                    </div>
+                                }
 
                                 { !isInitializingGoals && goals && goals.map(( goal ) => ( 
 

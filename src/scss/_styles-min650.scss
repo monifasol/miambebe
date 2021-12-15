@@ -29,6 +29,15 @@
         }
     }
     
+    .week-component {
+        .form-goal {
+            .input-foodgroup {
+                max-width: unset;
+                padding: 0;
+            }
+        }
+    }
+    
     .pagination-links {
         width: 80%;
         margin: 40px auto;

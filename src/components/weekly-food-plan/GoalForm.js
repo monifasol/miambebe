@@ -7,21 +7,19 @@ const GoalForm = ( props ) => {
 
     const { goal, handleSubmit, buildError } = props
 
-    //const [quantityGoal, setQuantityGoal] = useState(0)
-    //const [quantityAccomplished, setQuantityAccomplished ] = useState(0)
-    //const [foodgroup, setFoodgroup ] = useState("")
-
-    const [ formState, setFormState ] = useState({
-          quantityGoal: 0,
-          quantityAccomplished: 0,
-          foodgroup: ""
-    })
+    const [ formState, setFormState ] = useState({})
+    //const [ loadingForm, setLoadingForm ] = useState(true)
+    
     
     // Initialize the form with the Goal information
     useEffect( ()=> {
+            console.log("Im going to set FormState NOW: ")
+
             setFormState(Object.assign({}, formState, {quantityGoal: goal.quantityGoal}))
             setFormState(Object.assign({}, formState, {quantityAccomplished: goal.quantityAccomplished}))
             setFormState(Object.assign({}, formState, {foodgroup: goal.foodgroup}))
+
+            console.log("formState: ", formState)
     }, [goal])
 
 
@@ -122,7 +120,6 @@ const GoalForm = ( props ) => {
                     </div>
                 </div>
 
-                <button type="submit" className="btn">Save</button>
             </form>
 
         </div>
