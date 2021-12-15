@@ -172,9 +172,17 @@ const ProfilePage = () => {
                                     <span className="extra-text">Kgs</span>
                                 </p>
 
+
+                                <p className="field-row">
+                                    <label>Baby's picture: </label>
+                                    <input type="file" />
+                                </p>
+                                
+
                             </div>
-                            
+
                         )) }
+
                     </div>
                 </>
             

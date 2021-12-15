@@ -21,23 +21,15 @@ function RecipesListPage() {
 
     const { userDevice } = useContext(CurrentDataContext)
 
-    // Load the first recipe in the Selected recipe container
-    useEffect(()=>{
-      if (recipes) {
-        let firstRecipe = recipes[0]
-        setRecipeSelected(firstRecipe)
-      }
-    },[recipes])
-
     
     const dispatchToRecipe = (recipeId) => {
 
       if (userDevice === "mobile") {
-          <Redirect to="/recipes" id={recipeId} />   // CHECK THIS!! 
+          <Redirect to={`/recipes/${recipeId}`} />  
       } else {
           // show recipe in the container
           let getRecipe = recipes.filter( (recipe) => recipe._id === recipeId)
-          setRecipeSelected(getRecipe)
+          setRecipeSelected(getRecipe[0])
       }
     }
 
@@ -51,6 +43,8 @@ function RecipesListPage() {
         .then((response) => {
           let foundRecipes = response.data.data
           setRecipes(foundRecipes)
+          let firstRecipe = foundRecipes[0]
+          setRecipeSelected(firstRecipe)
           setIsLoading(false)
         })
         .catch((error) => console.log(error));
