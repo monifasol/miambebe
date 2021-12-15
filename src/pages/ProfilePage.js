@@ -1,5 +1,6 @@
-import { React, useContext } from 'react'
+import { React, useContext, useState } from 'react'
 import axios from "axios";
+import defaultBabyPic from "../images/spinner.png"
 
 import editIcon from "../images/edit-icon.png"
 import { CurrentDataContext } from '../context/currentData.context'
@@ -11,6 +12,7 @@ const token = localStorage.getItem("authToken");
 const ProfilePage = () => {
     
     const { currentUser, currentBaby } = useContext(CurrentDataContext)
+    const [ picBaby, setPicBaby ] = useState()
 
     const toggleEditIcon = (e, action) => {
         let iconEl = e.target.querySelector('.edit-icon')
@@ -21,6 +23,40 @@ const ProfilePage = () => {
         }
     }
 
+    const handleSubmitPicture = (e, babyId) => {
+
+        e.preventDefault()
+
+        let tooltipEl = e.target.nextSibling
+        let tooltipErr = e.target.nextSibling.nextSibling
+
+        console.log("tooltipEl", tooltipEl)
+        console.log("tooltipErr",tooltipErr )
+
+        const requestBody = new FormData();
+        requestBody.append("imageUrl", e.target.files[0]);
+        let url = `${API_URI}/babies/${babyId}/uploadPic`
+
+        axios
+            .post(url, requestBody, {     // updates user info     
+                headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => {
+                tooltipEl.classList.add('show')
+                tooltipEl.innerText = "Picture saved!"
+
+                let babyPic = response.data.data
+                console.log("is this an image? ==>", babyPic)
+                setPicBaby(babyPic)
+                setTimeout(()=>{ tooltipEl.classList.remove('show')}, 1000)
+            })
+            .catch((error) => {
+                tooltipErr.classList.add('show')
+                tooltipErr.innerText = "Sorry, picture not saved"
+                setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1000)
+            });
+
+    }
 
     const submitUserName = (e) => {
 
@@ -63,9 +99,6 @@ const ProfilePage = () => {
         if (value !== "") {
             const requestBody = { [field]: value }   
             const putURL = `${API_URI}/babies/${currentBaby._id}`
-
-            console.log("Im about to call this url", putURL)
-            console.log("and this is my body: ", requestBody)
 
             axios
                 .put(putURL, requestBody, {     // updates baby info    
@@ -173,10 +206,21 @@ const ProfilePage = () => {
                                 </p>
 
 
-                                <p className="field-row">
-                                    <label>Baby's picture: </label>
-                                    <input type="file" />
-                                </p>
+                                <div className="pic-upload">
+
+                                    <form className="form">
+                                        <label>Baby's picture: </label>
+
+                                        <div className="wapper-upload-pic">
+                                            <img className="preview-pic" src={ baby.imageUrl || picBaby || defaultBabyPic } alt="baby_avatar" />
+                                            <input type="file" name="imageUrl" 
+                                                    onChange={ (e) => { handleSubmitPicture(e, baby._id) } } />
+                                            <span className="tooltip-form info"></span>
+                                            <span className="tooltip-form error"></span>
+                                        </div>
+                                    </form>
+
+                                </div>
                                 
 
                             </div>

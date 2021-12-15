@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URI = process.env.API_URL || 'http://localhost:5000';
 
 
 function SignupPage(props) {
+
+  const history = useHistory()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -22,12 +25,9 @@ function SignupPage(props) {
     // If POST request for Signup is successful, redirects to homepage
     // Otherwise, sets the error message in the state
 
-    console.log("API_URI", API_URI)
-
     axios
       .post(`${API_URI}/auth/signup`, requestBody)
-      .then((response) => props.history.push("/"))
-      //.then((response) => props.history.push("/login"))
+      .then((response) => history.push("/login"))
       .catch((error) => {
         const errorDescription = `There's been an error: ${error}`
         setErrorMessage(errorDescription)

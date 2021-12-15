@@ -12,11 +12,14 @@ const GoalForm = ( props ) => {
     
     // Initialize the form with the Goal information
     useEffect( ()=> {
+            console.log("Im going to set FormState NOW: ")
+
             setFormState({
               quantityGoal: goal.quantityGoal,
               quantityAccomplished: goal.quantityAccomplished,
               foodgroup: goal.foodgroup
             })
+
             //setFormState(Object.assign({}, formState, {quantityGoal: goal.quantityGoal}))
             //setFormState(Object.assign({}, formState, {quantityAccomplished: goal.quantityAccomplished}))
             //setFormState(Object.assign({}, formState, {foodgroup: goal.foodgroup}))

@@ -20,14 +20,15 @@ function AuthProviderWrapper(props) {
         })
         .then((response) => {
           const userJWT = response.data;
+          //console.log("holaaaaa =====>", userJWT)
           setUser(userJWT);   
-          setIsLoading(false);
           setIsLoggedIn(true);
+          setIsLoading(false);
         })
         .catch((error) => {
           setUser(null);
-          setIsLoading(false);
           setIsLoggedIn(false);
+          setIsLoading(false);
         });
     } else {
       // The token is not in localStorage

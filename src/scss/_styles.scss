@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;600;800&display=swap');
 
 
 body {
@@ -10,6 +10,7 @@ body {
     line-height: 1.7em;
     letter-spacing: 0.02em;
     padding-bottom: 50px;
+    font-weight: 400;
 }
 
 h1 {
@@ -533,6 +534,41 @@ nav.menu {
         border-radius: 10px;
         margin-top: 10px;
         width: 100%;
+    }
+
+    .pic-upload {
+        width: 100%;
+
+        form {
+
+            margin-top: 20px;
+
+            .wapper-upload-pic {
+                margin-top: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+
+                input, .btn {
+                    width: fit-content;
+                }
+
+                .preview-pic {
+                    width: 120px;
+                    height: 120px;
+                    object-fit: cover;
+                    border-radius: 20px;
+                    margin-right: 20px;
+                    border: solid 2px $color-lila-dark;
+                }
+            }
+            
+        }
+        label {
+            font-weight: bold;
+        }
+        
     }
 
 }

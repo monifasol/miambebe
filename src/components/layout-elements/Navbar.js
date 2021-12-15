@@ -6,7 +6,7 @@ import { CurrentDataContext } from "../../context/currentData.context";
 
 const Navbar = () => {
 
-  const { isLoggedIn, logOutUser } = useContext(AuthContext);
+  const { logOutUser } = useContext(AuthContext);
   const { currentBaby, currentUser } = useContext(CurrentDataContext);
 
   return (
@@ -15,7 +15,7 @@ const Navbar = () => {
         <span className="link">Miam Bebe</span>
       </Link>
 
-      {isLoggedIn
+      {currentUser
         ? 
           (<>
             

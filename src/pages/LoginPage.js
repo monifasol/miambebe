@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "./../context/auth.context";
 
@@ -6,6 +7,8 @@ const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 
 function LoginPage(props) {
+
+  const history = useHistory()
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +32,7 @@ function LoginPage(props) {
 
         const JWTToken = response.data.authToken;
         logInUser(JWTToken);
-        props.history.push("/");
+        history.push("/");
       })
       .catch((error) => {
         const errorDescription = `There has been an error: ${error}`;
