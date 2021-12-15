@@ -33,7 +33,7 @@ const FormNewBaby = () => {
             tooltipErr.innerText = `Name should not be empty!`
             setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1000)
         } else {
-
+            
             axios
                 .post(`${API_URI}/babies/${currentUser._id}`, requestBody, {        
                     headers: { Authorization: `Bearer ${token}` },

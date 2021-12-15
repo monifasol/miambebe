@@ -21,8 +21,6 @@ function LoginPage(props) {
     e.preventDefault();
     const requestBody = { email, password };
 
-    console.log("URIIIII ======>", API_URI)
-
     axios
 
       .post(`${API_URI}/auth/login`, requestBody)
@@ -34,7 +32,7 @@ function LoginPage(props) {
         props.history.push("/");
       })
       .catch((error) => {
-        const errorDescription = error.response.data.message;
+        const errorDescription = `There has been an error: ${error}`;
         setErrorMessage(errorDescription);
       });
   };

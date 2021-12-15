@@ -81,11 +81,17 @@ const Databoard = ( { goals } ) => {
 
         <div className="databoard-component comp">
         
-            <h2 className="h2-comp">Databoard</h2>
-
+            { !isDataLoading && goals && goals.length > 0 && dataChart && 
+                <>
                     <span className="graphics-label-foodgroup">Foodgroup</span>
                     <span className="graphics-label-given">Given</span>
 
+                </>
+            }
+
+            <h2 className="h2-comp">Databoard</h2>
+
+                
             { (!currentBaby || !currentWeek || (!isDataLoading && areGoalQuantiesEmpty())) 
             
                 &&
@@ -108,7 +114,11 @@ const Databoard = ( { goals } ) => {
             { !isDataLoading && goals && goals.length > 0 &&
                 <>
                     <div className="databoard-graphics">
-                        { dataChart && <GraphicBars dataGoals={dataChart} labelsFoodgroups={labelsChart} arrayTickValues={tickValuesChart} /> }
+                        { dataChart && 
+                            
+                            <GraphicBars dataGoals={dataChart} labelsFoodgroups={labelsChart} arrayTickValues={tickValuesChart} /> 
+                            
+                        }
                     </div>
                 </>
             }

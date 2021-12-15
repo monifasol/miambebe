@@ -21,18 +21,6 @@ function HomePage() {
   const [isInitializingGoals, setIsInitializingGoals] = useState(true)    // goals for the week
 
 
-/*
-              // ADD SORTING BY GOAL Quantity ?
-                const sortyByGoal = (a, b) => {
-                    if (a.quantityGoal < b.quantityGoal) return 1
-                    if (a.quantityGoal > b.quantityGoal) return -1
-                    else return 0
-                } 
-      
-                const sortedGoals = goals.sort(sortyByGoal)
-*/
-
-
     // Inits state variable GOALS, if week has already goals (first, API call to populate them)
     useEffect( () => {
       if (currentWeek && currentWeek.goals && currentWeek.goals.length > 0) {
@@ -100,6 +88,7 @@ function HomePage() {
         
           // I need an Axios call here, to get the week from the API with its goals updated. 
           // Otherwise, week.goals do not reflect the updated goals.          
+          
           axios
               .get(`${API_URI}/weeks/${currentWeek._id}`, requestBody, {
                   headers: { Authorization: `Bearer ${token}` },
