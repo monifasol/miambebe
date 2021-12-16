@@ -20,7 +20,7 @@ function HomePage() {
   const [isInitializingGoals, setIsInitializingGoals] = useState(true)    // goals for the week
 
 
-    // Inits state variable GOALS, if week has already goals (first, API call to populate them)
+    // Inits state variable GOALS, if week has already goals
     useEffect( () => {
       if (currentWeek && currentWeek.goals && currentWeek.goals.length > 0) {
 
@@ -35,8 +35,6 @@ function HomePage() {
 
     // Init goals for an empty week 
     const initWeekFoodPlan = () => {
-
-      //console.log("Init goals for an empty weelk =====>", currentWeek.firstday)
 
       foodgroups.forEach( (foodgroup) => {
           const requestBody = { foodgroupId: foodgroup._id, quantityGoal: 0, quantityAccomplished: 0, weekId: currentWeek._id }
@@ -65,8 +63,6 @@ function HomePage() {
               })
               .catch((error) => { console.log(error)});
       }
-
-      //console.log("currentWeek now has goals ===> ", currentWeek.goals.length)
   }
 
 
