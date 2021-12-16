@@ -2,7 +2,7 @@ import React from 'react'
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
 
 
-const GraphicBars = ( { dataGoals, labelsFoodgroups, arrayTickValues } ) => {
+const GraphicBars = ( { dataGoals, labelsFoodgroups } ) => {
 
     const styleAxis = {
                         axis: {stroke: "#4C536A"},
@@ -13,11 +13,6 @@ const GraphicBars = ( { dataGoals, labelsFoodgroups, arrayTickValues } ) => {
                                     fontSize: 8, 
                                     padding: 4, 
                                     fontFamily: "'Montserrat Alternates', sans-serif"} }
-    
-    
-    //console.log("In GRAPHIC: dataGoals", dataGoals)
-    //console.log("In GRAPHIC: labelsFoodgroups", labelsFoodgroups)
-    //console.log("In GRAPHIC: arrayTickValues", arrayTickValues)
 
     const buildTooltip = (datum) => {
         let message = `You wanted to give ${datum.goalQ} portions of ${datum.labelFoodgroup} this week, and baby ate ${datum.givenQ} so far`        
@@ -30,7 +25,6 @@ const GraphicBars = ( { dataGoals, labelsFoodgroups, arrayTickValues } ) => {
         let tooltipEl = document.getElementById('tooltip')
         tooltipEl.classList.remove("show")
     }
-
 
     return (
 
@@ -46,15 +40,15 @@ const GraphicBars = ( { dataGoals, labelsFoodgroups, arrayTickValues } ) => {
                 animate={{ duration: 500 }} >
 
                 <VictoryAxis crossAxis
-                    //tickValues={[arrayTickValues]}
                     tickFormat={labelsFoodgroups}
                     style={styleAxis} 
                     //fixLabelOverlap={true} 
                     />
 
                 <VictoryAxis crossAxis
-                    dependentAxis
+                    tickValues={[0, 25, 50, 100]}
                     tickFormat={(x) => (`${x} %`)}
+                    dependentAxis
                     style={styleAxis}
                  />
 

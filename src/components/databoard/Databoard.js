@@ -11,7 +11,6 @@ const Databoard = ( { goals } ) => {
 
     const [ dataChart, setDataChart ] = useState(null)   
     const [ labelsChart, setLabelsChart ] = useState(null) 
-    const [ tickValuesChart, setTickValuesChart ] = useState(null) 
 
 
     // Calls "buildGoalsArrObj" on component mount, to use in Victory Chart.
@@ -24,13 +23,9 @@ const Databoard = ( { goals } ) => {
 
     useEffect( ()=> {
         if (dataChart) {
-
-            // Build labels and tick values data
+            // Build labels for the graphics
             let labelsFoodgroups = dataChart.map( item => item.labelFoodgroup)
-            let arrayTickValues = dataChart.map( item => item.foodgroup) 
-
             setLabelsChart(labelsFoodgroups)
-            setTickValuesChart(arrayTickValues)
         }
     }, [dataChart]);
 
@@ -116,7 +111,7 @@ const Databoard = ( { goals } ) => {
                     <div className="databoard-graphics">
                         { dataChart && 
                             
-                            <GraphicBars dataGoals={dataChart} labelsFoodgroups={labelsChart} arrayTickValues={tickValuesChart} /> 
+                            <GraphicBars dataGoals={dataChart} labelsFoodgroups={labelsChart} /> 
                             
                         }
                     </div>
