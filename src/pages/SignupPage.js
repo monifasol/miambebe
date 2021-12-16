@@ -35,37 +35,46 @@ function SignupPage(props) {
   };
 
   return (
-    <div className="signup-page">
-      <h1>Sign Up</h1>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+    <>
+      
+      <div className="welcome-msg">
+          <p>Welcome to Miam Bebe! </p>
+          <p>A food tracker for babies...  <span class="small">(and parents!)</span></p>
+      </div>
 
-      <form onSubmit={handleSignupSubmit} className="form">
+      <div className="signup-page">
+        <h1>Sign Up</h1>
 
-        <div className="fields">
-          <label>Your firstname:</label>
-          <input type="text" name="name" value={name} onChange={handleName} />
-        </div>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-        <div className="fields">
-          <label>Email:</label>
-          <input type="text" name="email" value={email} onChange={handleEmail} />
-        </div>
+        <form onSubmit={handleSignupSubmit} className="form">
 
-        <div className="fields">
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={handlePassword}
-          />
-        </div>
+          <div className="fields">
+            <label>Your firstname:</label>
+            <input type="text" name="name" value={name} onChange={handleName} />
+          </div>
 
-        <button type="submit" className="btn">Sign Up</button>
-      </form>
+          <div className="fields">
+            <label>Email:</label>
+            <input type="text" name="email" value={email} onChange={handleEmail} />
+          </div>
 
-    </div>
+          <div className="fields">
+            <label>Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={handlePassword}
+            />
+          </div>
+
+          <button type="submit" className="btn">Sign Up</button>
+        </form>
+
+      </div>
+    </>
   );
 }
 

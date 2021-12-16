@@ -4,12 +4,9 @@ import axios from "axios";
 const localJWTToken = localStorage.getItem("authToken");
 const API_URI = process.env.REACT_APP_API_URL;
 
-console.log("========> env", process.env.REACT_APP_API_URL)
-
 const DataContext = React.createContext();
 
 function DataProviderWrapper(props) {
-
 
   // AUTH state variables 
 

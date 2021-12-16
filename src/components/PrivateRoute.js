@@ -11,6 +11,9 @@ function PrivateRoute(props) {
   // If the authentication is still loading ⏳
   if (isLoading) return <p>Loading ...</p>;
 
+
+  console.log("LOGGEED IN: ", isLoggedIn.toString())
+
   // If the user is not logged in ❌
   if (!isLoggedIn) return <Redirect to="/login" />;
 

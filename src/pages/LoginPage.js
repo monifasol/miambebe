@@ -33,7 +33,8 @@ function LoginPage(props) {
 
         const JWTToken = response.data.authToken;
         logInUser(JWTToken);
-        history.push("/login");
+        console.log("HOLA ESTOY AQUI", JWTToken)
+        props.history.push("/");
       })
       .catch((error) => {
         const errorDescription = `There has been an error: ${error}`;
@@ -42,31 +43,40 @@ function LoginPage(props) {
   };
 
   return (
-    <div className="login-page">
-      <h1>Login</h1>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+    <>
+      
+      <div className="welcome-msg">
+          <p>Welcome to Miam Bebe! </p>
+          <p>A food tracker for babies...  <span class="small">(and parents!)</span></p>
+      </div>
 
-      <form onSubmit={handleLoginSubmit} className="form">
-        <div className="fields">
-          <label>Email:</label>
-          <input type="text" name="email" value={email} onChange={handleEmail} />
-        </div>
+      <div className="login-page">
+        <h1>Login</h1>
 
-        <div className="fields">
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={handlePassword}
-          />
-        </div>
+        {errorMessage && <p className="error">{errorMessage}</p>}
 
-        <button type="submit" className="btn">Login</button>
+        <form onSubmit={handleLoginSubmit} className="form">
+          <div className="fields">
+            <label>Email:</label>
+            <input type="text" name="email" value={email} onChange={handleEmail} />
+          </div>
 
-      </form>
-    </div>
+          <div className="fields">
+            <label>Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={handlePassword}
+            />
+          </div>
+
+          <button type="submit" className="btn">Login</button>
+
+        </form>
+      </div>
+    </>
   );
 }
 

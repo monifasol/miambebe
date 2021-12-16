@@ -6,7 +6,7 @@ import logo from "../../images/logo.png"
 
 const Navbar = () => {
 
-  const { isLoggedIn, logOutUser, currentBaby, currentUser } = useContext(DataContext);
+  const { isLoggedIn, logOutUser, currentBaby, currentUser, userDevice } = useContext(DataContext);
 
   return (
     <nav className="header">
@@ -18,7 +18,7 @@ const Navbar = () => {
         ? 
           (<>
             
-            { currentBaby && <CurrentBabyNav currentBaby={currentBaby} /> }  
+            { currentBaby && <CurrentBabyNav currentBaby={currentBaby} currentUser={currentUser} /> }  
                 
             <div className="only-desktop">
 
@@ -28,21 +28,19 @@ const Navbar = () => {
               <Link to="/profile">
                 <span className="link">Profile</span>
               </Link>
-            </div>
 
-            <span>Hello, {currentUser && currentUser.name}!</span>
-            <span onClick={logOutUser} className="link">Logout</span>
+              <span onClick={logOutUser} className="link">Logout</span>
+            </div>
           </>)
         : 
           (<>
-
               <div className="singup">
-                <p>Don't have an account yet?</p>
+                { userDevice !== "mobile" && <p>Don't have an account yet?</p> }
                 <Link to="/signup"> <span className='btn'>Signup</span> </Link>
               </div>
 
               <div className="login">
-                <p>Already have account?</p>
+                { userDevice !== "mobile" && <p>Already have account?</p> }
                 <Link to="/login"> <span className='btn'>Login</span> </Link>
               </div>
             
