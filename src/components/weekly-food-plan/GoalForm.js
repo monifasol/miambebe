@@ -74,7 +74,7 @@ const GoalForm = ( props ) => {
                 </div>
 
 
-                <div className="group-inputs-goal given">
+                <div className="group-inputs-goal">
                     <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ (e)=> increaseQuantityAccomplished(e) } />
                       
                     <input type="text" 

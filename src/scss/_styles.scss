@@ -30,7 +30,7 @@ h2.h2-comp {
     font-weight: 600;
     margin-top: 20px;
     font-size: x-large;
-    margin: 20px auto;
+    margin: 30px auto;
     position: relative;
     width: fit-content;
     z-index: 0;
@@ -455,9 +455,6 @@ nav.menu {
 
         &.empty {
             background-color: white;
-            .group-inputs-goal {
-                //background-color: $color-pink-light;
-            }
         }
         
         .group-inputs-goal {
@@ -466,15 +463,9 @@ nav.menu {
             align-items: center;
             padding: 6px 10px;
 
-            //background-color: #F2F6FF;
-
             .title {
                 font-size: 12px;
                 text-align: center;
-            }
-
-            &.given {
-                background-color: unset;
             }
         }
         
@@ -658,6 +649,22 @@ form, .form {
     flex-direction: column;
     align-items: flex-start;
     position: relative;
+
+    input[type=file]::file-selector-button {
+        padding: 10px 20px;
+        border-radius: 6px;
+        background-color: $color-pink;
+        border: 1px solid $color-pink-dark;
+        transition: 1s;
+        font-family: $main-font-family;
+        cursor: pointer;
+        color: $main-color;
+    }
+    
+    input[type=file]::file-selector-button:hover {
+        background-color: $color-pink-dark;
+        border: solid 1px $main-color;
+    }
 
     input, select, textarea, option {
         border-radius: 6px;
@@ -1051,7 +1058,7 @@ form, .form {
     background-color: $color-footer;
     color: white;
     width: 100vw;
-    height: 90px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;

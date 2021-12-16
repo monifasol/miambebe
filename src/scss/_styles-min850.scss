@@ -3,6 +3,10 @@
         font-size: 14px;
     }
     
+    .only-desktop {
+        display: flex;
+    }
+    
     nav.header {
         margin: 20px;
         span {
@@ -35,7 +39,9 @@
     }
 
     .week-component {
-
+        .form-goal {
+            width: unset;
+        }
         .header-form-goals {
             width: 100%;
         }
@@ -71,6 +77,10 @@
 
     .recipe-card {
         margin: 0 20px 20px 0;
+    }
+
+    #footerMenu {
+        display: none;
     }
 
 }

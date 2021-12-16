@@ -1,8 +1,4 @@
 @media all and (min-width: 650px) {
-    
-    .only-desktop {
-        display: flex;
-    }
 
     nav.header {
             
@@ -23,20 +19,14 @@
 
     }
 
-
     .signup-page,
     .login-page,
     .welcome-msg {
         width: 500px;
     }
 
-
     .homepage {
         padding: 10px 30px;
-
-        &-flex {
-            margin-top: 50px;
-        }
     }
     
     .week-component {
@@ -51,10 +41,6 @@
     .pagination-links {
         width: 80%;
         margin: 40px auto;
-    }
-
-    #footerMenu {
-        display: none;
     }
     
     .modal {

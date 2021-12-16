@@ -13,7 +13,7 @@ const token = localStorage.getItem("authToken");
 const ProfilePage = () => {
     
 
-    const { currentUser, currentBaby } = useContext(DataContext)
+    const { currentUser, currentBaby, updateUser, updateBaby } = useContext(DataContext)
     const [ user, setUser ] = useState()
 
 
@@ -57,19 +57,22 @@ const ProfilePage = () => {
             const requestBody = { name: value }          
 
             axios
-                .put(`${API_URI}/users/${currentUser._id}`, requestBody, {     // updates user info     
+                .put(`${API_URI}/users/${currentUser._id}`, requestBody, {     // updates user name     
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 .then((response) => {
+                    let updatedUser = response.data.data
+                    updateUser(updatedUser)    
                     tooltipEl.classList.add('show')
                     tooltipEl.innerText = `${field} saved!`
                     setTimeout(()=>{ tooltipEl.classList.remove('show')}, 1000)
                 })
                 .catch((error) => console.log(error));
         } else {
+            e.target.innerText = currentUser.name
             tooltipErr.classList.add('show')
-            tooltipErr.innerText = `${field} empty`
-            setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1000)
+            tooltipErr.innerText = `${field} not saved, it was empty!`
+            setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1200)
         }
     }    
 
@@ -91,15 +94,18 @@ const ProfilePage = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 .then((response) => {
+                    let updatedBaby = response.data.data
+                    updateBaby(updatedBaby)  
                     tooltipEl.classList.add('show')
                     tooltipEl.innerText = `${field} saved!`
-                    setTimeout(()=>{ tooltipEl.classList.remove('show')}, 1000)
+                    setTimeout(()=>{ tooltipEl.classList.remove('show')}, 1200)
                 })
                 .catch((error) => console.log(error));
         } else {
+            e.target.innerText = currentBaby[field]
             tooltipErr.classList.add('show')
-            tooltipErr.innerText = `${field} empty`
-            setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1000)
+            tooltipErr.innerText = `${field} not saved, it was empty!`
+            setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1200)
         }
     }    
 

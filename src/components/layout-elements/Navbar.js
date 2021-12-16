@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";        
-import CurrentBabyNav from "./CurrentBabyNav";               
 import { DataContext } from "../../context/data.context";
 import logo from "../../images/logo.png"
+import defaultBabyPic from "../../images/default-avatar.png"
+
 
 const Navbar = () => {
 
@@ -18,15 +19,25 @@ const Navbar = () => {
         ? 
           (<>
             
-            { currentBaby && <CurrentBabyNav currentBaby={currentBaby} currentUser={currentUser} /> }  
+            { currentBaby && 
+            
+              <div className="current-logged">
+                <img className="baby-avatar-header" src={currentBaby.imageUrl || defaultBabyPic} alt="avatar baby" />
+                <div className="text">
+                    <span>Hello, {currentUser && currentUser.name}!</span>
+                    <span className="baby">{currentBaby.name}, {currentBaby.age} months</span>
+                </div>
+            </div>
+            
+            }  
                 
             <div className="only-desktop">
 
               <Link to="/">
                 <span className="link">Week plan</span>
               </Link>
-              <Link to="/profile">
-                <span className="link">Profile</span>
+              <Link to="/recipes">
+                <span className="link">Recipes</span>
               </Link>
               <Link to="/profile">
                 <span className="link">Profile</span>

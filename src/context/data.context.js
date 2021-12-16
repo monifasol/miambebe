@@ -110,6 +110,13 @@ function DataProviderWrapper(props) {
   }, [currentUser]);
 
 
+  const updateUser = (user) => {
+    setCurrentUser(user)
+  }
+
+  const updateBaby = (baby) => {
+    setCurrentBaby(baby)
+  }
 
   // ========= Week Initialization ============
 
@@ -207,7 +214,9 @@ function DataProviderWrapper(props) {
         currentUser,
         currentWeek,
         foodgroups,
-        userDevice
+        userDevice,
+        updateUser,
+        updateBaby
       }}
     >
       {props.children}
