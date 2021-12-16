@@ -49,6 +49,7 @@ const GraphicBars = ( { dataGoals, labelsFoodgroups } ) => {
                     tickValues={[0, 25, 50, 100]}
                     tickFormat={(x) => (`${x} %`)}
                     dependentAxis
+                    animate={{ duration: 0, delay: 0 }}
                     style={styleAxis}
                  />
 

@@ -3,7 +3,7 @@ import axios from "axios";
 import { DataContext } from '../context/data.context'
 import defaultBabyPic from "../images/default-avatar.png"
 
-const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URI = process.env.REACT_APP_API_URL;
 const token = localStorage.getItem("authToken");
 
 

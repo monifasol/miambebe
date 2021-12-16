@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-const API_URI = process.env.API_URL || 'http://localhost:5000';
+const API_URI = process.env.API_URL;
 
 
 function SignupPage(props) {

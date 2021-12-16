@@ -2,7 +2,7 @@ import { React, useState, useContext } from 'react'
 import axios from "axios";
 import { DataContext } from '../../context/data.context'
 
-const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URI = process.env.REACT_APP_API_URL;
 const token = localStorage.getItem("authToken");
 
 const FormNewBaby = (props) => {
@@ -19,8 +19,6 @@ const FormNewBaby = (props) => {
         
         const requestBody = formState    
     
-        console.log("modal to hide ===> ", e.target.parentElement)
-
         if ( Object.keys(formState).length === 0 ) {
 
             tooltipErr.classList.add('show')
@@ -39,17 +37,20 @@ const FormNewBaby = (props) => {
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 .then((response) => {
-                    props.babyIsUpdated()
 
                     tooltipEl.classList.add('show')
                     tooltipEl.innerText = `Baby successfully saved!`
-
 
                     setTimeout(()=>{ 
                         tooltipEl.classList.remove('show')
                         e.target.parentElement.classList.remove('show')
                         document.getElementById('overlayModals').classList.remove('show')
+                    }, 800)
+
+                    setTimeout(()=>{ 
+                        props.babyIsUpdated()
                     }, 1000)
+
                 })
                 .catch((error) => {
                     console.log(error)

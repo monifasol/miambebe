@@ -10,7 +10,7 @@ import RecipeSelected from "../components/recipes/RecipeSelected";
 import RecipeCard from "./../components/recipes/RecipeCard";
 
 
-const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URI = process.env.REACT_APP_API_URL;
 const token = localStorage.getItem("authToken");
 
 

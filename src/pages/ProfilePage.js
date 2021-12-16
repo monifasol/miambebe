@@ -6,7 +6,7 @@ import FormNewBaby from "../components/babies/FormNewBaby";
 
 import editIcon from "../images/edit-icon.png"
 
-const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URI = process.env.REACT_APP_API_URL;
 const token = localStorage.getItem("authToken");
 
 

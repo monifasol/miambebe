@@ -26,10 +26,9 @@ const Logs = () => {
             
               <p className="log"> 
                 <Moment fromNow>{goal.updatedAt}</Moment>:
-                  given
                   <span className="portions">{goal.quantityAccomplished} portions</span>
                    of 
-                   <span className="foodgroup">{goal.foodgroup.name} </span>
+                   <span className="foodgroup">{goal.foodgroup.name} </span> given.
               </p>
           }
 

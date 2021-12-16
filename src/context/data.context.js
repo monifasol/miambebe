@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const localJWTToken = localStorage.getItem("authToken");
-const API_URI = process.env.REACT_APP_API_URL || "http://localhost:5000";
+const API_URI = process.env.REACT_APP_API_URL;
+
+console.log("========> env", process.env.REACT_APP_API_URL)
 
 const DataContext = React.createContext();
 

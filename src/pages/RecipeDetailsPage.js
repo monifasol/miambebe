@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AddTask from "../components/AddTask";
 import RecipeCard from "../components/recipes/RecipeCard";
 
-const API_URI = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URI = process.env.REACT_APP_API_URL;
 
 
 function RecipeDetailsPage(props) {

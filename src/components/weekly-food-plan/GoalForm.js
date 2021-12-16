@@ -38,18 +38,6 @@ const GoalForm = ( props ) => {
       }
     }
 
-    const increaseQuantityGoal = (e) => {
-      let value = parseInt(quantityGoal) + 1
-      handleChangeQuantityGoal(value)
-    }
-
-    const decreaseQuantityGoal = (e) => {
-      if (quantityGoal > 0) {
-        let value = parseInt(quantityGoal) - 1
-        handleChangeQuantityGoal(value)
-      }
-    }
-
     const increaseQuantityAccomplished = (e) => {
       let value = parseInt(quantityAccomplished) + 1
       handleChangeQuantityAccomplished(value)
@@ -76,16 +64,12 @@ const GoalForm = ( props ) => {
                             className="input-foodgroup"
                             value={(foodgroup && foodgroup.name) || ""} />   
                     
+                    x
                     <input type="text" 
                             name="quantityGoal" 
                             value={quantityGoal || 0} 
                             onChange={ (e)=> { handleChangeQuantityGoal(e.target.value) }} 
                     />
-
-                    <div className="goal-buttons">
-                      <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ (e)=> increaseQuantityGoal(e) } />
-                      <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ (e)=> decreaseQuantityGoal(e) } />
-                    </div>
 
                 </div>
 
