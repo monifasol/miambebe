@@ -26,14 +26,14 @@
     }
 
     .homepage {
-        padding: 10px 30px;
+        padding: 0px 20px;
     }
     
     .week-component {
         .form-goal {
             .input-foodgroup {
                 max-width: unset;
-                padding: 0;
+                width: 150px;
             }
         }
     }
@@ -60,16 +60,13 @@
             }
         }
 
-        .pic-upload {
-            form {
-                .wrapper-upload-pic {
-                    input, .btn {
-                        max-width: unset;
-                        margin-top: 0px;
-                    }
-                }
+        .pic-upload form .wrapper-upload-pic {
+            input, .btn {
+                max-width: unset;
+                margin-top: 0px;
             }
-        }           
+        }
+      
     }
 
     .recipes-page {

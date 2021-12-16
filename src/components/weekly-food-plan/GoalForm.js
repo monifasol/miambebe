@@ -62,6 +62,7 @@ const GoalForm = ( props ) => {
                             type="text" 
                             name="foodgroup" 
                             className="input-foodgroup"
+                            id={ foodgroup && foodgroup.code }
                             value={(foodgroup && foodgroup.name) || ""} />   
                     
                     x

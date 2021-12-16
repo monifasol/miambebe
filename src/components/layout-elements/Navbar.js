@@ -7,7 +7,7 @@ import defaultBabyPic from "../../images/default-avatar.png"
 
 const Navbar = () => {
 
-  const { isLoggedIn, logOutUser, currentBaby, currentUser, userDevice } = useContext(DataContext);
+  const { isLoggedIn, logOutUser, currentBaby, currentUser } = useContext(DataContext);
 
   return (
     <nav className="header">
@@ -15,7 +15,7 @@ const Navbar = () => {
         <img src={logo} alt="logo miam bebe" />
       </Link>
 
-            { currentBaby && 
+            { currentBaby && isLoggedIn &&
             
               <div className="current-logged">
                 <img className="baby-avatar-header" src={currentBaby.imageUrl || defaultBabyPic} alt="avatar baby" />

@@ -449,7 +449,6 @@ nav.menu {
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
-        width: 80%;
         padding-right: 8px;
         margin: 10px auto;
         border: solid 1px $color-blue;
@@ -458,6 +457,10 @@ nav.menu {
 
         &.empty {
             background-color: white;
+
+            .input-foodgroup {
+                background-color: white;
+            }
         }
         
         .group-inputs-goal {
@@ -469,6 +472,52 @@ nav.menu {
             .title {
                 font-size: 12px;
                 text-align: center;
+            }
+
+            & #FRUIT, & #VEG, & #DRIED_VEG , & #DAIRY , & #POTATOES, & #CEREAL, & #EGGS, & #MEAT, & #FISH , & #EGG, & #FAT {
+                background-size: 27px;
+                background-repeat: no-repeat;
+                background-position: left;
+            } 
+
+            & #FRUIT {
+                background-image: url('../images/icons/fruits.png');
+            }
+
+            & #VEG {
+                background-image: url('../images/icons/veggies.png');
+            }
+
+            & #DRIED_VEG {
+                background-image: url('../images/icons/legumes.png');
+            }
+
+            & #DAIRY {
+                background-image: url('../images/icons/dairy.png');
+            }
+
+            & #POTATOES {
+                background-image: url('../images/icons/potatoes.png');
+            }
+
+            & #CEREAL {
+                background-image: url('../images/icons/bread.png');
+            }
+
+            & #EGG {
+                background-image: url('../images/icons/egg.png');
+            }
+
+            & #MEAT {
+                background-image: url('../images/icons/meat.png');
+            }
+
+            & #FISH {
+                background-image: url('../images/icons/fish.png');
+            }
+
+            & #FAT {
+                background-image: url('../images/icons/fats.png');
             }
         }
         
@@ -482,8 +531,10 @@ nav.menu {
         .input-foodgroup {
             border: none;
             width: fit-content;
-            max-width: 100px;
             padding: 0;
+            background-color: $color-lila-light;
+            padding-left: 45px;
+            text-align: left;
         }
 
         .btn {
@@ -708,6 +759,11 @@ form, .form {
             margin-left: 20px;
         }
     }
+}
+
+#form-error {
+    margin-top: -20px;
+    margin-bottom: 11px;
 }
 
 #overlayModals {

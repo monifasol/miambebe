@@ -46,7 +46,7 @@ const GraphicBars = ( { dataGoals, labelsFoodgroups } ) => {
                     />
 
                 <VictoryAxis crossAxis
-                    tickValues={[0, 25, 50, 100]}
+                    tickValues={[0, 25, 50, 75, 100]}
                     tickFormat={(x) => (`${x} %`)}
                     dependentAxis
                     animate={{ duration: 0, delay: 0 }}
