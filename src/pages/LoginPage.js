@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 import { DataContext } from "./../context/data.context";
+
 
 const API_URI = process.env.REACT_APP_API_URL;
 
@@ -28,13 +29,9 @@ function LoginPage(props) {
 
       .post(`${API_URI}/auth/login`, requestBody)
       .then((response) => {
-
-        console.log("JWT token", response.data.authToken);
-
         const JWTToken = response.data.authToken;
         logInUser(JWTToken);
-        console.log("HOLA ESTOY AQUI", JWTToken)
-        props.history.push("/");
+        history.push("/");
       })
       .catch((error) => {
         const errorDescription = `There has been an error: ${error}`;
@@ -74,7 +71,12 @@ function LoginPage(props) {
 
           <button type="submit" className="btn">Login</button>
 
-        </form>
+        </form>              
+      </div>
+
+      <div className="login-page">
+          <p>Don't have an account yet?</p>
+          <Link to="/signup"> <span className='btn'>Signup</span> </Link>
       </div>
     </>
   );

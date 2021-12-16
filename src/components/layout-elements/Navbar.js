@@ -15,10 +15,6 @@ const Navbar = () => {
         <img src={logo} alt="logo miam bebe" />
       </Link>
 
-      {isLoggedIn
-        ? 
-          (<>
-            
             { currentBaby && 
             
               <div className="current-logged">
@@ -45,21 +41,7 @@ const Navbar = () => {
 
               <span onClick={logOutUser} className="link">Logout</span>
             </div>
-          </>)
-        : 
-          (<>
-              <div className="singup">
-                { userDevice !== "mobile" && <p>Don't have an account yet?</p> }
-                <Link to="/signup"> <span className='btn'>Signup</span> </Link>
-              </div>
-
-              <div className="login">
-                { userDevice !== "mobile" && <p>Already have account?</p> }
-                <Link to="/login"> <span className='btn'>Login</span> </Link>
-              </div>
-            
-          </>)
-      }
+        
     </nav>
   );
 }

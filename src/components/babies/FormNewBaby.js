@@ -9,7 +9,7 @@ const FormNewBaby = (props) => {
 
 
     const [ formState, setFormState ] = useState({})
-    const { currentUser } = useContext(DataContext)
+    const { currentUser, updateBaby } = useContext(DataContext)
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -37,6 +37,8 @@ const FormNewBaby = (props) => {
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 .then((response) => {
+                    let updatedBaby = response.data.data 
+                    updateBaby(updatedBaby)   
 
                     tooltipEl.classList.add('show')
                     tooltipEl.innerText = `Baby successfully saved!`

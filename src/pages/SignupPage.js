@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 
 const API_URI = process.env.API_URL;
 
 
 function SignupPage(props) {
+
 
   const history = useHistory()
   const [email, setEmail] = useState("");
@@ -73,6 +74,11 @@ function SignupPage(props) {
           <button type="submit" className="btn">Sign Up</button>
         </form>
 
+      </div>
+
+      <div className="signup-page">
+          <p>Already have account?</p>
+          <Link to="/login"> <span className='btn'>Login</span> </Link>
       </div>
     </>
   );

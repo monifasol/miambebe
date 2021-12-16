@@ -49,6 +49,29 @@
         width: 80%;
     }
 
+    .profile-page {
+        &-form {
+            padding: 30px;
+
+            .field-row {
+                label {
+                    width: 30%;
+                }
+            }
+        }
+
+        .pic-upload {
+            form {
+                .wrapper-upload-pic {
+                    input, .btn {
+                        max-width: unset;
+                        margin-top: 0px;
+                    }
+                }
+            }
+        }           
+    }
+
     .recipes-page {
         padding: 40px 10px;
     

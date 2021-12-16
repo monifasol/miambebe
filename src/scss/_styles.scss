@@ -34,6 +34,7 @@ h2.h2-comp {
     position: relative;
     width: fit-content;
     z-index: 0;
+    line-height: 1.2em;
 
     &::before {
         content: "";
@@ -43,8 +44,9 @@ h2.h2-comp {
         transform: skew(10deg);
         position: absolute;
         z-index: -1;
-        bottom: -8px;
+        bottom: -4px;
         left: -10px;
+        width: calc(100% + 20px);
     }
 
 }
@@ -184,7 +186,7 @@ nav.header {
         }
         .text .baby {
             color: $color-blue-dark;
-            font-weight: bold;
+            font-weight: 600;
             line-height: 1.7em;
         }
     }
@@ -393,6 +395,7 @@ nav.menu {
 
     .no-baby {
         margin: 50px auto;
+        text-align: center;
     }
 
     .dates-current-week {
@@ -575,11 +578,13 @@ nav.menu {
 /* ========= Profile page ======== */
 
 .profile-page {
+
     width: 100%;
+    
     &-form {
         background-color: white;
         border-radius: 10px;
-        padding: 30px;
+        padding: 10px;
         margin: 10px;
 
         .field-row {
@@ -587,12 +592,15 @@ nav.menu {
                 padding: 0px 20px;
                 width: 90%;
             }
+            label {
+                width: 50%;
+            }
         }
     }
 
     h3 {
         font-weight: bold;
-        margin-top: 20px;
+        margin: 20px 0 0 20px;
     }
 
     .user-babies {
@@ -619,6 +627,8 @@ nav.menu {
 
                 input, .btn {
                     width: fit-content;
+                    max-width: 90%;
+                    margin-top: 14px;
                 }
 
                 .preview-pic {
@@ -679,6 +689,10 @@ form, .form {
         display: block;
         width: 30%;
         flex-shrink: 0;
+    }
+
+    .title {
+        font-weight: bold;
     }
 
     .field-row {
