@@ -11,7 +11,7 @@ const Week = ( props ) => {
     
     const { week, goals, initWeekFoodPlan, isInitializingGoals, handleSubmit } = props
 
-    const { currentBaby } = useContext(DataContext);
+    const { currentBaby } = useContext(DataContext)
     const [firstDay, setFirstDay] = useState(null)
     const [lastDay, setLastDay] = useState(null)
     

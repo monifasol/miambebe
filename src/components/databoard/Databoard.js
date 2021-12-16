@@ -16,7 +16,9 @@ const Databoard = ( { goals } ) => {
 
     // Calls "buildGoalsArrObj" on component mount, to use in Victory Chart.
     useEffect( ()=> {
-        if (goals) buildDataObj(goals)
+        if (goals) {
+           buildDataObj(goals)
+        }
     }, [goals]);
 
 
@@ -37,8 +39,6 @@ const Databoard = ( { goals } ) => {
                     
         let buildData = []
         let counter = 1
-
-        console.log("LETS SEE THIS GOALS ====> ", goals)
 
         goals.forEach( (goal, i) => {
 

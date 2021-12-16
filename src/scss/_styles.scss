@@ -29,6 +29,11 @@ h2.h2-comp {
     text-align: center;
     font-weight: 600;
     margin-top: 20px;
+    font-size: x-large;
+    position: relative;
+    background-color: $color-blue;
+    width: fit-content;
+    margin: 20px auto;
 }
 
 .bold {
@@ -160,8 +165,8 @@ nav.header {
         }
         .baby-avatar-header {
             object-fit: cover;
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             border-radius: 20px;
         }
     }
@@ -305,7 +310,13 @@ nav.menu {
                 padding: 20px;
 
                 .log {
-                    margin: 10px 0;
+                    margin: 0;
+                    padding: 10px 0;
+
+                    //&:nth-child(even) {
+                    //    background-color: $color-pink-light;
+                    //}
+                                        
                 }
 
                 h2.h2-comp {

@@ -7,77 +7,58 @@ const GoalForm = ( props ) => {
 
     const { goal, handleSubmit, buildError } = props
 
-    const [ formState, setFormState ] = useState({})
+    const [ quantityGoal, setQuantityGoal ] = useState(0)
+    const [ quantityAccomplished, setQuantityAccomplished ] = useState(0)
+    const [ foodgroup, setFoodgroup ] = useState("")
 
     
     // Initialize the form with the Goal information
     useEffect( ()=> {
-            console.log("Im going to set FormState NOW: ")
-
-            setFormState({
-              quantityGoal: goal.quantityGoal,
-              quantityAccomplished: goal.quantityAccomplished,
-              foodgroup: goal.foodgroup
-            })
-
-            //setFormState(Object.assign({}, formState, {quantityGoal: goal.quantityGoal}))
-            //setFormState(Object.assign({}, formState, {quantityAccomplished: goal.quantityAccomplished}))
-            //setFormState(Object.assign({}, formState, {foodgroup: goal.foodgroup}))
+            setQuantityGoal(goal.quantityGoal)
+            setQuantityAccomplished(goal.quantityAccomplished)
+            setFoodgroup(goal.foodgroup)
     }, [])
 
 
-    const handleChange = (e) => {
-      const {name, value } = e.target
-
-      console.log("name======>", name)
-      console.log("value======>", value)
-
+    const handleChangeQuantityGoal = (value) => {
+     
       if (Number.isNaN(parseInt(value))) buildError()
       else {
-        setFormState(Object.assign({}, formState, {[name]: value}))
-        console.log("formState", formState)
-        handleSubmit(goal, formState.foodgroup, formState.quantityGoal, formState.quantityAccomplished )
+        setQuantityGoal(value)
+        handleSubmit(goal, foodgroup, value, quantityAccomplished )
       }
     }
 
-    const submitField = () => {
-      handleSubmit(
-        goal, 
-        formState.foodgroup, 
-        formState.quantityGoal, 
-        formState.quantityAccomplished
-      )
+    const handleChangeQuantityAccomplished = (value) => {
+      
+      if (Number.isNaN(parseInt(value))) buildError()
+      else {
+        setQuantityAccomplished(value)
+        handleSubmit(goal, foodgroup, quantityGoal, value )
+      }
     }
 
     const increaseQuantityGoal = (e) => {
-      setFormState(
-          Object.assign({}, formState, {quantityGoal: parseInt(formState.quantityGoal) + 1})
-      )
-      submitField()
+      let value = parseInt(quantityGoal) + 1
+      handleChangeQuantityGoal(value)
     }
 
     const decreaseQuantityGoal = (e) => {
-      if (parseInt(formState.quantityGoal) > 0) {
-          setFormState(
-              Object.assign({}, formState, {quantityGoal: parseInt(formState.quantityGoal) - 1})
-          )
-          submitField()
+      if (quantityGoal > 0) {
+        let value = parseInt(quantityGoal) - 1
+        handleChangeQuantityGoal(value)
       }
     }
 
     const increaseQuantityAccomplished = (e) => {
-      setFormState(
-          Object.assign({}, formState, {quantityAccomplished: parseInt(formState.quantityAccomplished) + 1})
-      )
-      submitField()
+      let value = parseInt(quantityAccomplished) + 1
+      handleChangeQuantityAccomplished(value)
     }
 
-    const decreaseQuantityAccomplished= (e) => {
-      if (parseInt(formState.quantityAccomplished) > 0) {
-          setFormState(
-              Object.assign({}, formState, {quantityAccomplished: parseInt(formState.quantityAccomplished) - 1})
-          )
-          submitField()
+    const decreaseQuantityAccomplished = (e) => {
+      if (quantityAccomplished > 0) {
+        let value = parseInt(quantityAccomplished) - 1
+        handleChangeQuantityAccomplished(value)
       }
     }
 
@@ -85,7 +66,7 @@ const GoalForm = ( props ) => {
     return (
         <div>
               
-            <form className={(!formState.quantityGoal || formState.quantityGoal === 0) ? "form form-goal empty" : "form form-goal" } >
+            <form className={(!quantityGoal || quantityGoal === 0) ? "form form-goal empty" : "form form-goal" } >
 
                 <div className="group-inputs-goal">
                   
@@ -93,12 +74,12 @@ const GoalForm = ( props ) => {
                             type="text" 
                             name="foodgroup" 
                             className="input-foodgroup"
-                            value={(formState.foodgroup && formState.foodgroup.name) || ""} />   
+                            value={(foodgroup && foodgroup.name) || ""} />   
                     
                     <input type="text" 
                             name="quantityGoal" 
-                            value={formState.quantityGoal || 0} 
-                            onChange={ (e)=> { handleChange(e) }} 
+                            value={quantityGoal || 0} 
+                            onChange={ (e)=> { handleChangeQuantityGoal(e.target.value) }} 
                     />
 
                     <div className="goal-buttons">
@@ -113,14 +94,15 @@ const GoalForm = ( props ) => {
                     
                     <input type="text" 
                             name="quantityAccomplished" 
-                            value={formState.quantityAccomplished || 0} 
-                            onChange={ (e)=> { handleChange(e) }}
+                            value={quantityAccomplished || 0} 
+                            onChange={ (e)=> { handleChangeQuantityAccomplished(e.target.value) }}
                     />
 
                     <div className="goal-buttons">
                       <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ (e)=> increaseQuantityAccomplished(e) } />
                       <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ (e)=> decreaseQuantityAccomplished(e) } />
                     </div>
+
                 </div>
 
             </form>

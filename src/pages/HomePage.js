@@ -25,7 +25,9 @@ function HomePage() {
       if (currentWeek && currentWeek.goals && currentWeek.goals.length > 0) {
 
           setGoals(currentWeek.goals)
-          setTimeout(() => { setIsInitializingGoals(false) }, 1000)
+          setTimeout(() => { 
+            setIsInitializingGoals(false) 
+          }, 1000)
        
       } 
     }, [currentWeek])
@@ -72,8 +74,6 @@ function HomePage() {
 
   const handleSubmit = (goal, foodgroup, quantityGoal, quantityAccomplished) => {
 
-    console.log("SUBMIT GOAL!!!! ")
-
     if (currentWeek && foodgroup) {
       const requestBody = { foodgroupId: foodgroup._id, quantityGoal, quantityAccomplished, weekId: currentWeek._id }
       
@@ -82,19 +82,15 @@ function HomePage() {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          let updatedGoal = response.data.data
-          console.log(`Goal successfully updated with id ${updatedGoal._id}`)
-        
+
           // I need an Axios call here, to get the week from the API with its goals updated. 
           // Otherwise, week.goals do not reflect the updated goals.          
-          
           axios
               .get(`${API_URI}/weeks/${currentWeek._id}`, requestBody, {
                   headers: { Authorization: `Bearer ${token}` },
               })
               .then((response) => {
                   let foundWeek = response.data.data
-                  console.log(`New goals for the week of ${foundWeek.goals}`)
                   setGoals(foundWeek.goals)
               })
               .catch((error) => {
@@ -109,7 +105,6 @@ function HomePage() {
   
   return (
     <div className="homepage">
-      <h1>Your dashboard</h1>
       
       <div className="homepage-flex">
 
