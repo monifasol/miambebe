@@ -2,6 +2,7 @@ import { React, useContext, useEffect, useState } from 'react'
 import editIcon from "../../images/edit-icon.png"
 import { DataContext } from '../../context/data.context'
 import Moment from 'react-moment';
+import ReadOnlyRecipe from './ReadOnlyRecipe';
 
 const RecipeSelected = ( { recipe, submitRecipeChange } ) => {
 
@@ -13,9 +14,18 @@ const RecipeSelected = ( { recipe, submitRecipeChange } ) => {
 
     useEffect(() => {
         if (recipe && recipe.user && currentUser) {
+
+            console.log("user:", currentUser._id) 
+            console.log("writer:", recipe.user._id)    
+
+
             if (currentUser._id === recipe.user._id) {
+                console.log("SO YESSS")
                 setIsWritter(true)
+            } else {
+                setIsWritter(false)
             }
+
         }
     }, [recipe, currentUser])
 
@@ -69,11 +79,11 @@ const RecipeSelected = ( { recipe, submitRecipeChange } ) => {
         { recipe &&
 
          <>
-            { !isWritter
+            { isWritter === false
             
             ? 
             <>
-                SHOW READ ONLY RECIPE
+                <ReadOnlyRecipe recipe={recipe} />
             </>
 
             :
