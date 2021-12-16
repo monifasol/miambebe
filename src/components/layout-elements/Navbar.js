@@ -22,8 +22,11 @@ const Navbar = () => {
                 
             <div className="only-desktop">
 
-              <Link to="/recipes">
-                <span className="link">Recipes</span>
+              <Link to="/">
+                <span className="link">Week plan</span>
+              </Link>
+              <Link to="/profile">
+                <span className="link">Profile</span>
               </Link>
               <Link to="/profile">
                 <span className="link">Profile</span>

@@ -75,18 +75,15 @@ const GoalForm = ( props ) => {
 
 
                 <div className="group-inputs-goal given">
-                    
+                    <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ (e)=> increaseQuantityAccomplished(e) } />
+                      
                     <input type="text" 
                             name="quantityAccomplished" 
                             value={quantityAccomplished || 0} 
                             onChange={ (e)=> { handleChangeQuantityAccomplished(e.target.value) }}
                     />
 
-                    <div className="goal-buttons">
-                      <img src={btnMore} alt="increase quantity goal" className="btn-more" onClick={ (e)=> increaseQuantityAccomplished(e) } />
-                      <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ (e)=> decreaseQuantityAccomplished(e) } />
-                    </div>
-
+                    <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ (e)=> decreaseQuantityAccomplished(e) } />
                 </div>
 
             </form>
