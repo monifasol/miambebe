@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const localJWTToken = localStorage.getItem("authToken");
 const API_URI = process.env.REACT_APP_API_URL;
 
 const DataContext = React.createContext();
@@ -26,7 +25,9 @@ function DataProviderWrapper(props) {
   // ====== Auth methods ========
 
    const verifyToken = () => {
-    
+
+    const localJWTToken = localStorage.getItem("authToken");
+
     if (localJWTToken) {
       axios
         .get(`${API_URI}/auth/verify`, {
@@ -34,7 +35,9 @@ function DataProviderWrapper(props) {
         })
         .then((response) => {
           const userJWT = response.data;
-          setUser(userJWT);     
+          setUser(userJWT);   
+          console.log("I got a user: ", userJWT)
+  
           setIsLoggedIn(true);
           setIsLoading(false);
         })
@@ -67,6 +70,9 @@ function DataProviderWrapper(props) {
    // fetches currentUser (full user model)
    useEffect( ()=> {
     if (user) {
+
+      const localJWTToken = localStorage.getItem("authToken");
+
       axios
       .get(`${API_URI}/users/${user._id}`, {
         headers: { Authorization: `Bearer ${localJWTToken}` },
@@ -137,6 +143,8 @@ function DataProviderWrapper(props) {
       babyId: currentBaby._id,
     };
 
+    const localJWTToken = localStorage.getItem("authToken");
+
     axios
       .post(`${API_URI}/weeks/`, requestBody, {
         headers: { Authorization: `Bearer ${localJWTToken}` },
@@ -167,6 +175,9 @@ function DataProviderWrapper(props) {
 
   // Init foodggroups
   useEffect(() => {
+
+    const localJWTToken = localStorage.getItem("authToken");
+
     if (localJWTToken) {
       axios
         .get(`${API_URI}/foodgroups`, {
