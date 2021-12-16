@@ -1,4 +1,5 @@
 import { Switch } from "react-router-dom";
+import { useContext } from "react";        
 
 import Navbar from "./components/layout-elements/Navbar";
 import FooterMenu from "./components/layout-elements/FooterMenu";
@@ -13,7 +14,12 @@ import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";    
 import AnonRoute from "./components/AnonRoute";        
 
+import { DataContext } from "./context/data.context";
+
 function App() {
+
+  const { isLoggedIn } = useContext(DataContext);
+
   return (
     <div className="App">  
 
@@ -31,9 +37,9 @@ function App() {
         <AnonRoute exact path="/login" component={LoginPage} />
       </Switch>
 
-      <div id="footerMenu">
-        <FooterMenu />
-      </div>
+      { isLoggedIn && 
+        <div id="footerMenu"><FooterMenu /></div>
+      }
     </div>
   );
 }

@@ -13,10 +13,11 @@ const FooterMenu = () => {
     const { isLoggedIn, logOutUser } = useContext(DataContext);
 
     return (
-        <div className="footer-menu">
-            {isLoggedIn &&
-            
-                (<>
+        <>
+         {isLoggedIn &&
+            <div className="footer-menu">
+        
+                <>
                     <Link to="/">
                         <img src={iconDashboard} className="link" alt="icon dashboard"/>
                     </Link>
@@ -31,9 +32,11 @@ const FooterMenu = () => {
 
                     <img onClick={logOutUser} src={iconLogout} className="link logout" alt="icon logout"/>
 
-                </>)
-            }
-        </div>
+                </>
+            </div>
+        }
+        
+        </>
     )
 }
 
