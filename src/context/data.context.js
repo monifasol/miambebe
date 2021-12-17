@@ -118,6 +118,10 @@ function DataProviderWrapper(props) {
     setCurrentBaby(baby)
   }
 
+  const updateWeek = (week) => {
+    setCurrentWeek(week)
+  }
+
   // ========= Week Initialization ============
 
   const formatDate = (date) => {
@@ -216,7 +220,8 @@ function DataProviderWrapper(props) {
         foodgroups,
         userDevice,
         updateUser,
-        updateBaby
+        updateBaby,
+        updateWeek
       }}
     >
       {props.children}

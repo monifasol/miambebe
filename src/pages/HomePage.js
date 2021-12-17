@@ -12,7 +12,7 @@ const API_URI = process.env.REACT_APP_API_URL;
 
 function HomePage() {
 
-  const { currentWeek, foodgroups } = useContext(DataContext);
+  const { currentWeek, foodgroups, updateWeek } = useContext(DataContext);
 
   const [goals, setGoals] = useState(null)
   const [isError, setIsError] = useState(false)
@@ -58,8 +58,9 @@ function HomePage() {
               })
               .then((response) => {
                   const foundWeek = response.data.data
+                  updateWeek(foundWeek)
                   setGoals(foundWeek.goals)
-                  setTimeout(() => { setIsInitializingGoals(false) }, 1000)
+                  setTimeout(() => { setIsInitializingGoals(false) }, 2000)
               })
               .catch((error) => { console.log(error)});
       }
@@ -87,6 +88,7 @@ function HomePage() {
               })
               .then((response) => {
                   let foundWeek = response.data.data
+                  updateWeek(foundWeek)
                   setGoals(foundWeek.goals)
               })
               .catch((error) => {
