@@ -93,7 +93,6 @@ const FormUpdateGoal = ( props ) => {
                             value={quantityGoal || 0} 
                             onChange={ (e)=> { handleChangeQuantityGoal(e.target.value) }} 
                     />
-
                 </div>
 
                 <div className="group-inputs-goal">

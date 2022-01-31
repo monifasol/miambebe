@@ -33,7 +33,8 @@ function HomePage() {
               headers: { Authorization: `Bearer ${token}` }
         })
         .then((response) => {
-          setGoals(response.data.data)
+          const sortedGoals = response.data.data.sort( (a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setGoals(sortedGoals)
           console.log(`Goals fetched from DB (populated!) after a change in goals.`)
         })
         .catch((error) => console.log(error));

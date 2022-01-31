@@ -12,9 +12,11 @@ const Databoard = ( { goals } ) => {
     const [ dataChart, setDataChart ] = useState(null)   
     const [ labelsChart, setLabelsChart ] = useState(null) 
 
-    // Calls "buildGoalsArrObj" on component mount, to use in Victory Chart.
+    // Calls "buildDataObj" on component mount, to use in Victory Chart.
     useEffect( ()=> { 
-        goals && buildDataObj(goals) 
+        if (goals) {
+            buildDataObj(goals)
+        }  
     }, [goals]);
 
 

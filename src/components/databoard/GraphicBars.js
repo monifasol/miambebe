@@ -15,7 +15,7 @@ const GraphicBars = ( { dataGoals, labelsFoodgroups } ) => {
                                     fontFamily: "'Montserrat Alternates', sans-serif"} }
 
     const buildTooltip = (datum) => {
-        let message = `You wanted to give ${datum.goalQ} portions of ${datum.labelFoodgroup} this week, and baby ate ${datum.givenQ} so far`        
+        let message = `Your goal was to give ${datum.goalQ} portions of ${datum.labelFoodgroup}, and baby had ${datum.givenQ} so far`        
         let tooltipEl = document.getElementById('tooltip')
         tooltipEl.textContent = message
         tooltipEl.classList.add("show")
@@ -30,7 +30,7 @@ const GraphicBars = ( { dataGoals, labelsFoodgroups } ) => {
 
         <>
 
-        <div id="tooltip" className="tooltip-databoard">Here it goes tooltip</div>
+        <div id="tooltip" className="tooltip-databoard"></div>
         
         <VictoryChart
                 height={300}

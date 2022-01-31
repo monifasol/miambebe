@@ -420,43 +420,62 @@ nav.menu {
         margin: 20px auto;
     }
 
-    .add-new-goal {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px;
-        border-radius: 5px;
-        margin: 30px auto;
-        cursor: pointer;
+    .wrapper-new-goal {
+        margin: 30px auto 0;
 
-        border: solid 1px $color-lila-dark;
-        background-color: $color-lila;
-        transition: all 0.4s 0s;
-
-        &:hover {
-            background-color: $color-lila-light;
-            box-shadow: 0px 0px 15px 5px $color-lila;
+        .new-goal-header {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            width: 100%;
+            border: solid 1px $color-lila-dark;
+            background-color: $color-lila;
+            transition: all 0.4s 0s;
+    
+            &:hover {
+                background-color: $color-lila-light;
+                box-shadow: 0px -10px 15px 5px $color-lila-light;
+            }
+    
+            img.btn-more {
+                width: 24px;
+                margin-right: 20px;
+                font-size: 0.9em;
+            }
         }
-
-        img {
-            width: 30px;
-            margin-right: 20px;
-        }
-    }
+    }    
 
     .form-new-goal {
-        border-radius: 5px;
-        margin: 30px auto;
-        padding: 20px;
         border: solid 1px $color-lila-dark;
-        box-shadow: 0px 0px 10px 10px $color-lila-light;
+        box-shadow: 0px 15px 15px 5px $color-lila-light;
+        border-top: 0px;
+        border-radius: 0 0 5px 5px;
+        transform: translateY(-30px);
+        opacity: 0;
+        visibility: hidden;
+        height: 0px;
+        transition: all 1s 0.2s, opacity 1s 0s;
+
+        &.show {
+            visibility: visible;
+            transform: translate(0px);
+            opacity: 1;
+            height: 130px;
+            transition: all 0.8s 0s, opacity 1.2s 0.2s;
+
+        }
 
         .wrapper-form-new-goal {
             display: flex;
             flex-direction: row;
             width: 100%;
+            margin: 20px;           // this is done, so that we avoid adding padding (it breaks the behavior or accordion in the UI)
+            width: -webkit-fill-available;
+
         }
+        
         .group-fields-new-goal {
             flex-grow: 1;
 
@@ -493,10 +512,10 @@ nav.menu {
         width: 88%;
         font-size: smaller;
         text-align: center;
-        margin-bottom: 20px;
+        margin: 40px auto 10px;
 
         p:first-child {
-            width: 70%;
+            width: 32%;
         }
 
         p span {

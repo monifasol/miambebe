@@ -42,7 +42,7 @@ const GoalsDisplay = ( props ) => {
     }
 
     const showNewGoalForm = () => {
-        // show new form
+        document.querySelector('.form-new-goal').classList.toggle('show')
     }
 
     const deleteGoal = (goalId) => {
@@ -70,6 +70,10 @@ const GoalsDisplay = ( props ) => {
             </div>
 
             <h2 className="h2-comp">Baby's goals</h2>
+
+            <p className="current-date">
+                <Moment format="DD MMM YYYY">{Date.today}</Moment>
+            </p>
         
             { !currentBaby && 
                 <p className="no-baby">
@@ -80,16 +84,13 @@ const GoalsDisplay = ( props ) => {
             { currentBaby && 
 
                 <>
-                    <p className="current-date">
-                        <Moment format="DD MMM YYYY">{Date.today}</Moment>
-                    </p>
-
-                    <FormNewGoal fetchGoals={props.fetchGoals} className="hide" />
-
-                    <p className="add-new-goal">
-                        <img src={btnAdd} alt="add a new goal" className="btn-more" onClick={ ()=> showNewGoalForm } />
-                        Set a new Goal!
-                    </p>
+                    <div className="wrapper-new-goal">
+                        <p className="new-goal-header" onClick={showNewGoalForm}>
+                            <img src={btnAdd} alt="add a new goal" className="btn-more" />
+                            Set a new Goal!
+                        </p>
+                        <FormNewGoal fetchGoals={props.fetchGoals} />
+                    </div>
 
                     { (!currentBaby || (!isLoading && goalsAreEmpty())) 
             
