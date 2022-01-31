@@ -1,4 +1,4 @@
-import { React, useContext, useState, useEffect } from "react";        
+import { React, useContext } from "react";        
 import Moment from 'react-moment';
 
 import FormUpdateGoal from "../goals/FormUpdateGoal";
@@ -67,7 +67,7 @@ const GoalsDisplay = ( props ) => {
                         <p className="message">There are no goals defined for {currentBaby.name } yet.</p>
                     }
 
-                    <FormNewGoal updateGoals={props.updateGoals} className="hide" />
+                    <FormNewGoal fetchGoals={props.fetchGoals} className="hide" />
 
                     <p className="add-new-goal">
                         <img src={btnAdd} alt="add a new goal" className="btn-more" onClick={ ()=> showNewGoalForm } />

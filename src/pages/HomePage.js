@@ -15,58 +15,54 @@ function HomePage() {
     const { currentBaby } = useContext(DataContext);
 
     const [goals, setGoals] = useState(null)
-    const [isError, setIsError] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
 
+    // This Loading Flag is to show spinner in Goals Display
+    const [isLoading, setIsLoading] = useState(true)              
 
     // Inits state variable GOALS, if week has already goals
     useEffect( () => {
       if (currentBaby) {
         setTimeout( () => {
-          setGoals(currentBaby.goals)
+          fetchGoals()           // fetches goals and sets goals state variable
           setIsLoading(false)
-        }, 1000)  // just to show for a little bit the nice spinner
+        }, 1000)                // just to show for a little bit the nice spinner
       }
     }, [currentBaby])
 
 
-    const updateGoals = () => {
-
-      // fetch again from DB, to get the populate!
+    const fetchGoals = () => {
       axios
         .get(`${API_URI}/babies/${currentBaby._id}/goals`, { 
               headers: { Authorization: `Bearer ${token}` }
         })
         .then((response) => {
-          const fetchedGoals = response.data.data
-          setGoals(fetchedGoals)
-          console.log(`Goals fetched from DB (populated!) after adding a new goal.`)
+          setGoals(response.data.data)
+          console.log(`Goals fetched from DB (populated!) after a change in goals.`)
         })
         .catch((error) => console.log(error));
     }
 
     // Handle submit for FormUpdateGoal. Updates information of a Goal.
     const handleSubmitUpdateGoal = (goal, foodgroup, quantityGoal, quantityAccomplished) => {
-
-      if (foodgroup) {
         
-        const requestBody = { 
-          foodgroupId: foodgroup._id, 
-          quantityGoal, 
-          quantityAccomplished, 
-          babyId: currentBaby._id 
-        }
-
-        axios
-          .put(`${API_URI}/goals/${goal._id}`, requestBody, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((response) => {
-            const updatedGoal = response.data.data
-            console.log(`Goal with id ${updatedGoal._id} successfully updated, for baby with id ${currentBaby._id}`)
-          })
-          .catch((error) => console.log(error));
+      const requestBody = { 
+        foodgroupId: foodgroup && foodgroup._id, 
+        quantityGoal, 
+        quantityAccomplished, 
+        babyId: currentBaby._id 
       }
+
+      axios
+        .put(`${API_URI}/goals/${goal._id}`, requestBody, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          const updatedGoal = response.data.data
+          console.log(`Goal with id ${updatedGoal._id} successfully updated, for baby with id ${currentBaby._id}`)
+          fetchGoals()
+        })
+        .catch((error) => console.log(error));
+
     };
 
   
@@ -78,7 +74,7 @@ function HomePage() {
           <GoalsDisplay 
                 goals={goals} 
                 isLoading={isLoading}
-                updateGoals={updateGoals}
+                fetchGoals={fetchGoals}
                 handleSubmitUpdateGoal={handleSubmitUpdateGoal}
                 />
 

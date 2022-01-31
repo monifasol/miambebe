@@ -53,7 +53,7 @@ const FormNewGoal = (props) => {
             })
             .then((response) => {
                 const newGoal = response.data
-                props.updateGoals()
+                props.fetchGoals()
                 showNotification(tooltipEl, `New goal successfully saved!`)
                 setFormState({})    // reset the form
                 console.log(`Goal (${newGoal._id}) successfully saved for baby ${currentBaby._id}`)

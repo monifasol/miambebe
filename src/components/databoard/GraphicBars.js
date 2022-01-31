@@ -42,7 +42,7 @@ const GraphicBars = ( { dataGoals, labelsFoodgroups } ) => {
                 <VictoryAxis crossAxis
                     tickFormat={labelsFoodgroups}
                     style={styleAxis} 
-                    //fixLabelOverlap={true} 
+                    fixLabelOverlap={true} 
                     />
 
                 <VictoryAxis crossAxis

@@ -7,16 +7,17 @@ const FormUpdateGoal = ( props ) => {
 
     const { goal, handleSubmit, buildError } = props
 
-    const [ quantityGoal, setQuantityGoal ] = useState(0)
-    const [ quantityAccomplished, setQuantityAccomplished ] = useState(0)
-    const [ foodgroup, setFoodgroup ] = useState("")
+    const [ quantityGoal, setQuantityGoal ] = useState(goal.quantityGoal)
+    const [ quantityAccomplished, setQuantityAccomplished ] = useState(goal.quantityAccomplished)
+    const [ foodgroup, setFoodgroup ] = useState(goal.foodgroup)
+
 
     // Initialize the form with the Goal information
-    useEffect( ()=> {
-            setQuantityGoal(goal.quantityGoal)
-            setQuantityAccomplished(goal.quantityAccomplished)
-            setFoodgroup(goal.foodgroup)
-    }, [])
+    //useEffect( ()=> {
+    //        setQuantityGoal(goal.quantityGoal)
+    //        setQuantityAccomplished(goal.quantityAccomplished)
+    //        setFoodgroup(goal.foodgroup)
+    //}, [])
 
 
     const handleChangeQuantityGoal = (value) => {

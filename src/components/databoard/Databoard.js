@@ -7,28 +7,22 @@ import { DataContext } from '../../context/data.context';
 const Databoard = ( { goals } ) => {
 
     const { currentBaby } = useContext(DataContext)
-    const [ isDataLoading, setIsDataLoading ] = useState(true)     
+    const [ isDataLoading, setIsDataLoading ] = useState(true)          // first time Databoard loads
 
     const [ dataChart, setDataChart ] = useState(null)   
     const [ labelsChart, setLabelsChart ] = useState(null) 
 
-
     // Calls "buildGoalsArrObj" on component mount, to use in Victory Chart.
-    useEffect( ()=> {
-        if (goals) {
-           buildDataObj(goals)
-        }
+    useEffect( ()=> { 
+        goals && buildDataObj(goals) 
     }, [goals]);
 
 
+    // Build labels for the graphics. 
+    // This is needed, to make match the BAR with the LABEL in the graphic!
     useEffect( ()=> {
-        if (dataChart) {
-            // Build labels for the graphics
-            let labelsFoodgroups = dataChart.map( item => item.labelFoodgroup)
-            setLabelsChart(labelsFoodgroups)
-        }
+        dataChart && setLabelsChart(dataChart.map( item => item.labelFoodgroup))
     }, [dataChart]);
-
 
     const buildDataObj = () => {
                     
@@ -36,6 +30,8 @@ const Databoard = ( { goals } ) => {
         let counter = 1
 
         goals.forEach( (goal, i) => {
+
+            //console.log(`${i}: lets see in which order im iterating over the goals: ${goal.foodgroup.name}`)
 
             if (goal.quantityGoal !== 0 ) {
 
@@ -59,7 +55,7 @@ const Databoard = ( { goals } ) => {
         setDataChart(buildData)
 
         setTimeout(()=> {        
-            setIsDataLoading(false)         // show spinner
+            setIsDataLoading(false)         // show spinner first time it loads
         },1000) 
 
     }
@@ -85,7 +81,6 @@ const Databoard = ( { goals } ) => {
             }
 
             <h2 className="h2-comp">Databoard</h2>
-
                 
             { (!currentBaby || (!isDataLoading && areGoalQuantiesEmpty())) 
             
@@ -101,7 +96,6 @@ const Databoard = ( { goals } ) => {
                 && 
                 (currentBaby && goals && goals.length > 0 )
                 &&
-
                 <LoadingSpinner msg="Loading data for graphics..."/> 
             }
 
@@ -109,15 +103,12 @@ const Databoard = ( { goals } ) => {
                 <>
                     <div className="databoard-graphics">
                         { dataChart && 
-                            
                             <GraphicBars dataGoals={dataChart} labelsFoodgroups={labelsChart} /> 
-                            
                         }
                     </div>
                 </>
             }
         </div>
-
     )
 }
 
