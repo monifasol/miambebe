@@ -6,7 +6,7 @@ import { DataContext } from '../../context/data.context';
 
 const Databoard = ( { goals } ) => {
 
-    const { currentWeek, currentBaby } = useContext(DataContext)
+    const { currentBaby } = useContext(DataContext)
     const [ isDataLoading, setIsDataLoading ] = useState(true)     
 
     const [ dataChart, setDataChart ] = useState(null)   
@@ -87,20 +87,19 @@ const Databoard = ( { goals } ) => {
             <h2 className="h2-comp">Databoard</h2>
 
                 
-            { (!currentBaby || !currentWeek || (!isDataLoading && areGoalQuantiesEmpty())) 
+            { (!currentBaby || (!isDataLoading && areGoalQuantiesEmpty())) 
             
                 &&
                 
                 <p className="no-data-databoard">       
                     There is no data to show at the moment. 
-                    <br/>Please, set the goals for the week first.
+                    <br/>Please, first, set a first goal.
                 </p>
             }
 
-
             {   (isDataLoading ) 
                 && 
-                (currentBaby && currentWeek && goals && goals.length > 0 )
+                (currentBaby && goals && goals.length > 0 )
                 &&
 
                 <LoadingSpinner msg="Loading data for graphics..."/> 

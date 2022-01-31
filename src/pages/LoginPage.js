@@ -45,7 +45,7 @@ function LoginPage(props) {
       
       <div className="welcome-msg">
           <p>Welcome to Miam Bebe! </p>
-          <p>A food tracker for babies...  <span class="small">(and parents!)</span></p>
+          <p>A food tracker for babies...  <span className="small">(and parents!)</span></p>
       </div>
 
       <div className="login-page">

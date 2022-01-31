@@ -1,4 +1,4 @@
-import Week from "./../components/weekly-food-plan/Week";
+import GoalsDisplay from "../components/goals/GoalsDisplay";
 import Databoard from "../components/databoard/Databoard"
 import Logs from "../components/databoard/Logs"
 
@@ -12,115 +12,84 @@ const API_URI = process.env.REACT_APP_API_URL;
 
 function HomePage() {
 
-  const { currentWeek, foodgroups, updateWeek } = useContext(DataContext);
+    const { currentBaby } = useContext(DataContext);
 
-  const [goals, setGoals] = useState(null)
-  const [isError, setIsError] = useState(false)
-
-  const [isInitializingGoals, setIsInitializingGoals] = useState(true)    // goals for the week
+    const [goals, setGoals] = useState(null)
+    const [isError, setIsError] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
 
     // Inits state variable GOALS, if week has already goals
     useEffect( () => {
-      if (currentWeek && currentWeek.goals && currentWeek.goals.length > 0) {
-
-          setGoals(currentWeek.goals)
-          setTimeout(() => { 
-            setIsInitializingGoals(false) 
-          }, 1000)
-       
-      } 
-    }, [currentWeek])
-
-
-    // Init goals for an empty week 
-    const initWeekFoodPlan = () => {
-
-      foodgroups.forEach( (foodgroup) => {
-          const requestBody = { foodgroupId: foodgroup._id, quantityGoal: 0, quantityAccomplished: 0, weekId: currentWeek._id }
-          axios
-              .post(`${API_URI}/goals`, requestBody, {
-                  headers: { Authorization: `Bearer ${token}` },
-              })
-              .then((response) => {
-                  console.log(`Goal set for the week of ${currentWeek.firstday}`)
-              })
-              .catch((error) => {
-                  setIsError(true)
-                  console.log(error)
-              });
-      })
-      
-      if (!isError) {
-          axios
-              .get(`${API_URI}/weeks/${currentWeek._id}`, {
-                  headers: { Authorization: `Bearer ${token}` },
-              })
-              .then((response) => {
-                  const foundWeek = response.data.data
-                  updateWeek(foundWeek)
-                  setGoals(foundWeek.goals)
-                  setTimeout(() => { setIsInitializingGoals(false) }, 2000)
-              })
-              .catch((error) => { console.log(error)});
+      if (currentBaby) {
+        setTimeout( () => {
+          setGoals(currentBaby.goals)
+          setIsLoading(false)
+        }, 1000)  // just to show for a little bit the nice spinner
       }
-  }
+    }, [currentBaby])
 
 
-  // Handle submit for Week > FormGoal
+    const updateGoals = () => {
 
-  const handleSubmit = (goal, foodgroup, quantityGoal, quantityAccomplished) => {
-
-    if (currentWeek && foodgroup) {
-      const requestBody = { foodgroupId: foodgroup._id, quantityGoal, quantityAccomplished, weekId: currentWeek._id }
-      
+      // fetch again from DB, to get the populate!
       axios
-        .put(`${API_URI}/goals/${goal._id}`, requestBody, {
-          headers: { Authorization: `Bearer ${token}` },
+        .get(`${API_URI}/babies/${currentBaby._id}/goals`, { 
+              headers: { Authorization: `Bearer ${token}` }
         })
         .then((response) => {
-
-          // I need an Axios call here, to get the week from the API with its goals updated. 
-          // Otherwise, week.goals do not reflect the updated goals.          
-          axios
-              .get(`${API_URI}/weeks/${currentWeek._id}`, requestBody, {
-                  headers: { Authorization: `Bearer ${token}` },
-              })
-              .then((response) => {
-                  let foundWeek = response.data.data
-                  updateWeek(foundWeek)
-                  setGoals(foundWeek.goals)
-              })
-              .catch((error) => {
-                  setIsError(true)
-                  console.log(error)
-              });
+          const fetchedGoals = response.data.data
+          setGoals(fetchedGoals)
+          console.log(`Goals fetched from DB (populated!) after adding a new goal.`)
         })
         .catch((error) => console.log(error));
     }
-  };
+
+    // Handle submit for FormUpdateGoal. Updates information of a Goal.
+    const handleSubmitUpdateGoal = (goal, foodgroup, quantityGoal, quantityAccomplished) => {
+
+      if (foodgroup) {
+        
+        const requestBody = { 
+          foodgroupId: foodgroup._id, 
+          quantityGoal, 
+          quantityAccomplished, 
+          babyId: currentBaby._id 
+        }
+
+        axios
+          .put(`${API_URI}/goals/${goal._id}`, requestBody, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((response) => {
+            const updatedGoal = response.data.data
+            console.log(`Goal with id ${updatedGoal._id} successfully updated, for baby with id ${currentBaby._id}`)
+          })
+          .catch((error) => console.log(error));
+      }
+    };
 
   
-  return (
-    <div className="homepage">
-      
-      <div className="homepage-flex">
+    return (
+      <div className="homepage">
+        
+        <div className="homepage-flex">
 
-        <Week week={currentWeek} 
-              goals={goals} 
-              isInitializingGoals={isInitializingGoals} 
-              initWeekFoodPlan={initWeekFoodPlan}
-              handleSubmit={handleSubmit}
-              />
+          <GoalsDisplay 
+                goals={goals} 
+                isLoading={isLoading}
+                updateGoals={updateGoals}
+                handleSubmitUpdateGoal={handleSubmitUpdateGoal}
+                />
 
-        <div className="homepage-flex-left-side">
-          <Databoard goals={goals} />
-          <Logs />  
+          <div className="homepage-flex-left-side">
+            <Databoard goals={goals} />
+            <Logs />
+          </div>
         </div>
+        
       </div>
-      
-    </div>
-  );
+    );
 }
 
 export default HomePage;

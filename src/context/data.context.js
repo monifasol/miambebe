@@ -17,7 +17,6 @@ function DataProviderWrapper(props) {
   // Current data state variables
   const [currentUser, setCurrentUser] = useState(null);   // this user will contain the full user model
   const [currentBaby, setCurrentBaby] = useState(null);
-  const [currentWeek, setCurrentWeek] = useState(null);
   const [foodgroups, setFoodgroups] = useState(null);
   const [userDevice, setUserDevice] = useState("");
 
@@ -118,71 +117,6 @@ function DataProviderWrapper(props) {
     setCurrentBaby(baby)
   }
 
-  const updateWeek = (week) => {
-    setCurrentWeek(week)
-  }
-
-  // ========= Week Initialization ============
-
-  const formatDate = (date) => {
-    return (
-      date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
-    );
-  };
-
-  const getMondaySunday = () => {
-    // Find out beginning and end of the week
-    const today = new Date();
-    const dayWeek = today.getDay();
-    const diff = today.getDate() - dayWeek + (dayWeek === 0 ? -6 : 1); // day of month - day of week (-6 if Sunday), otherwise +1
-    var firstD = new Date(today.setDate(diff)); // first day
-    var lastD = new Date(today.setDate(firstD.getDate() + 6)); // last day --> first day + 6
-
-    let daysObj = { firstday: formatDate(firstD), lastday: formatDate(lastD) };
-
-    return daysObj;
-  };
-
-  let firstDayWeek = getMondaySunday().firstday;
-  let lastDayWeek = getMondaySunday().lastday;
-
-
-  const createCurrentWeek = async () => {
-    const requestBody = {
-      firstday: firstDayWeek,
-      lastday: lastDayWeek,
-      babyId: currentBaby._id,
-    };
-
-    const localJWTToken = localStorage.getItem("authToken");
-
-    axios
-      .post(`${API_URI}/weeks/`, requestBody, {
-        headers: { Authorization: `Bearer ${localJWTToken}` },
-      })
-      .then((response) => {
-        // We get the created week; or the original week if it already existed.
-        const weekFromAPI = response.data.data;
-
-        // Find week, to populate goals (after CREATE, we don't populate!!)
-        axios
-          .get(`${API_URI}/weeks/${weekFromAPI._id}`, {
-            headers: { Authorization: `Bearer ${localJWTToken}` },
-          })
-          .then((response) => {
-            let foundWeek = response.data.data;
-            setCurrentWeek(foundWeek);
-          })
-          .catch((error) => console.log("Error in week creation: ", error));
-      })
-      .catch((error) => console.log("Error in week creation: ", error));
-  };
-
-  // Create the Current Week for this time and current Baby; if it alreayd exists, the backend will not let us.
-  useEffect(() => {
-    if (currentBaby) createCurrentWeek();
-  }, [currentBaby]);
-
 
   // Init foodggroups
   useEffect(() => {
@@ -216,12 +150,10 @@ function DataProviderWrapper(props) {
         isLoading, 
         currentBaby,
         currentUser,
-        currentWeek,
         foodgroups,
         userDevice,
         updateUser,
-        updateBaby,
-        updateWeek
+        updateBaby
       }}
     >
       {props.children}

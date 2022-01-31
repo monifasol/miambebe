@@ -3,7 +3,7 @@ import {React, useState, useEffect} from 'react'
 import btnLess from "../../images/btn-less.png"
 import btnMore from "../../images/btn-more.png"
 
-const GoalForm = ( props ) => {
+const FormUpdateGoal = ( props ) => {
 
     const { goal, handleSubmit, buildError } = props
 
@@ -11,7 +11,6 @@ const GoalForm = ( props ) => {
     const [ quantityAccomplished, setQuantityAccomplished ] = useState(0)
     const [ foodgroup, setFoodgroup ] = useState("")
 
-    
     // Initialize the form with the Goal information
     useEffect( ()=> {
             setQuantityGoal(goal.quantityGoal)
@@ -34,7 +33,7 @@ const GoalForm = ( props ) => {
       if (Number.isNaN(parseInt(value))) buildError()
       else {
         setQuantityAccomplished(value)
-        handleSubmit(goal, foodgroup, quantityGoal, value )
+        handleSubmit(goal, foodgroup, quantityGoal, value)
       }
     }
 
@@ -50,11 +49,9 @@ const GoalForm = ( props ) => {
       }
     }
 
-
     return (
-        <div>
               
-            <form className={(!quantityGoal || quantityGoal === 0) ? "form form-goal empty" : "form form-goal" } >
+            <form className={(!quantityGoal || quantityGoal === 0) ? "form form-update-goal empty" : "form form-update-goal" } >
 
                 <div className="group-inputs-goal">
                   
@@ -74,7 +71,6 @@ const GoalForm = ( props ) => {
 
                 </div>
 
-
                 <div className="group-inputs-goal">
                     <img src={btnLess} alt="decrease quantity goal" className="btn-less" onClick={ (e)=> decreaseQuantityAccomplished(e) } />
                     <input type="text" 
@@ -87,9 +83,7 @@ const GoalForm = ( props ) => {
                 </div>
 
             </form>
-
-        </div>
     )
 }
 
-export default GoalForm
+export default FormUpdateGoal

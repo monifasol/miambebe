@@ -30,7 +30,7 @@ const Navbar = () => {
             <div className="only-desktop">
 
               <Link to="/">
-                <span className="link">Week plan</span>
+                <span className="link">Goals</span>
               </Link>
               <Link to="/recipes">
                 <span className="link">Recipes</span>

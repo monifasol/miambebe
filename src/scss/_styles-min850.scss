@@ -19,7 +19,7 @@
         &-flex {
             flex-direction: row;
     
-            .week-component {
+            .goals-component {
                 width: 45%;
             }
     
@@ -38,18 +38,18 @@
         
     }
 
-    .week-component {
-        .form-goal {
+    .goals-component {
+        .form-update-goal {
             width: unset;
         }
         .header-form-goals {
             width: 100%;
         }
-        .dates-current-week {
+        .current-date {
             margin: 30px auto;
         }
     
-        .weekly-food-plan {
+        .goals-plan {
             width: 100%;
             max-width: 400px;
             margin: 0 auto;

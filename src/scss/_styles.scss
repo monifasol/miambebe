@@ -27,14 +27,13 @@ h1 {
 
 h2.h2-comp {
     text-align: center;
-    font-weight: 600;
-    margin-top: 20px;
-    font-size: x-large;
-    margin: 30px auto;
     position: relative;
     width: fit-content;
     z-index: 0;
     line-height: 1.2em;
+    font-size: 1.4em;
+    margin: 16px auto;
+
 
     &::before {
         content: "";
@@ -69,14 +68,19 @@ a {
     }
 }
 
-.small {
-    font-size: 10px;
+.small, small {
+    font-size: 0.75em;
 }
 
 .comp {
     background-color: white;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
+}
+.message {
+    background-color: $color-lila-light;
+    padding: 10px 20px;
+    border-radius: 5px;
 }
 .only-desktop {
     display: none;
@@ -153,7 +157,7 @@ nav.header {
     padding: 10px;
     height: 80px; 
     margin: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
 
     .singup, .login {
         display: flex;
@@ -303,9 +307,8 @@ nav.menu {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin-top: 30px;
 
-        .week-component {
+        .goals-component {
             width: 100%;
             max-width: 100%;
             border: solid 1px white;
@@ -389,37 +392,35 @@ nav.menu {
 }
 
 
-/* ========== Current Week Component ============ */
+/* ========== Display Goals Component ============ */
 
-.week-component {
+.goals-component {
 
     .no-baby {
         margin: 50px auto;
         text-align: center;
     }
 
-    .dates-current-week {
+    .current-date {
         width: fit-content;
         word-spacing: 10px;
-        //border-bottom: solid 1px $color-lila-dark;
         padding: 5px 10px;
         margin: 20px auto 0px;
         text-align: center;
         font-weight: 600;
-        color: $main-color;
 
         span {
             padding: 0 10px;
         }
     }
 
-    .text-current-week {
+    .message {
         text-align: center;
         font-size: 14px;
         margin-top: 20px;
     }
 
-    .weekly-food-plan {
+    .goals-plan {
         width: 100%;
         padding-bottom: 20px;
         margin: 0 auto;
@@ -445,7 +446,75 @@ nav.menu {
         }
     }
 
-    .form-goal {
+    .add-new-goal {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 30px auto;
+        cursor: pointer;
+
+        border: solid 1px $color-lila-dark;
+        background-color: $color-lila;
+        transition: all 0.4s 0s;
+
+        &:hover {
+            background-color: $color-lila-light;
+            box-shadow: 0px 0px 15px 5px $color-lila;
+        }
+
+        img {
+            width: 30px;
+            margin-right: 20px;
+        }
+    }
+
+    .form-new-goal {
+        border-radius: 5px;
+        margin: 30px auto;
+        padding: 20px;
+        border: solid 1px $color-lila-dark;
+        box-shadow: 0px 0px 10px 10px $color-lila-light;
+
+        .wrapper-form-new-goal {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+        .group-fields-new-goal {
+            flex-grow: 1;
+
+            &:nth-child(1) {
+                width:  65%;
+            }
+            label {
+                width: 100%;
+            }
+            input, select {
+                width: 90%;
+                margin-top: 10px;
+            }
+        }
+        
+        .wrapper-input-savebutton {
+            display: flex;
+
+            #quantityGoal {
+                width: 40px;
+                text-align: center;
+            }
+            .btn.new-goal {
+                margin: 10px 0 0 20px;
+                padding: 5px 10px;
+            }
+        }
+        
+    }
+
+
+    .form-update-goal {
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
@@ -889,7 +958,11 @@ form, .form {
     &.general {
         left: 50%;
         top: -40px;
-    }    
+    } 
+    
+    &.new-goal {
+        border: solid 3px red;
+    }
     
     &.info {
         color: $color-info-dark;

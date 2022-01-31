@@ -14,18 +14,7 @@ const RecipeSelected = ( { recipe, submitRecipeChange } ) => {
 
     useEffect(() => {
         if (recipe && recipe.user && currentUser) {
-
-            console.log("user:", currentUser._id) 
-            console.log("writer:", recipe.user._id)    
-
-
-            if (currentUser._id === recipe.user._id) {
-                console.log("SO YESSS")
-                setIsWritter(true)
-            } else {
-                setIsWritter(false)
-            }
-
+            setIsWritter( (currentUser._id === recipe.user._id) ? true : false )
         }
     }, [recipe, currentUser])
 
