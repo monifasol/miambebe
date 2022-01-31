@@ -16,7 +16,6 @@
         .menu_icon {
             display: none;
         }
-
     }
 
     .signup-page,
@@ -30,10 +29,12 @@
     }
     
     .goals-component {
-        .form-update-goal {
-            .input-foodgroup {
-                max-width: unset;
-                width: 150px;
+        .wrapper-goal-row {
+            .form-update-goal {
+                .input-foodgroup {
+                    max-width: unset;
+                    width: 150px;
+                }
             }
         }
     }

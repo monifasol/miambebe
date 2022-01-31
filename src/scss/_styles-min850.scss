@@ -21,11 +21,13 @@
     
             .goals-component {
                 width: 45%;
+                padding: 0 12px;
             }
     
             &-left-side {
                 width: 55%;
                 margin-left: 20px;
+
                 .databoard-component {
                     margin-top: 0px;
                 }
@@ -35,24 +37,27 @@
                 }
             }
         }
-        
     }
 
     .goals-component {
-        .form-update-goal {
-            width: unset;
-        }
-        .header-form-goals {
-            width: 100%;
-        }
         .current-date {
             margin: 30px auto;
         }
-    
-        .goals-plan {
+
+        .header-form-goals {
             width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
+        }
+
+        .wrapper-goal-row {
+            .icon-delete {
+                width: 20px;
+                margin-left: 6px;
+            }
+            .form-update-goal {
+                .group-inputs-goal {
+                    padding: 6px 0px;
+                }
+            }
         }
     }
 

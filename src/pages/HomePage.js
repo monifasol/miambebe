@@ -13,24 +13,21 @@ const API_URI = process.env.REACT_APP_API_URL;
 function HomePage() {
 
     const { currentBaby } = useContext(DataContext);
-
     const [goals, setGoals] = useState(null)
-
-    // This Loading Flag is to show spinner in Goals Display
-    const [isLoading, setIsLoading] = useState(true)              
+    const [isLoading, setIsLoading] = useState(true)       // Loading Flag for goals loading in Goals Display         
 
     // Inits state variable GOALS, if week has already goals
     useEffect( () => {
       if (currentBaby) {
-        setTimeout( () => {
-          fetchGoals()           // fetches goals and sets goals state variable
-          setIsLoading(false)
-        }, 1000)                // just to show for a little bit the nice spinner
+        fetchGoals()           // fetches goals and sets goals state variable
+
+        // just to show for a little bit the nice spinner
+        setTimeout( () => { setIsLoading(false) }, 800)                 
       }
     }, [currentBaby])
 
-
     const fetchGoals = () => {
+    
       axios
         .get(`${API_URI}/babies/${currentBaby._id}/goals`, { 
               headers: { Authorization: `Bearer ${token}` }
@@ -41,30 +38,6 @@ function HomePage() {
         })
         .catch((error) => console.log(error));
     }
-
-    // Handle submit for FormUpdateGoal. Updates information of a Goal.
-    const handleSubmitUpdateGoal = (goal, foodgroup, quantityGoal, quantityAccomplished) => {
-        
-      const requestBody = { 
-        foodgroupId: foodgroup && foodgroup._id, 
-        quantityGoal, 
-        quantityAccomplished, 
-        babyId: currentBaby._id 
-      }
-
-      axios
-        .put(`${API_URI}/goals/${goal._id}`, requestBody, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((response) => {
-          const updatedGoal = response.data.data
-          console.log(`Goal with id ${updatedGoal._id} successfully updated, for baby with id ${currentBaby._id}`)
-          fetchGoals()
-        })
-        .catch((error) => console.log(error));
-
-    };
-
   
     return (
       <div className="homepage">
@@ -74,9 +47,8 @@ function HomePage() {
           <GoalsDisplay 
                 goals={goals} 
                 isLoading={isLoading}
-                fetchGoals={fetchGoals}
-                handleSubmitUpdateGoal={handleSubmitUpdateGoal}
-                />
+                setIsLoading={setIsLoading}
+                fetchGoals={fetchGoals} />
 
           <div className="homepage-flex-left-side">
             <Databoard goals={goals} />

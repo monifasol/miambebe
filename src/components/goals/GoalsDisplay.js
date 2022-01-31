@@ -1,19 +1,26 @@
 import { React, useContext } from "react";        
 import Moment from 'react-moment';
+import axios from 'axios';
 
+// components
 import FormUpdateGoal from "../goals/FormUpdateGoal";
 import FormNewGoal from "../goals/FormNewGoal";
 import FormNewBaby from "../babies/FormNewBaby";
 import LoadingSpinner from "../layout-elements/LoadingSpinner";
-import btnAdd from "../../images/add.png"
 
+// images
+import btnAdd from "../../images/add.png"
+import iconDelete from "../../images/icon-delete.png"
+
+// data
 import { DataContext } from "../../context/data.context";
+const token = localStorage.getItem("authToken");
+const API_URI = process.env.REACT_APP_API_URL;
 
 const GoalsDisplay = ( props ) => {
     
     const { currentBaby } = useContext(DataContext);
-
-    const { goals, isLoading, handleSubmitUpdateGoal } = props
+    const { goals, isLoading, setIsLoading, fetchGoals } = props
 
     // Builds small error when input is not a number (function passed as a CB to children <FormUpdateGoal/>)
     const buildError = () => {
@@ -38,6 +45,22 @@ const GoalsDisplay = ( props ) => {
         // show new form
     }
 
+    const deleteGoal = (goalId) => {
+        setIsLoading(true)
+        axios
+          .delete(`${API_URI}/goals/${goalId}/${currentBaby._id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then(() => {
+            console.log(`Goal deleted, for baby ${currentBaby._id}`)
+            fetchGoals()
+            setTimeout( () => { setIsLoading(false) }, 400)
+          })
+          .catch((error) => console.log(error));
+      }
+
+    const goalsAreEmpty = () => !goals || (goals && goals.length === 0)
+
     return (
         <div className="goals-component comp">
 
@@ -61,12 +84,6 @@ const GoalsDisplay = ( props ) => {
                         <Moment format="DD MMM YYYY">{Date.today}</Moment>
                     </p>
 
-                        
-                    { (!goals || (goals && goals.length === 0 )) 
-                        &&
-                        <p className="message">There are no goals defined for {currentBaby.name } yet.</p>
-                    }
-
                     <FormNewGoal fetchGoals={props.fetchGoals} className="hide" />
 
                     <p className="add-new-goal">
@@ -74,31 +91,47 @@ const GoalsDisplay = ( props ) => {
                         Set a new Goal!
                     </p>
 
-                    { goals && goals.length > 0 &&  
+                    { (!currentBaby || (!isLoading && goalsAreEmpty())) 
+            
+                        &&
                         
-                        <>
-                            { isLoading && <LoadingSpinner msg="Loading goals..."/> }
+                        <p className="message">
+                            There are no goals defined for {currentBaby.name } yet.
+                        </p>
+                    }
 
+                    {  isLoading && !goalsAreEmpty() &&
+                        <LoadingSpinner msg="Loading goals..."/> 
+                    }
+
+                    { !isLoading && !goalsAreEmpty() &&
+                        <>
                             <div id="form-error">
                                 <p className="flash-small error"></p>
                             </div>
 
-                            <div className="goals-plan">
-
-                                <div className="header-form-goals">
-                                    <p><span>Goals</span></p>
-                                    <p><span>Progress</span></p>
-                                </div>
-
-                                { goals.map(( goal ) => ( 
-
-                                    <FormUpdateGoal key={goal._id} 
-                                        goal={goal} 
-                                        buildError={buildError} 
-                                        handleSubmit={handleSubmitUpdateGoal}
-                                        /> 
-                                )) }
+                            <div className="header-form-goals">
+                                <p><span>Goals</span></p>
+                                <p><span>Progress</span></p>
                             </div>
+
+                            { goals.map(( goal ) => ( 
+
+                                <div className="wrapper-goal-row" key={goal._id}>
+
+                                    <FormUpdateGoal  
+                                        goal={goal} 
+                                        buildError={buildError}
+                                        fetchGoals={fetchGoals} /> 
+                                    
+                                    <img 
+                                        className="icon-delete" 
+                                        src={iconDelete} 
+                                        alt={`delete goal ${goal._id}`} 
+                                        onClick={ () => deleteGoal(goal._id)} />
+
+                                </div>
+                            )) }
                         </>
                     }
                 </>

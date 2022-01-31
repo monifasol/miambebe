@@ -9,13 +9,17 @@ const API_URI = process.env.REACT_APP_API_URL;
 
 const FormNewGoal = (props) => {
   
+    const initialFormState = {
+        foodgroupId: 'init',
+        quantityGoal: 0
+    }
+
     const { foodgroups, currentBaby } = useContext(DataContext);
-    const [ formState, setFormState] = useState({});
+    const [ formState, setFormState] = useState(initialFormState);
 
     const tooltipEl = document.querySelector('.tooltip-form.new-goal.info')
     const tooltipErr = document.querySelector('.tooltip-form.new-goal.error')
     
-
     const handleInput = (e) => {
         let {name, value } = e.target       
         let newState = Object.assign({}, formState, {[name]: value})
@@ -27,15 +31,15 @@ const FormNewGoal = (props) => {
     const handleSubmitNewGoal = (e) => {
         e.preventDefault()
 
-        console.log("In Submit, formState:", formState)
-
         if ( Object.keys(formState).length === 0 ) {
             showNotification(tooltipErr, `All fields are empty!`)
             
         } else if (formState.quantityGoal === undefined || formState.quantityGoal === 0)  {
             showNotification(tooltipErr, `You should provide a quatity (in number of portions)!`)
 
-        } else if (formState.foodgroupId === undefined || formState.foodgroupId === "") {
+        } else if ( formState.foodgroupId === 'init' 
+                    || formState.foodgroupId === undefined 
+                    || formState.foodgroupId === "") {
             showNotification(tooltipErr, `You should select a foodgroup from the list!`)
 
         } else {
@@ -55,7 +59,7 @@ const FormNewGoal = (props) => {
                 const newGoal = response.data
                 props.fetchGoals()
                 showNotification(tooltipEl, `New goal successfully saved!`)
-                setFormState({})    // reset the form
+                setFormState(initialFormState)    // reset the form
                 console.log(`Goal (${newGoal._id}) successfully saved for baby ${currentBaby._id}`)
             })
             .catch((error) => {
@@ -76,8 +80,10 @@ const FormNewGoal = (props) => {
             <div className="wrapper-form-new-goal">
                 <div className="group-fields-new-goal">
                     <label>New goal</label>
-                    <select name="foodgroupId" onChange={ (e) => { handleInput(e) } }>
-                        <option defaultValue> Select a foodgroup </option>
+                    <select name="foodgroupId" 
+                            onChange={ (e) => { handleInput(e)}}
+                            defaultValue='init'>
+                        <option value="init"> Select a foodgroup </option>
                         { foodgroups && foodgroups.map( (foodgroup) => (
                             <option
                                 key={foodgroup._id}

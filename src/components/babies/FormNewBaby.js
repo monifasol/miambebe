@@ -58,8 +58,6 @@ const FormNewBaby = (props) => {
     function handleInput(e){
         let {name, value } = e.target
         setFormState(Object.assign({}, formState, {[name]: value}))
-
-        console.log(formState)
     }
 
     return (

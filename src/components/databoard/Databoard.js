@@ -31,8 +31,6 @@ const Databoard = ( { goals } ) => {
 
         goals.forEach( (goal, i) => {
 
-            //console.log(`${i}: lets see in which order im iterating over the goals: ${goal.foodgroup.name}`)
-
             if (goal.quantityGoal !== 0 ) {
 
                 let givenQ = parseInt(goal.quantityAccomplished)
@@ -53,11 +51,7 @@ const Databoard = ( { goals } ) => {
         })  
 
         setDataChart(buildData)
-
-        setTimeout(()=> {        
-            setIsDataLoading(false)         // show spinner first time it loads
-        },1000) 
-
+        setTimeout( () => { setIsDataLoading(false) }, 800)  // show spinner first time it loads
     }
 
 
@@ -76,7 +70,6 @@ const Databoard = ( { goals } ) => {
                 <>
                     <span className="graphics-label-foodgroup">Foodgroup</span>
                     <span className="graphics-label-given">Given</span>
-
                 </>
             }
 
