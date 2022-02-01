@@ -41,9 +41,9 @@ URL to the presentation slides
 
 ## Backlog
 
-Internalization    
-Share recipes to facebook   
-Add more graphics (food intolerances)   
-Manage introduction of foods   
-School connecting to app   
-Doctor connecting to app    
+Internalization  
+Share recipes to facebook  
+Add more graphics (food intolerances)  
+Manage introduction of foods  
+School connecting to app  
+Doctor connecting to app   

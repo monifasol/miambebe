@@ -3,30 +3,24 @@ import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 import { DataContext } from "./../context/data.context";
 
-
 const API_URI = process.env.REACT_APP_API_URL;
 
-
-function LoginPage(props) {
+const Login = () => {
 
   const history = useHistory()
-  
+  const { logInUser } = useContext(DataContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
 
-  const { logInUser } = useContext(DataContext);
-
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
-
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const requestBody = { email, password };
 
     axios
-
       .post(`${API_URI}/auth/login`, requestBody)
       .then((response) => {
         const JWTToken = response.data.authToken;
@@ -42,11 +36,6 @@ function LoginPage(props) {
   return (
 
     <>
-      
-      <div className="welcome-msg">
-          <p>Welcome to Miam Bebe! </p>
-          <p>A food tracker for babies...  <span class="small">(and parents!)</span></p>
-      </div>
 
       <div className="login-page">
         <h1>Login</h1>
@@ -74,12 +63,11 @@ function LoginPage(props) {
         </form>              
       </div>
 
-      <div className="login-page">
-          <p>Don't have an account yet?</p>
-          <Link to="/signup"> <span className='btn'>Signup</span> </Link>
-      </div>
+      <p>Don't have an account yet?</p>
+      <Link to="/signup"> <span className='btn'>Signup</span> </Link>
+
     </>
   );
 }
 
-export default LoginPage;
+export default Login;

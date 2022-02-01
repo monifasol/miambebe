@@ -1,35 +1,31 @@
 import { React, useState, useContext } from 'react'
 import axios from "axios";
 import { DataContext } from '../../context/data.context'
+import { showNotification } from '../../utils/ui.utils'
 
 const API_URI = process.env.REACT_APP_API_URL;
 const token = localStorage.getItem("authToken");
 
 const FormNewBaby = (props) => {
 
-
     const [ formState, setFormState ] = useState({})
     const { currentUser, updateBaby } = useContext(DataContext)
+
+    const tooltipEl = document.querySelector('.tooltip-form.general.info')
+    const tooltipErr = document.querySelector('.tooltip-form.general.error')
+
 
     function handleSubmit(e) {
         e.preventDefault()
 
-        let tooltipEl = document.querySelector('.tooltip-form.info')
-        let tooltipErr = document.querySelector('.tooltip-form.error')
-        
         const requestBody = formState    
     
         if ( Object.keys(formState).length === 0 ) {
-
-            tooltipErr.classList.add('show')
-            tooltipErr.innerText = `All fields are empty!`
-            setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1000)
+            showNotification(tooltipErr, `All fields are empty!`)
 
         } else if (formState.name === "")  {
-            
-            tooltipErr.classList.add('show')
-            tooltipErr.innerText = `Name should not be empty!`
-            setTimeout(()=>{ tooltipErr.classList.remove('show')}, 1000)
+            showNotification(tooltipErr, `Name should not be empty!`)
+
         } else {
             
             axios
@@ -40,11 +36,10 @@ const FormNewBaby = (props) => {
                     let updatedBaby = response.data.data 
                     updateBaby(updatedBaby)   
 
-                    tooltipEl.classList.add('show')
-                    tooltipEl.innerText = `Baby successfully saved!`
+                    showNotification(tooltipEl, `Baby successfully saved!`)
+                    setFormState({})    // reset the form
 
                     setTimeout(()=>{ 
-                        tooltipEl.classList.remove('show')
                         e.target.parentElement.classList.remove('show')
                         document.getElementById('overlayModals').classList.remove('show')
                     }, 800)
@@ -57,10 +52,7 @@ const FormNewBaby = (props) => {
                 .catch((error) => {
                     console.log(error)
                 })
-        
         } 
-
-        setFormState({})    // reset the form
     }
 
     function handleInput(e){

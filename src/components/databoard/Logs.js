@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 
 const Logs = () => {
 
-  const { currentWeek, currentBaby } = useContext(DataContext);
+  const { currentBaby } = useContext(DataContext);
 
   const sortByUpdatedDate = (a, b) => {
     if (a.updatedAt < b.updatedAt) return 1
@@ -15,9 +15,9 @@ const Logs = () => {
 
   return (
     <div className="logs-component comp">
-        <h2 className="h2-comp">Latest food you gave to { currentBaby && currentBaby.name }</h2>
+        <h2 className="h2-comp">Latest progress </h2>
 
-        { currentWeek && currentWeek.goals && currentWeek.goals.sort(sortByUpdatedDate).map((goal) => 
+        { currentBaby && currentBaby.goals && currentBaby.goals.sort(sortByUpdatedDate).map((goal) => 
 
           <div key={goal._id}>
             

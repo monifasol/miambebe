@@ -6,29 +6,24 @@ import { DataContext } from '../../context/data.context';
 
 const Databoard = ( { goals } ) => {
 
-    const { currentWeek, currentBaby } = useContext(DataContext)
-    const [ isDataLoading, setIsDataLoading ] = useState(true)     
+    const { currentBaby } = useContext(DataContext)
+    const [ isDataLoading, setIsDataLoading ] = useState(true)          // first time Databoard loads
 
     const [ dataChart, setDataChart ] = useState(null)   
     const [ labelsChart, setLabelsChart ] = useState(null) 
 
-
-    // Calls "buildGoalsArrObj" on component mount, to use in Victory Chart.
-    useEffect( ()=> {
+    // Calls "buildDataObj" on component mount, to use in Victory Chart.
+    useEffect( ()=> { 
         if (goals) {
-           buildDataObj(goals)
-        }
+            buildDataObj(goals)
+        }  
     }, [goals]);
 
-
+    // Build labels for the graphics. 
+    // This is needed, to make match the BAR with the LABEL in the graphic!
     useEffect( ()=> {
-        if (dataChart) {
-            // Build labels for the graphics
-            let labelsFoodgroups = dataChart.map( item => item.labelFoodgroup)
-            setLabelsChart(labelsFoodgroups)
-        }
+        dataChart && setLabelsChart(dataChart.map( item => item.labelFoodgroup))
     }, [dataChart]);
-
 
     const buildDataObj = () => {
                     
@@ -57,13 +52,8 @@ const Databoard = ( { goals } ) => {
         })  
 
         setDataChart(buildData)
-
-        setTimeout(()=> {        
-            setIsDataLoading(false)         // show spinner
-        },1000) 
-
+        setTimeout( () => { setIsDataLoading(false) }, 800)  // show spinner first time it loads
     }
-
 
     const areGoalQuantiesEmpty = () => {
         let empty = true
@@ -80,29 +70,25 @@ const Databoard = ( { goals } ) => {
                 <>
                     <span className="graphics-label-foodgroup">Foodgroup</span>
                     <span className="graphics-label-given">Given</span>
-
                 </>
             }
 
             <h2 className="h2-comp">Databoard</h2>
-
                 
-            { (!currentBaby || !currentWeek || (!isDataLoading && areGoalQuantiesEmpty())) 
+            { (!currentBaby || (!isDataLoading && areGoalQuantiesEmpty())) 
             
                 &&
                 
                 <p className="no-data-databoard">       
                     There is no data to show at the moment. 
-                    <br/>Please, set the goals for the week first.
+                    <br/>Please, first, set a first goal.
                 </p>
             }
 
-
             {   (isDataLoading ) 
                 && 
-                (currentBaby && currentWeek && goals && goals.length > 0 )
+                (currentBaby && goals && goals.length > 0 )
                 &&
-
                 <LoadingSpinner msg="Loading data for graphics..."/> 
             }
 
@@ -110,15 +96,12 @@ const Databoard = ( { goals } ) => {
                 <>
                     <div className="databoard-graphics">
                         { dataChart && 
-                            
                             <GraphicBars dataGoals={dataChart} labelsFoodgroups={labelsChart} /> 
-                            
                         }
                     </div>
                 </>
             }
         </div>
-
     )
 }
 

@@ -13,8 +13,6 @@ body {
     background: linear-gradient(180deg, $color-gradient-bg-top 0%, $color-gradient-bg-bottom 100%);
     background-repeat: no-repeat;
     width: 100vw;
-    //height: 100vh;
-    //height: 100%;
     min-height: 100vh;
 }
 
@@ -27,14 +25,13 @@ h1 {
 
 h2.h2-comp {
     text-align: center;
-    font-weight: 600;
-    margin-top: 20px;
-    font-size: x-large;
-    margin: 30px auto;
     position: relative;
     width: fit-content;
     z-index: 0;
     line-height: 1.2em;
+    font-size: 1.4em;
+    margin: 16px auto;
+
 
     &::before {
         content: "";
@@ -61,6 +58,10 @@ a {
     color: $main-color;
 }
 
+input, select {
+    font-family: $main-font-family;
+}
+
 .link {
     cursor: pointer;
     &:hover {
@@ -69,14 +70,19 @@ a {
     }
 }
 
-.small {
-    font-size: 10px;
+.small, small {
+    font-size: 0.75em;
 }
 
 .comp {
     background-color: white;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
+}
+.message {
+    background-color: $color-lila-light;
+    padding: 10px 20px;
+    border-radius: 5px;
 }
 .only-desktop {
     display: none;
@@ -153,7 +159,7 @@ nav.header {
     padding: 10px;
     height: 80px; 
     margin: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
 
     .singup, .login {
         display: flex;
@@ -297,20 +303,20 @@ nav.menu {
 
 .homepage { 
     padding: 12px;
-    
+    margin-bottom: 40px;
+
     &-flex {
 
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin-top: 30px;
 
-        .week-component {
+        .goals-component {
             width: 100%;
             max-width: 100%;
             border: solid 1px white;
             height: fit-content;
-            padding: 0 20px;
+            padding: 0 20px 20px;
             margin: 0 auto;
         }
 
@@ -334,10 +340,6 @@ nav.menu {
                     margin: 0;
                     padding: 8px 0;
 
-                    //&:nth-child(even) {
-                    //    background-color: $color-pink-light;
-                    //}
-
                     .portions {
                         color: $color-lila-dark;       
                         padding: 0px 10px;                 
@@ -358,24 +360,37 @@ nav.menu {
     }
 }
 
-/* ====== Login and Signup ======== */
+/* ====== Landing, Login, and Signup ======== */
+
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-logo {
+        margin-top: 40px;
+        width: 240px;
+    }
+}
 
 .welcome-msg {
     line-height: 2em;
+    font-size: 1.3em;
+    letter-spacing: 0.03em;
     text-align: center;
     width: 100%;
-    margin-top: 60px;
+    margin: 40px auto 20px;
 }
 
 .signup-page,
-.login-page,
-.welcome-msg {
+.login-page {
     background-color: white;
     border: 1px solid $color-blue-dark;
     box-shadow: 0px 2px 10px #ccc;
     width: 95%;
     text-align: center;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 10px;
     border-radius: 10px;
 
@@ -383,47 +398,139 @@ nav.menu {
         display: flex;
         flex-direction: row;
         width: 100%;
-        margin: 20px auto;
+        margin: 12px auto;
+        align-items: center;
+    }
+
+    .btn {
+        margin: 12px auto;
+    }
+
+    h1 {
+        margin: 16px auto 10px;
     }
 
 }
 
 
-/* ========== Current Week Component ============ */
+/* ========== Display Goals Component ============ */
 
-.week-component {
+.goals-component {
 
     .no-baby {
         margin: 50px auto;
         text-align: center;
     }
 
-    .dates-current-week {
+    .current-date {
         width: fit-content;
         word-spacing: 10px;
-        //border-bottom: solid 1px $color-lila-dark;
         padding: 5px 10px;
         margin: 20px auto 0px;
         text-align: center;
         font-weight: 600;
-        color: $main-color;
 
         span {
             padding: 0 10px;
         }
     }
 
-    .text-current-week {
+    .message {
         text-align: center;
         font-size: 14px;
-        margin-top: 20px;
+        margin: 20px auto;
     }
 
-    .weekly-food-plan {
-        width: 100%;
-        padding-bottom: 20px;
-        margin: 0 auto;
-    }
+    .wrapper-new-goal {
+        margin: 20px auto 0;
+
+        .new-goal-header {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            border: solid 1px $color-lila-dark;
+            background-color: $color-lila-light;
+            transition: all 0.4s 0s;
+    
+            &:hover {
+                background-color: $color-lila;
+                box-shadow: 0px -10px 15px 5px $color-lila-light;
+            }
+    
+            img.btn-more {
+                width: 24px;
+                margin-right: 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        .form-new-goal {
+            border: solid 1px $color-lila-dark;
+            box-shadow: 0px 15px 15px 5px $color-lila-light;
+            border-top: 0px;
+            border-radius: 0 0 5px 5px;
+            transform: translateY(-30px);
+            opacity: 0;
+            visibility: hidden;
+            height: 0px;
+            transition: all 1s 0.2s, opacity 1s 0s;
+    
+            .wrapper-form-new-goal {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                margin: 20px;           // this is done, so that we avoid adding padding (it breaks the behavior or accordion in the UI)
+                width: -webkit-fill-available;
+            }
+            
+            .group-fields-new-goal {
+                flex-grow: 1;
+    
+                &:nth-child(1) {
+                    width:  65%;
+                }
+                label {
+                    width: 100%;
+                }
+                input, select {
+                    width: 90%;
+                    margin-top: 10px;
+                }
+            }
+            
+            .wrapper-input-savebutton {
+                display: flex;
+    
+                #quantityGoal {
+                    width: 40px;
+                    text-align: center;
+                }
+                .btn.new-goal {
+                    margin: 10px 0 0 20px;
+                    padding: 5px 10px;
+                }
+            }
+        }
+
+        &.show-new-goal {
+
+            .new-goal-header {
+                border-radius: 5px 5px 0 0;
+            }
+
+            .form-new-goal {
+                visibility: visible;
+                transform: translate(0px);
+                opacity: 1;
+                height: 130px;
+                transition: all 0.8s 0s, opacity 1.2s 0.2s;
+            }
+        }
+    }    
+
 
     .header-form-goals {
         display: flex;
@@ -432,10 +539,10 @@ nav.menu {
         width: 88%;
         font-size: smaller;
         text-align: center;
-        margin-bottom: 20px;
+        margin: 40px auto 10px;
 
         p:first-child {
-            width: 70%;
+            width: 32%;
         }
 
         p span {
@@ -445,119 +552,133 @@ nav.menu {
         }
     }
 
-    .form-goal {
+    /* ROW goal - Form update goal */
+    .wrapper-goal-row {
         display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        padding-right: 8px;
-        margin: 10px auto;
-        border: solid 1px $color-blue;
-        border-radius: 10px;
-        background-color: $color-lila-light;
+        align-items: center;
 
-        &.empty {
-            background-color: white;
-
-            .input-foodgroup {
-                background-color: white;
-            }
+        .icon-delete {
+            width: 25px;
+            height: auto;
+            margin-left: 20px;
+            cursor: pointer;
         }
-        
-        .group-inputs-goal {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            padding: 6px 10px;
 
-            .title {
-                font-size: 12px;
+        .form-update-goal {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            padding-right: 8px;
+            margin: 10px auto;
+            border: solid 1px $color-blue;
+            border-radius: 10px;
+            background-color: $color-lila-light;
+            width: 95%;
+    
+            &.empty {
+                background-color: white;
+    
+                .input-foodgroup {
+                    background-color: white;
+                }
+            }
+            
+            .group-inputs-goal {
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                padding: 6px 10px;
+    
+                .title {
+                    font-size: 12px;
+                    text-align: center;
+                }
+    
+                & #FRUIT, & #VEG, & #DRIED_VEG , & #DAIRY , & #POTATOES, & #CEREAL, & #EGGS, & #MEAT, & #FISH , & #EGG, & #FAT {
+                    background-size: 27px;
+                    background-repeat: no-repeat;
+                    background-position: left;
+                } 
+    
+                & #FRUIT {
+                    background-image: url('../images/icons/fruits.png');
+                }
+    
+                & #VEG {
+                    background-image: url('../images/icons/veggies.png');
+                }
+    
+                & #DRIED_VEG {
+                    background-image: url('../images/icons/legumes.png');
+                }
+    
+                & #DAIRY {
+                    background-image: url('../images/icons/dairy.png');
+                }
+    
+                & #POTATOES {
+                    background-image: url('../images/icons/potatoes.png');
+                }
+    
+                & #CEREAL {
+                    background-image: url('../images/icons/bread.png');
+                }
+    
+                & #EGG {
+                    background-image: url('../images/icons/egg.png');
+                }
+    
+                & #MEAT {
+                    background-image: url('../images/icons/meat.png');
+                }
+    
+                & #FISH {
+                    background-image: url('../images/icons/fish.png');
+                }
+    
+                & #FAT {
+                    background-image: url('../images/icons/fats.png');
+                }
+            }
+            
+            input{
+                margin: 5px;
+                height: 38px;
+                width: 38px;
                 text-align: center;
             }
-
-            & #FRUIT, & #VEG, & #DRIED_VEG , & #DAIRY , & #POTATOES, & #CEREAL, & #EGGS, & #MEAT, & #FISH , & #EGG, & #FAT {
-                background-size: 27px;
-                background-repeat: no-repeat;
-                background-position: left;
-            } 
-
-            & #FRUIT {
-                background-image: url('../images/icons/fruits.png');
+    
+            .input-foodgroup {
+                border: none;
+                width: fit-content;
+                padding: 0;
+                background-color: $color-lila-light;
+                padding-left: 45px;
+                text-align: left;
+                width: 60%;
             }
-
-            & #VEG {
-                background-image: url('../images/icons/veggies.png');
+    
+            .btn {
+                width: fit-content;
+                text-align: center;
+                display: block;
+                padding: 10px 8px;
+                font-size: 13px;
+                margin: 10px 0 0 0;
+                height: 50px;
             }
-
-            & #DRIED_VEG {
-                background-image: url('../images/icons/legumes.png');
-            }
-
-            & #DAIRY {
-                background-image: url('../images/icons/dairy.png');
-            }
-
-            & #POTATOES {
-                background-image: url('../images/icons/potatoes.png');
-            }
-
-            & #CEREAL {
-                background-image: url('../images/icons/bread.png');
-            }
-
-            & #EGG {
-                background-image: url('../images/icons/egg.png');
-            }
-
-            & #MEAT {
-                background-image: url('../images/icons/meat.png');
-            }
-
-            & #FISH {
-                background-image: url('../images/icons/fish.png');
-            }
-
-            & #FAT {
-                background-image: url('../images/icons/fats.png');
+    
+            .btn-more,
+            .btn-less {
+                width: 26px;
+                height: 26px;
+                cursor: pointer;
+    
+                img {
+                    width: 100%;
+                }
             }
         }
-        
-        input{
-            margin: 5px;
-            height: 38px;
-            width: 38px;
-            text-align: center;
-        }
-
-        .input-foodgroup {
-            border: none;
-            width: fit-content;
-            padding: 0;
-            background-color: $color-lila-light;
-            padding-left: 45px;
-            text-align: left;
-        }
-
-        .btn {
-            width: fit-content;
-            text-align: center;
-            display: block;
-            padding: 10px 8px;
-            font-size: 13px;
-            margin: 10px 0 0 0;
-            height: 50px;
-        }
-
-        .btn-more,
-        .btn-less {
-            width: 26px;
-            height: 26px;
-            cursor: pointer;
-
-            img {
-                width: 100%;
-            }
-        }
-
     }
 }
 
@@ -618,7 +739,9 @@ nav.menu {
         top: -10px;
         transition: all 0.5s 0s;
         opacity: 0;
-    
+        background: rgb(255,239,242);
+        background: linear-gradient(0deg, rgba(255,239,242,1) 0%, rgba(255,248,236,1) 100%);
+
         &.show {
             opacity: 1;
         }
@@ -889,7 +1012,7 @@ form, .form {
     &.general {
         left: 50%;
         top: -40px;
-    }    
+    } 
     
     &.info {
         color: $color-info-dark;

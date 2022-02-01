@@ -23,6 +23,7 @@ const ProfilePage = () => {
 
 
     // Fetch again currentUser, so that it reflects the New baby from child component FormNewBaby
+    // In the backend, with mongoose, we User.find().populate('babies')
     const babyIsUpdated = () => {
 
         axios
@@ -109,18 +110,15 @@ const ProfilePage = () => {
         }
     }    
 
+    const overlay = document.getElementById("overlayModals")
+    const modalNewBaby = document.getElementById('modalNewBaby')
 
     const openModalNewBaby = () => {
-        let overlay = document.getElementById("overlayModals")
-        let modalNewBaby = document.getElementById('modalNewBaby')
         modalNewBaby.classList.add("show")
         overlay.classList.add("show")
-
     }
 
     const closeModalNewBaby = () => {
-        let overlay = document.getElementById("overlayModals")
-        let modalNewBaby = document.getElementById('modalNewBaby')
         modalNewBaby.classList.remove("show")
         overlay.classList.remove("show")
     }
