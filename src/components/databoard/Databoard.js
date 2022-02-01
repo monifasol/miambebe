@@ -19,7 +19,6 @@ const Databoard = ( { goals } ) => {
         }  
     }, [goals]);
 
-
     // Build labels for the graphics. 
     // This is needed, to make match the BAR with the LABEL in the graphic!
     useEffect( ()=> {
@@ -55,7 +54,6 @@ const Databoard = ( { goals } ) => {
         setDataChart(buildData)
         setTimeout( () => { setIsDataLoading(false) }, 800)  // show spinner first time it loads
     }
-
 
     const areGoalQuantiesEmpty = () => {
         let empty = true

@@ -1,7 +1,6 @@
 @media all and (min-width: 1200px) {      
 
     .homepage {
-        padding: 20px 60px;
 
         &-flex {    
             .goals-component {
@@ -17,7 +16,6 @@
         }
     }
 
-
     .databoard-graphics {
         text-align: center;
         display: flex;
@@ -28,7 +26,6 @@
         }
 
         .tooltip-databoard {
-            
             top: 20px;
             left: 30%;
         }

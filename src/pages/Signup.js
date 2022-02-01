@@ -5,8 +5,7 @@ import axios from "axios";
 const API_URI = process.env.REACT_APP_API_URL;
 
 
-function SignupPage(props) {
-
+const SignupPage = () => {
 
   const history = useHistory()
   const [email, setEmail] = useState("");
@@ -38,11 +37,6 @@ function SignupPage(props) {
   return (
 
     <>
-      
-      <div className="welcome-msg">
-          <p>Welcome to Miam Bebe! </p>
-          <p>A food tracker for babies...  <span className="small">(and parents!)</span></p>
-      </div>
 
       <div className="signup-page">
         <h1>Sign Up</h1>
@@ -76,10 +70,8 @@ function SignupPage(props) {
 
       </div>
 
-      <div className="signup-page">
-          <p>Already have account?</p>
-          <Link to="/login"> <span className='btn'>Login</span> </Link>
-      </div>
+      <p>Already have account?</p>
+      <Link to="/login"> <span className='btn'>Login</span> </Link>
     </>
   );
 }

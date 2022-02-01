@@ -8,8 +8,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import RecipesPage from "./pages/RecipesPage";
 import RecipeDetailsPage from "./pages/RecipeDetailsPage";
-import SignupPage from "./pages/SignupPage";
-import LoginPage from "./pages/LoginPage";
+import LandingPage from "./pages/LandingPage";
 
 import PrivateRoute from "./components/PrivateRoute";    
 import AnonRoute from "./components/AnonRoute";        
@@ -25,7 +24,9 @@ function App() {
 
       <div id="overlayModals"></div>
 
-      <Navbar />
+      { isLoggedIn && 
+        <Navbar />
+      }
 
       <Switch>      
         <PrivateRoute exact path="/" component={HomePage} />
@@ -33,8 +34,14 @@ function App() {
         <PrivateRoute exact path="/recipes" component={RecipesPage} />
         <PrivateRoute exact path="/recipes/:id" component={RecipeDetailsPage} />
         
-        <AnonRoute exact path="/signup" component={SignupPage} />
-        <AnonRoute exact path="/login" component={LoginPage} />
+        <AnonRoute exact path='/login' render={(props) => (
+          <LandingPage {...props} page='login' />
+        )}/>
+
+        <AnonRoute exact path='/signup' render={(props) => (
+          <LandingPage {...props} page='signup' />
+        )}/>
+
       </Switch>
 
       { isLoggedIn && 

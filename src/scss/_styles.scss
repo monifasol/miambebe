@@ -13,8 +13,6 @@ body {
     background: linear-gradient(180deg, $color-gradient-bg-top 0%, $color-gradient-bg-bottom 100%);
     background-repeat: no-repeat;
     width: 100vw;
-    //height: 100vh;
-    //height: 100%;
     min-height: 100vh;
 }
 
@@ -58,6 +56,10 @@ a {
     text-decoration: none;
     list-style: none;
     color: $main-color;
+}
+
+input, select {
+    font-family: $main-font-family;
 }
 
 .link {
@@ -301,7 +303,8 @@ nav.menu {
 
 .homepage { 
     padding: 12px;
-    
+    margin-bottom: 40px;
+
     &-flex {
 
         display: flex;
@@ -313,7 +316,7 @@ nav.menu {
             max-width: 100%;
             border: solid 1px white;
             height: fit-content;
-            padding: 0 20px;
+            padding: 0 20px 20px;
             margin: 0 auto;
         }
 
@@ -337,10 +340,6 @@ nav.menu {
                     margin: 0;
                     padding: 8px 0;
 
-                    //&:nth-child(even) {
-                    //    background-color: $color-pink-light;
-                    //}
-
                     .portions {
                         color: $color-lila-dark;       
                         padding: 0px 10px;                 
@@ -361,24 +360,37 @@ nav.menu {
     }
 }
 
-/* ====== Login and Signup ======== */
+/* ====== Landing, Login, and Signup ======== */
+
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-logo {
+        margin-top: 40px;
+        width: 240px;
+    }
+}
 
 .welcome-msg {
     line-height: 2em;
+    font-size: 1.3em;
+    letter-spacing: 0.03em;
     text-align: center;
     width: 100%;
-    margin-top: 60px;
+    margin: 40px auto 20px;
 }
 
 .signup-page,
-.login-page,
-.welcome-msg {
+.login-page {
     background-color: white;
     border: 1px solid $color-blue-dark;
     box-shadow: 0px 2px 10px #ccc;
     width: 95%;
     text-align: center;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 10px;
     border-radius: 10px;
 
@@ -386,7 +398,16 @@ nav.menu {
         display: flex;
         flex-direction: row;
         width: 100%;
-        margin: 20px auto;
+        margin: 12px auto;
+        align-items: center;
+    }
+
+    .btn {
+        margin: 12px auto;
+    }
+
+    h1 {
+        margin: 16px auto 10px;
     }
 
 }
@@ -421,21 +442,21 @@ nav.menu {
     }
 
     .wrapper-new-goal {
-        margin: 30px auto 0;
+        margin: 20px auto 0;
 
         .new-goal-header {
             display: flex;
             align-items: center;
             padding: 8px 10px;
-            border-radius: 5px 5px 0 0;
+            border-radius: 5px;
             cursor: pointer;
             width: 100%;
             border: solid 1px $color-lila-dark;
-            background-color: $color-lila;
+            background-color: $color-lila-light;
             transition: all 0.4s 0s;
     
             &:hover {
-                background-color: $color-lila-light;
+                background-color: $color-lila;
                 box-shadow: 0px -10px 15px 5px $color-lila-light;
             }
     
@@ -445,65 +466,71 @@ nav.menu {
                 font-size: 0.9em;
             }
         }
+
+        .form-new-goal {
+            border: solid 1px $color-lila-dark;
+            box-shadow: 0px 15px 15px 5px $color-lila-light;
+            border-top: 0px;
+            border-radius: 0 0 5px 5px;
+            transform: translateY(-30px);
+            opacity: 0;
+            visibility: hidden;
+            height: 0px;
+            transition: all 1s 0.2s, opacity 1s 0s;
+    
+            .wrapper-form-new-goal {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                margin: 20px;           // this is done, so that we avoid adding padding (it breaks the behavior or accordion in the UI)
+                width: -webkit-fill-available;
+            }
+            
+            .group-fields-new-goal {
+                flex-grow: 1;
+    
+                &:nth-child(1) {
+                    width:  65%;
+                }
+                label {
+                    width: 100%;
+                }
+                input, select {
+                    width: 90%;
+                    margin-top: 10px;
+                }
+            }
+            
+            .wrapper-input-savebutton {
+                display: flex;
+    
+                #quantityGoal {
+                    width: 40px;
+                    text-align: center;
+                }
+                .btn.new-goal {
+                    margin: 10px 0 0 20px;
+                    padding: 5px 10px;
+                }
+            }
+        }
+
+        &.show-new-goal {
+
+            .new-goal-header {
+                border-radius: 5px 5px 0 0;
+            }
+
+            .form-new-goal {
+                visibility: visible;
+                transform: translate(0px);
+                opacity: 1;
+                height: 130px;
+                transition: all 0.8s 0s, opacity 1.2s 0.2s;
+            }
+        }
     }    
 
-    .form-new-goal {
-        border: solid 1px $color-lila-dark;
-        box-shadow: 0px 15px 15px 5px $color-lila-light;
-        border-top: 0px;
-        border-radius: 0 0 5px 5px;
-        transform: translateY(-30px);
-        opacity: 0;
-        visibility: hidden;
-        height: 0px;
-        transition: all 1s 0.2s, opacity 1s 0s;
-
-        &.show {
-            visibility: visible;
-            transform: translate(0px);
-            opacity: 1;
-            height: 130px;
-            transition: all 0.8s 0s, opacity 1.2s 0.2s;
-
-        }
-
-        .wrapper-form-new-goal {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            margin: 20px;           // this is done, so that we avoid adding padding (it breaks the behavior or accordion in the UI)
-            width: -webkit-fill-available;
-
-        }
-        
-        .group-fields-new-goal {
-            flex-grow: 1;
-
-            &:nth-child(1) {
-                width:  65%;
-            }
-            label {
-                width: 100%;
-            }
-            input, select {
-                width: 90%;
-                margin-top: 10px;
-            }
-        }
-        
-        .wrapper-input-savebutton {
-            display: flex;
-
-            #quantityGoal {
-                width: 40px;
-                text-align: center;
-            }
-            .btn.new-goal {
-                margin: 10px 0 0 20px;
-                padding: 5px 10px;
-            }
-        }
-    }
 
     .header-form-goals {
         display: flex;
@@ -628,6 +655,7 @@ nav.menu {
                 background-color: $color-lila-light;
                 padding-left: 45px;
                 text-align: left;
+                width: 60%;
             }
     
             .btn {
@@ -711,7 +739,9 @@ nav.menu {
         top: -10px;
         transition: all 0.5s 0s;
         opacity: 0;
-    
+        background: rgb(255,239,242);
+        background: linear-gradient(0deg, rgba(255,239,242,1) 0%, rgba(255,248,236,1) 100%);
+
         &.show {
             opacity: 1;
         }

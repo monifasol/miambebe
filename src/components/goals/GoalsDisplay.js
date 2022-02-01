@@ -42,7 +42,7 @@ const GoalsDisplay = ( props ) => {
     }
 
     const showNewGoalForm = () => {
-        document.querySelector('.form-new-goal').classList.toggle('show')
+        document.querySelector('.wrapper-new-goal').classList.toggle('show-new-goal')
     }
 
     const deleteGoal = (goalId) => {
