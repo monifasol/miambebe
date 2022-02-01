@@ -2,9 +2,9 @@
 
 # Miam Bebe Client (Front-end) application
 
-Find the website online here: https://miambebe.herokuapp.com/
+Access the [website](https://miambebe.herokuapp.com/) here. 
 
-Access the server application (API) here: https://miambebe-server.herokuapp.com/
+Access the [server application (API)](https://miambebe-server.herokuapp.com/) here.
 
 
 ## Description
