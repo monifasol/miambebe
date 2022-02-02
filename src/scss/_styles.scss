@@ -488,10 +488,8 @@ nav.menu {
             
             .group-fields-new-goal {
                 flex-grow: 1;
+                width: auto;
     
-                &:nth-child(1) {
-                    width:  65%;
-                }
                 label {
                     width: 100%;
                 }
